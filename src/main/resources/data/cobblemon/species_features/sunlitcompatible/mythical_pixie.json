@@ -1,0 +1,8 @@
+{
+  "type": "flag",
+  "keys": [
+    "mythical_pixie"
+  ],
+  "default": false,
+  "isAspect": true
+}

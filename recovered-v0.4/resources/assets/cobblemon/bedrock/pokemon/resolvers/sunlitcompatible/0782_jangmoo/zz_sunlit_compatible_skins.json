@@ -1,0 +1,82 @@
+{
+  "species": "cobblemon:jangmoo",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_metallic"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0782_jangmoo/jangmoo_metallic.png"
+    },
+    {
+      "aspects": [
+        "mythical_metallic",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0782_jangmoo/jangmoo_shiny_metallic.png"
+    },
+    {
+      "aspects": [
+        "mythical_marine"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0782_jangmoo/jangmoo_marine.png"
+    },
+    {
+      "aspects": [
+        "mythical_marine",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0782_jangmoo/jangmoo_shiny_marine.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0782_jangmoo/jangmoo_shiny_emissive_marine.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_pixie"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0782_jangmoo/jangmoo_pixie.png"
+    },
+    {
+      "aspects": [
+        "mythical_pixie",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0782_jangmoo/jangmoo_shiny_pixie.png"
+    },
+    {
+      "aspects": [
+        "mythical_error"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0782_jangmoo/jangmoo_error.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0782_jangmoo/jangmoo_emissive_error.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_error",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0782_jangmoo/jangmoo_shiny_error.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0782_jangmoo/jangmoo_shiny_emissive_error.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "type": "flag",
+  "keys": [
+    "mythical_ominous"
+  ],
+  "default": false,
+  "isAspect": true
+}

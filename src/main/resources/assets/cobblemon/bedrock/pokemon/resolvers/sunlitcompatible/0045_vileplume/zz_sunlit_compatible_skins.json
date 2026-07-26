@@ -1,0 +1,188 @@
+{
+  "species": "cobblemon:vileplume",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_radioactive"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0045_vileplume/vileplume_male_radioactive.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0045_vileplume/vileplume_male_emissive_radioactive.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_radioactive",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0045_vileplume/vileplume_male_shiny_radioactive.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0045_vileplume/vileplume_male_shiny_emissive_radioactive.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_radioactive",
+        "female"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0045_vileplume/vileplume_female_radioactive.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0045_vileplume/vileplume_female_emissive_radioactive.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_radioactive",
+        "shiny",
+        "female"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0045_vileplume/vileplume_female_shiny_radioactive.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0045_vileplume/vileplume_female_shiny_emissive_radioactive.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_radioactive",
+        "valencian"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0045_vileplume/vileplume_valencian_radioactive.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0045_vileplume/vileplume_valencian_emissive_radioactive.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_radioactive",
+        "valencian",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0045_vileplume/vileplume_valencian_shiny_radioactive.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0045_vileplume/vileplume_valencian_shiny_emissive_radioactive.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0045_vileplume/vileplume_male_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0045_vileplume/vileplume_male_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0045_vileplume/vileplume_male_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0045_vileplume/vileplume_male_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "female"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0045_vileplume/vileplume_female_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0045_vileplume/vileplume_female_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny",
+        "female"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0045_vileplume/vileplume_female_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0045_vileplume/vileplume_female_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "valencian"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0045_vileplume/vileplume_valencian_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0045_vileplume/vileplume_valencian_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "valencian",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0045_vileplume/vileplume_valencian_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0045_vileplume/vileplume_valencian_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    }
+  ]
+}

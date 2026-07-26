@@ -1,0 +1,8 @@
+{
+  "type": "flag",
+  "keys": [
+    "mythical_jungle"
+  ],
+  "default": false,
+  "isAspect": true
+}

@@ -1,0 +1,7 @@
+# Sunlit Compatible Skins. Wild assignment is disabled during the audit phase.
+[appearance_spawning]
+enabled = false
+normal_chance_percent = 75.0
+include_texture_variants = true
+include_shader_effects = true
+enabled_variant_families = "*"

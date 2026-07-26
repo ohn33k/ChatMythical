@@ -1,0 +1,3 @@
+Sunlit Compatible Skins ALPHA v0.3.1 HOTFIX
+- Rebuilt accepted Gyarados, Moltres, and Mewtwo static skins against Cobblemon 1.5.2 UV layouts.
+- Wailord/Avalugg 512-pixel animated-effect fix is supplied in the matching shader pack.

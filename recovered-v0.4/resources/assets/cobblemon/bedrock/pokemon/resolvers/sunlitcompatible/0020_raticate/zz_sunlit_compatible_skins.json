@@ -1,0 +1,126 @@
+{
+  "species": "cobblemon:raticate",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_shadow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0020_raticate/raticate_shadow.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0020_raticate/raticate_emissive_shadow.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_shadow",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0020_raticate/raticate_shiny_shadow.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0020_raticate/raticate_emissive_shadow.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0020_raticate/raticate_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0020_raticate/raticate_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0020_raticate/raticate_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0020_raticate/raticate_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_shadow",
+        "alolan"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0020_raticate/raticate_alolan_shadow.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0020_raticate/raticate_alolan_emissive_shadow.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_shadow",
+        "alolan",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0020_raticate/raticate_alolan_shiny_shadow.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0020_raticate/raticate_alolan_emissive_shadow.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "alolan"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0020_raticate/raticate_alolan_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0020_raticate/raticate_alolan_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "alolan",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0020_raticate/raticate_alolan_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0020_raticate/raticate_alolan_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    }
+  ]
+}

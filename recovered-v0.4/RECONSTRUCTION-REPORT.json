@@ -1,0 +1,17 @@
+{
+  "base_source": "SunlitCompatibleSkins-Source-v0.2-FULL.zip",
+  "reference_distribution": "SunlitCompatibleSkins-Forge-1.20.1-ALPHA-v0.4-CombinedFix-Java17.zip",
+  "selected_main_jar": "SunlitCompatibleSkins-v0.4-CombinedFix/server-and-client-mods/Cobblemon-forge-1.5.2+1.20.1-SunlitCompatibleSkins-ALPHA-v0.4-COMBINED-Java17.jar",
+  "selected_main_jar_size": 110029327,
+  "v0_2_java_file_count": 31,
+  "selected_v0_4_class_count": 15,
+  "recovered_resource_count": 17593,
+  "overlaid_resource_count": 17591,
+  "distribution_file_count": 6,
+  "known_namespaces": [
+    "cobblemon",
+    "mythicalcobbled"
+  ],
+  "decompiler_status": "CFR exit code: 0\n",
+  "important_note": "This is a reconstructed v0.4 source baseline made from the complete v0.2 source and compiled v0.4 distribution. It is not a byte-for-byte copy of the unavailable original v0.4 development directory."
+}

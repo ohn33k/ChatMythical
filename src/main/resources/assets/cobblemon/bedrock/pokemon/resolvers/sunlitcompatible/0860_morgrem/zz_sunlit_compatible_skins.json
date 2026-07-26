@@ -1,0 +1,40 @@
+{
+  "species": "cobblemon:morgrem",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_marine"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0860_morgrem/morgrem_marine.png"
+    },
+    {
+      "aspects": [
+        "mythical_marine",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0860_morgrem/morgrem_shiny_marine.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0860_morgrem/morgrem_shiny_emissive_marine.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_pixie"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0860_morgrem/morgrem_pixie.png"
+    },
+    {
+      "aspects": [
+        "mythical_pixie",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0860_morgrem/morgrem_shiny_pixie.png"
+    }
+  ]
+}

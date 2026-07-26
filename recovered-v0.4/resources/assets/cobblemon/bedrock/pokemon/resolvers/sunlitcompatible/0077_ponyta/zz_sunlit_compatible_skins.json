@@ -1,0 +1,130 @@
+{
+  "species": "cobblemon:ponyta",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0077_ponyta/ponyta_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0077_ponyta/ponyta_emissive_gilded.png",
+          "emissive": "true"
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0077_ponyta/ponyta_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0077_ponyta/ponyta_emissive_gilded.png",
+          "emissive": "true"
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_blazing"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0077_ponyta/ponyta_blazing.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0077_ponyta/ponyta_emissive_blazing.png",
+          "emissive": "true"
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_blazing",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0077_ponyta/ponyta_shiny_blazing.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0077_ponyta/ponyta_shiny_emissive_blazing.png",
+          "emissive": "true"
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0077_ponyta/ponyta_rainbow.png"
+    },
+    {
+      "aspects": [
+        "mythical_rainbow",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0077_ponyta/ponyta_shiny_rainbow.png"
+    },
+    {
+      "aspects": [
+        "mythical_pixie"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0077_ponyta/ponyta_pixie.png"
+    },
+    {
+      "aspects": [
+        "mythical_pixie",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0077_ponyta/ponyta_shiny_pixie.png"
+    },
+    {
+      "aspects": [
+        "galarian",
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0077_ponyta/ponyta_galar_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0077_ponyta/ponyta_galar_emissive_gilded.png",
+          "emissive": "true"
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "galarian",
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0077_ponyta/ponyta_galar_shiny_gilded.png"
+    },
+    {
+      "aspects": [
+        "galarian",
+        "mythical_easter"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0077_ponyta/ponyta_galar_easter.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0077_ponyta/ponyta_galar_emissive_easter.png",
+          "emissive": "true"
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "galarian",
+        "mythical_easter",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0077_ponyta/ponyta_galar_shiny_easter.png"
+    }
+  ]
+}

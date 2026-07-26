@@ -1,0 +1,19 @@
+{
+  "species": "cobblemon:bounsweet",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_easter"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0761_bounsweet/bounsweet_easter.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_easter"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0761_bounsweet/bounsweet_shiny_easter.png"
+    }
+  ]
+}

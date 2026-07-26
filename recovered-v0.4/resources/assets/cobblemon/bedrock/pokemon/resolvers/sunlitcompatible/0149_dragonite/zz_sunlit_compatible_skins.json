@@ -1,0 +1,132 @@
+{
+  "species": "cobblemon:dragonite",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_easter"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0149_dragonite/dragonite_easter.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_easter"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0149_dragonite/dragonite_shiny_easter.png"
+    },
+    {
+      "aspects": [
+        "mythical_blazing"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0149_dragonite/dragonite_blazing.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0149_dragonite/dragonite_emissive_blazing.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_blazing"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0149_dragonite/dragonite_shiny_blazing.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0149_dragonite/dragonite_shiny_emissive_blazing.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_shadow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0149_dragonite/dragonite_shadow.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0149_dragonite/dragonite_emissive_shadow.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_shadow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0149_dragonite/dragonite_shiny_shadow.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0149_dragonite/dragonite_shiny_emissive_shadow.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_twilight"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0149_dragonite/dragonite_twilight.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_twilight"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0149_dragonite/dragonite_shiny_twilight.png"
+    },
+    {
+      "aspects": [
+        "mythical_pixie"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0149_dragonite/dragonite_pixie.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_pixie"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0149_dragonite/dragonite_shiny_pixie.png"
+    },
+    {
+      "aspects": [
+        "mythical_plasma"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0149_dragonite/dragonite_plasma.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0149_dragonite/dragonite_emissive_plasma.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_plasma"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0149_dragonite/dragonite_shiny_plasma.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0149_dragonite/dragonite_shiny_emissive_plasma.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    }
+  ]
+}

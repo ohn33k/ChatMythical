@@ -1,0 +1,48 @@
+{
+  "species": "cobblemon:haunter",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0093_haunter/haunter_gilded.png"
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0093_haunter/haunter_shiny_gilded.png"
+    },
+    {
+      "aspects": [
+        "mythical_blazing"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0093_haunter/haunter_blazing.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0093_haunter/haunter_emissive_blazing.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_blazing",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0093_haunter/haunter_shiny_blazing.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0093_haunter/haunter_shiny_emissive_blazing.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    }
+  ]
+}

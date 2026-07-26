@@ -1,0 +1,103 @@
+{
+  "species": "cobblemon:torchic",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0255_torchic/torchic_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0255_torchic/torchic_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0255_torchic/torchic_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0255_torchic/torchic_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0255_torchic/torchic_rainbow.png"
+    },
+    {
+      "aspects": [
+        "mythical_rainbow",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0255_torchic/torchic_shiny_rainbow.png"
+    },
+    {
+      "aspects": [
+        "mythical_pixie"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0255_torchic/torchic_pixie.png"
+    },
+    {
+      "aspects": [
+        "mythical_pixie",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0255_torchic/torchic_shiny_pixie.png"
+    },
+    {
+      "aspects": [
+        "mythical_valentines"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0255_torchic/torchic_valentines.png"
+    },
+    {
+      "aspects": [
+        "mythical_valentines",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0255_torchic/torchic_shiny_valentines.png"
+    },
+    {
+      "aspects": [
+        "mythical_plasma"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0255_torchic/torchic_plasma.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0255_torchic/torchic_emissive_plasma.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_plasma",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0255_torchic/torchic_shiny_plasma.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0255_torchic/torchic_shiny_emissive_plasma.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "type": "flag",
+  "keys": [
+    "mythical_nebula"
+  ],
+  "default": false,
+  "isAspect": true
+}

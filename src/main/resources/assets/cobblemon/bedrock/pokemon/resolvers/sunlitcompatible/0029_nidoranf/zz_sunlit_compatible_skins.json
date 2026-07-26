@@ -1,0 +1,20 @@
+{
+  "species": "cobblemon:nidoranf",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_ominous"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0029_nidoranf/nidoranf_ominous.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "emissive": true,
+          "texture": "mythicalcobbled:textures/pokemon/0029_nidoranf/nidoranf_emissive_ominous.png",
+          "translucent": true
+        }
+      ]
+    }
+  ]
+}

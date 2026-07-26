@@ -1,0 +1,48 @@
+{
+  "species": "cobblemon:psyduck",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_easter"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0054_psyduck/psyduck_easter.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_easter"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0054_psyduck/psyduck_shiny_easter.png"
+    },
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0054_psyduck/psyduck_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0054_psyduck/psyduck_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0054_psyduck/psyduck_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0054_psyduck/psyduck_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    }
+  ]
+}

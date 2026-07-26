@@ -1,0 +1,20 @@
+{
+  "pokemon": [
+    "ralts",
+    "kirlia",
+    "gardevoir",
+    "beldum",
+    "metang",
+    "metagross",
+    "gallade",
+    "wimpod",
+    "golisopod",
+    "rookidee",
+    "corvisquire",
+    "corviknight",
+    "falinks"
+  ],
+  "features": [
+    "mythical_independence_day"
+  ]
+}

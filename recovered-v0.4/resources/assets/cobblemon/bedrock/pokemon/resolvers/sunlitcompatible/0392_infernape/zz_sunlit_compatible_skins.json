@@ -1,0 +1,48 @@
+{
+  "species": "cobblemon:infernape",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0392_infernape/infernape_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "emissive": true,
+          "texture": "mythicalcobbled:textures/pokemon/0392_infernape/infernape_emissive_gilded.png",
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0392_infernape/infernape_shiny_gilded.png"
+    },
+    {
+      "aspects": [
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0392_infernape/infernape_rainbow.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "emissive": true,
+          "texture": "mythicalcobbled:textures/pokemon/0392_infernape/infernape_emissive_gilded.png",
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_rainbow",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0392_infernape/infernape_shiny_rainbow.png"
+    }
+  ]
+}

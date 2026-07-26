@@ -1,0 +1,66 @@
+{
+  "species": "cobblemon:farfetchd",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0083_farfetchd/farfetchd_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0083_farfetchd/farfetchd_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0083_farfetchd/farfetchd_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0083_farfetchd/farfetchd_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "galarian"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0083_farfetchd/farfetchd_galar_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0083_farfetchd/farfetchd_galar_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny",
+        "galarian"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0083_farfetchd/farfetchd_galar_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0083_farfetchd/farfetchd_galar_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    }
+  ]
+}

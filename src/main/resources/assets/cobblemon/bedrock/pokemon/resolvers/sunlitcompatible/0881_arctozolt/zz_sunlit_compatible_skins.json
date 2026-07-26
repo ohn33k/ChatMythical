@@ -1,0 +1,40 @@
+{
+  "species": "cobblemon:arctozolt",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_marine"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0881_arctozolt/arctozolt_marine.png"
+    },
+    {
+      "aspects": [
+        "mythical_marine",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0881_arctozolt/arctozolt_shiny_marine.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0881_arctozolt/arctozolt_shiny_emissive_marine.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_twilight"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0881_arctozolt/arctozolt_twilight.png"
+    },
+    {
+      "aspects": [
+        "mythical_twilight",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0881_arctozolt/arctozolt_shiny_twilight.png"
+    }
+  ]
+}

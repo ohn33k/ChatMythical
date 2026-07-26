@@ -1,0 +1,81 @@
+{
+  "species": "cobblemon:sliggoo",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_metallic"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0705_sliggoo/sliggoo_metallic.png"
+    },
+    {
+      "aspects": [
+        "mythical_metallic",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0705_sliggoo/sliggoo_shiny_metallic.png"
+    },
+    {
+      "aspects": [
+        "mythical_marine"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0705_sliggoo/sliggoo_marine.png"
+    },
+    {
+      "aspects": [
+        "mythical_marine",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0705_sliggoo/sliggoo_shiny_marine.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0705_sliggoo/sliggoo_shiny_emissive_marine.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_frosted"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0705_sliggoo/sliggoo_frosted.png"
+    },
+    {
+      "aspects": [
+        "mythical_frosted",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0705_sliggoo/sliggoo_shiny_frosted.png"
+    },
+    {
+      "aspects": [
+        "mythical_jungle"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0705_sliggoo/sliggoo_jungle.png"
+    },
+    {
+      "aspects": [
+        "mythical_jungle",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0705_sliggoo/sliggoo_shiny_jungle.png"
+    },
+    {
+      "aspects": [
+        "hisuian",
+        "mythical_frosted"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0705_sliggoo/sliggoo_hisuian_frosted.png"
+    },
+    {
+      "aspects": [
+        "hisuian",
+        "mythical_frosted",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0705_sliggoo/sliggoo_hisuian_shiny_frosted.png"
+    }
+  ]
+}

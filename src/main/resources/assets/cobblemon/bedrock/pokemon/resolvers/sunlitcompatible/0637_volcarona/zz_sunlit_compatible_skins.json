@@ -1,0 +1,69 @@
+{
+  "species": "cobblemon:volcarona",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_marine"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0637_volcarona/volcarona_marine.png"
+    },
+    {
+      "aspects": [
+        "mythical_marine",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0637_volcarona/volcarona_shiny_marine.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0637_volcarona/volcarona_shiny_emissive_marine.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_jungle"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0637_volcarona/volcarona_jungle.png"
+    },
+    {
+      "aspects": [
+        "mythical_jungle",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0637_volcarona/volcarona_shiny_jungle.png"
+    },
+    {
+      "aspects": [
+        "mythical_ominous"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0637_volcarona/volcarona_ominous.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "emissive": true,
+          "texture": "mythicalcobbled:textures/pokemon/0637_volcarona/volcarona_emissive_ominous.png",
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_ominous",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0637_volcarona/volcarona_shiny_ominous.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "emissive": true,
+          "texture": "mythicalcobbled:textures/pokemon/0637_volcarona/volcarona_shiny_emissive_ominous.png",
+          "translucent": true
+        }
+      ]
+    }
+  ]
+}

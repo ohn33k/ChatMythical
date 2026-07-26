@@ -1,0 +1,181 @@
+{
+  "species": "cobblemon:growlithe",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0058_growlithe/growlithe_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0058_growlithe/growlithe_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0058_growlithe/growlithe_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0058_growlithe/growlithe_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_blazing"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0058_growlithe/growlithe_blazing.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0058_growlithe/growlithe_emissive_blazing.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_blazing"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0058_growlithe/growlithe_shiny_blazing.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0058_growlithe/growlithe_shiny_emissive_blazing.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0058_growlithe/growlithe_rainbow.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0058_growlithe/growlithe_shiny_rainbow.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_easter"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0058_growlithe/growlithe_shiny_easter.png"
+    },
+    {
+      "aspects": [
+        "mythical_frosted"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0058_growlithe/growlithe_frosted.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_frosted"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0058_growlithe/growlithe_shiny_frosted.png"
+    },
+    {
+      "aspects": [
+        "mythical_pixie"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0058_growlithe/growlithe_pixie.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_pixie"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0058_growlithe/growlithe_shiny_pixie.png"
+    },
+    {
+      "aspects": [
+        "mythical_error"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0058_growlithe/growlithe_error.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0058_growlithe/growlithe_emissive_error.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_error"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0058_growlithe/growlithe_shiny_error.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0058_growlithe/growlithe_shiny_emissive_error.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_jungle"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0058_growlithe/growlithe_jungle.png"
+    },
+    {
+      "aspects": [
+        "mythical_jungle",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0058_growlithe/growlithe_shiny_jungle.png"
+    },
+    {
+      "aspects": [
+        "mythical_ominous"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0058_growlithe/growlithe_ominous.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "emissive": true,
+          "texture": "mythicalcobbled:textures/pokemon/0058_growlithe/growlithe_emissive_ominous.png",
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_ominous",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0058_growlithe/growlithe_shiny_ominous.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "emissive": true,
+          "texture": "mythicalcobbled:textures/pokemon/0058_growlithe/growlithe_shiny_emissive_ominous.png",
+          "translucent": true
+        }
+      ]
+    }
+  ]
+}

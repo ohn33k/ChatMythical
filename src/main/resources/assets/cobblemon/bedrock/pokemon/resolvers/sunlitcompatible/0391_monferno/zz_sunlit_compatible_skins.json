@@ -1,0 +1,34 @@
+{
+  "species": "cobblemon:monferno",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0391_monferno/monferno_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "emissive": true,
+          "texture": "mythicalcobbled:textures/pokemon/0391_monferno/monferno_emissive_gilded.png",
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0391_monferno/monferno_rainbow.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "emissive": true,
+          "texture": "mythicalcobbled:textures/pokemon/0391_monferno/monferno_emissive_gilded.png",
+          "translucent": true
+        }
+      ]
+    }
+  ]
+}

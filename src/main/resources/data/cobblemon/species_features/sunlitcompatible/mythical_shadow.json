@@ -1,0 +1,8 @@
+{
+  "type": "flag",
+  "keys": [
+    "mythical_shadow"
+  ],
+  "default": false,
+  "isAspect": true
+}

@@ -1,0 +1,8 @@
+{
+  "type": "flag",
+  "keys": [
+    "mythical_easter"
+  ],
+  "default": false,
+  "isAspect": true
+}

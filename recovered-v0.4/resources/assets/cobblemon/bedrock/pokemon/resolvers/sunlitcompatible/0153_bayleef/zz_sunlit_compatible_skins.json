@@ -1,0 +1,48 @@
+{
+  "species": "cobblemon:bayleef",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0153_bayleef/bayleef_gilded.png"
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0153_bayleef/bayleef_shiny_gilded.png"
+    },
+    {
+      "aspects": [
+        "mythical_ominous"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0153_bayleef/bayleef_ominous.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "emissive": true,
+          "texture": "mythicalcobbled:textures/pokemon/0153_bayleef/bayleef_emissive_ominous.png",
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_ominous",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0153_bayleef/bayleef_shiny_ominous.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "emissive": true,
+          "texture": "mythicalcobbled:textures/pokemon/0153_bayleef/bayleef_shiny_emissive_ominous.png",
+          "translucent": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "species": "cobblemon:popplio",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0728_popplio/popplio_gilded.png"
+    },
+    {
+      "aspects": [
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0728_popplio/popplio_rainbow.png"
+    }
+  ]
+}

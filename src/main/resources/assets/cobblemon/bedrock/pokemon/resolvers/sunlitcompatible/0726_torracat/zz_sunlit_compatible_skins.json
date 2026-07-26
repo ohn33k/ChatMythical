@@ -1,0 +1,45 @@
+{
+  "species": "cobblemon:torracat",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0726_torracat/torracat_gilded.png"
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0726_torracat/torracat_shiny_gilded.png"
+    },
+    {
+      "aspects": [
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0726_torracat/torracat_rainbow.png"
+    },
+    {
+      "aspects": [
+        "mythical_rainbow",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0726_torracat/torracat_shiny_rainbow.png"
+    },
+    {
+      "aspects": [
+        "mythical_valentines"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0726_torracat/torracat_valentines.png"
+    },
+    {
+      "aspects": [
+        "mythical_valentines",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0726_torracat/torracat_shiny_valentines.png"
+    }
+  ]
+}

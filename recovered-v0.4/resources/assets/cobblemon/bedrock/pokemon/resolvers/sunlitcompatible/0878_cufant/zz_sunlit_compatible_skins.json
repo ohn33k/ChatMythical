@@ -1,0 +1,59 @@
+{
+  "species": "cobblemon:cufant",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_blazing"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0878_cufant/cufant_blazing.png",
+      "layers": [
+        {
+          "name": "glow",
+          "texture": "mythicalcobbled:textures/pokemon/0878_cufant/cufant_emissive_blazing.png",
+          "emissive": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_blazing",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0878_cufant/cufant_shiny_blazing.png",
+      "layers": [
+        {
+          "name": "glow",
+          "texture": "mythicalcobbled:textures/pokemon/0878_cufant/cufant_shiny_emissive_blazing.png",
+          "emissive": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0878_cufant/cufant_gilded.png"
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0878_cufant/cufant_shiny_gilded.png"
+    },
+    {
+      "aspects": [
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0878_cufant/cufant_rainbow.png"
+    },
+    {
+      "aspects": [
+        "mythical_rainbow",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0878_cufant/cufant_shiny_rainbow.png"
+    }
+  ]
+}

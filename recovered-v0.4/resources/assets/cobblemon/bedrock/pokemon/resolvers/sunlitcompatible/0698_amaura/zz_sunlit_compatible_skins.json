@@ -1,0 +1,56 @@
+{
+  "species": "cobblemon:amaura",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_nebula"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0698_amaura/amaura_nebula.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0698_amaura/amaura_emissive_nebula.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_nebula",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0698_amaura/amaura_shiny_nebula.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0698_amaura/amaura_shiny_emissive_nebula.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0698_amaura/amaura_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0698_amaura/amaura_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0698_amaura/amaura_shiny_gilded.png"
+    }
+  ]
+}

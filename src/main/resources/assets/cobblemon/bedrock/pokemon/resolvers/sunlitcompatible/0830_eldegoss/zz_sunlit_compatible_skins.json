@@ -1,0 +1,19 @@
+{
+  "species": "cobblemon:eldegoss",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_sakura"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0830_eldegoss/eldegoss_sakura.png"
+    },
+    {
+      "aspects": [
+        "mythical_sakura",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0830_eldegoss/eldegoss_shiny_sakura.png"
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "species": "cobblemon:raichu",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_radioactive"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0026_raichu/raichu_radioactive.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0026_raichu/raichu_emissive_radioactive.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_radioactive",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0026_raichu/raichu_shiny_radioactive.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0026_raichu/raichu_shiny_emissive_radioactive.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0026_raichu/raichu_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0026_raichu/raichu_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0026_raichu/raichu_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0026_raichu/raichu_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_radioactive",
+        "alolan"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0026_raichu/raichu_alolan_radioactive.png"
+    },
+    {
+      "aspects": [
+        "mythical_radioactive",
+        "alolan",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0026_raichu/raichu_alolan_shiny_radioactive.png"
+    }
+  ]
+}

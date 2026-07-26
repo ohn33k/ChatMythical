@@ -1,0 +1,8 @@
+{
+  "type": "flag",
+  "keys": [
+    "mythical_twilight"
+  ],
+  "default": false,
+  "isAspect": true
+}

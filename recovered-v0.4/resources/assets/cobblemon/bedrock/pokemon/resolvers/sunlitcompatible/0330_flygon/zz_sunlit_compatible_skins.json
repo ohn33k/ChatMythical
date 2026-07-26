@@ -1,0 +1,87 @@
+{
+  "species": "cobblemon:flygon",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_metallic"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0330_flygon/flygon_metallic.png",
+      "layers": [
+        {
+          "name": "eyes",
+          "texture": "mythicalcobbled:textures/pokemon/0330_flygon/flygon_transparency_metallic.png",
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_metallic",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0330_flygon/flygon_shiny_metallic.png",
+      "layers": [
+        {
+          "name": "eyes",
+          "texture": "mythicalcobbled:textures/pokemon/0330_flygon/flygon_transparency_shiny_metallic.png",
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_nebula"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0330_flygon/flygon_nebula.png",
+      "layers": [
+        {
+          "name": "eyes",
+          "texture": "mythicalcobbled:textures/pokemon/0330_flygon/flygon_transparency_nebula.png",
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_nebula",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0330_flygon/flygon_shiny_nebula.png",
+      "layers": [
+        {
+          "name": "eyes",
+          "texture": "mythicalcobbled:textures/pokemon/0330_flygon/flygon_transparency_shiny_nebula.png",
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0330_flygon/flygon_gilded.png",
+      "layers": [
+        {
+          "name": "eyes",
+          "texture": "mythicalcobbled:textures/pokemon/0330_flygon/flygon_emissive_gilded.png",
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0330_flygon/flygon_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "eyes",
+          "texture": "mythicalcobbled:textures/pokemon/0330_flygon/flygon_emissive_gilded.png",
+          "translucent": true
+        }
+      ]
+    }
+  ]
+}

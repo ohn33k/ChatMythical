@@ -1,0 +1,32 @@
+{
+  "species": "cobblemon:venusaur",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0003_venusaur/venusaur_gilded.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0003_venusaur/venusaur_shiny_gilded.png"
+    },
+    {
+      "aspects": [
+        "mythical_shadow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0003_venusaur/venusaur_shadow.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_shadow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0003_venusaur/venusaur_shiny_shadow.png"
+    }
+  ]
+}

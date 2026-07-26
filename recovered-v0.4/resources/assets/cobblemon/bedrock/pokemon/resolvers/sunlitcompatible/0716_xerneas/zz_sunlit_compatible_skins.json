@@ -1,0 +1,103 @@
+{
+  "species": "cobblemon:xerneas",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0716_xerneas/xerneas_rainbow.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0716_xerneas/xerneas_emissive_rainbow.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_rainbow",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0716_xerneas/xerneas_shiny_rainbow.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0716_xerneas/xerneas_emissive_rainbow.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_blazing"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0716_xerneas/xerneas_blazing.png"
+    },
+    {
+      "aspects": [
+        "mythical_blazing",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0716_xerneas/xerneas_shiny_blazing.png"
+    },
+    {
+      "aspects": [
+        "mythical_pixie"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0716_xerneas/xerneas_pixie.png"
+    },
+    {
+      "aspects": [
+        "mythical_pixie",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0716_xerneas/xerneas_shiny_pixie.png"
+    },
+    {
+      "aspects": [
+        "mythical_shadow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0716_xerneas/xerneas_shadow.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0716_xerneas/xerneas_emissive_shadow.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_shadow",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0716_xerneas/xerneas_shiny_shadow.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0716_xerneas/xerneas_emissive_shadow.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_jungle"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0716_xerneas/xerneas_jungle.png"
+    },
+    {
+      "aspects": [
+        "mythical_jungle",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0716_xerneas/xerneas_shiny_jungle.png"
+    }
+  ]
+}

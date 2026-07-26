@@ -1,0 +1,64 @@
+{
+  "species": "cobblemon:grimer",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_radioactive"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0088_grimer/grimer_radioactive.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0088_grimer/grimer_emissive_radioactive.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_radioactive",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0088_grimer/grimer_shiny_radioactive.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0088_grimer/grimer_shiny_emissive_radioactive.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0088_grimer/grimer_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0088_grimer/grimer_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0088_grimer/grimer_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0088_grimer/grimer_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    }
+  ]
+}

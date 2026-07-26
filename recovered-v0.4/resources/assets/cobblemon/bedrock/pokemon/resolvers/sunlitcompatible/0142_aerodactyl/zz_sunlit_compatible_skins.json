@@ -1,0 +1,19 @@
+{
+  "species": "cobblemon:aerodactyl",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0142_aerodactyl/aerodactyl_gilded.png"
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0142_aerodactyl/aerodactyl_shiny_gilded.png"
+    }
+  ]
+}

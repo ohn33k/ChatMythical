@@ -1,0 +1,21 @@
+{
+  "pokemon": [
+    "growlithe",
+    "arcanine",
+    "mewtwo",
+    "wooper",
+    "quagsire",
+    "umbreon",
+    "murkrow",
+    "honchkrow",
+    "leafeon",
+    "glaceon",
+    "sylveon",
+    "jangmoo",
+    "hakamoo",
+    "kommoo"
+  ],
+  "features": [
+    "mythical_error"
+  ]
+}

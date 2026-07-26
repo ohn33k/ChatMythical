@@ -1,0 +1,95 @@
+{
+  "species": "cobblemon:gloom",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_radioactive"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0044_gloom/gloom_radioactive.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0044_gloom/gloom_emissive_radioactive.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_radioactive",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0044_gloom/gloom_shiny_radioactive.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0044_gloom/gloom_shiny_emissive_radioactive.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0044_gloom/gloom_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0044_gloom/gloom_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0044_gloom/gloom_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0044_gloom/gloom_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "valencian"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0044_gloom/gloom_valencian_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0044_gloom/gloom_valencian_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "valencian",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0044_gloom/gloom_valencian_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0044_gloom/gloom_valencian_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "species": "cobblemon:vibrava",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_metallic"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0329_vibrava/vibrava_metallic.png"
+    },
+    {
+      "aspects": [
+        "mythical_metallic",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0329_vibrava/vibrava_shiny_metallic.png"
+    },
+    {
+      "aspects": [
+        "mythical_nebula"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0329_vibrava/vibrava_nebula.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0329_vibrava/vibrava_emissive_nebula.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_nebula",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0329_vibrava/vibrava_shiny_nebula.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0329_vibrava/vibrava_shiny_emissive_nebula.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0329_vibrava/vibrava_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0329_vibrava/vibrava_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0329_vibrava/vibrava_shiny_gilded.png"
+    }
+  ]
+}

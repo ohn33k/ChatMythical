@@ -1,0 +1,8 @@
+{
+  "type": "flag",
+  "keys": [
+    "mythical_amongus_orange"
+  ],
+  "default": false,
+  "isAspect": true
+}

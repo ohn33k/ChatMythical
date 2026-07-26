@@ -1,0 +1,6 @@
+inputs/
+build/
+dist/
+*.jar
+*.zip
+__pycache__/

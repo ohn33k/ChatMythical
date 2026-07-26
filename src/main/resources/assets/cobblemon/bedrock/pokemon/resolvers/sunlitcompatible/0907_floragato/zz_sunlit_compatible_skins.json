@@ -1,0 +1,103 @@
+{
+  "species": "cobblemon:floragato",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_blazing"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0907_floragato/floragato_blazing.png"
+    },
+    {
+      "aspects": [
+        "mythical_blazing",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0907_floragato/floragato_shiny_blazing.png"
+    },
+    {
+      "aspects": [
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0907_floragato/floragato_rainbow.png"
+    },
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0907_floragato/floragato_gilded.png"
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0907_floragato/floragato_shiny_gilded.png"
+    },
+    {
+      "aspects": [
+        "mythical_twilight"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0907_floragato/floragato_twilight.png"
+    },
+    {
+      "aspects": [
+        "mythical_twilight",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0907_floragato/floragato_shiny_twilight.png"
+    },
+    {
+      "aspects": [
+        "mythical_valentines"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0907_floragato/floragato_valentines.png"
+    },
+    {
+      "aspects": [
+        "mythical_valentines",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0907_floragato/floragato_shiny_valentines.png"
+    },
+    {
+      "aspects": [
+        "mythical_sakura"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0907_floragato/floragato_sakura.png"
+    },
+    {
+      "aspects": [
+        "mythical_sakura",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0907_floragato/floragato_shiny_sakura.png"
+    },
+    {
+      "aspects": [
+        "mythical_pixie"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0907_floragato/floragato_pixie.png"
+    },
+    {
+      "aspects": [
+        "mythical_pixie",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0907_floragato/floragato_shiny_pixie.png"
+    },
+    {
+      "aspects": [
+        "mythical_frosted"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0907_floragato/floragato_frosted.png"
+    },
+    {
+      "aspects": [
+        "mythical_frosted",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0907_floragato/floragato_shiny_frosted.png"
+    }
+  ]
+}

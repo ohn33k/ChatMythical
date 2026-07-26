@@ -1,0 +1,8 @@
+{
+  "type": "flag",
+  "keys": [
+    "mythical_firework"
+  ],
+  "default": false,
+  "isAspect": true
+}

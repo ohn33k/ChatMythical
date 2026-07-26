@@ -1,0 +1,30 @@
+{
+  "pokemon": [
+    "growlithe",
+    "arcanine",
+    "mareep",
+    "flaaffy",
+    "ampharos",
+    "starly",
+    "staravia",
+    "staraptor",
+    "archen",
+    "archeops",
+    "larvesta",
+    "volcarona",
+    "fletchling",
+    "fletchinder",
+    "talonflame",
+    "tyrunt",
+    "tyrantrum",
+    "goomy",
+    "sliggoo",
+    "goodra",
+    "xerneas",
+    "maschiff",
+    "mabosstiff"
+  ],
+  "features": [
+    "mythical_jungle"
+  ]
+}

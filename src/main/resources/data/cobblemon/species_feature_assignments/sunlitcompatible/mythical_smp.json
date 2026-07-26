@@ -1,0 +1,12 @@
+{
+  "pokemon": [
+    "exeggutor",
+    "staryu",
+    "starmie",
+    "politoed",
+    "sizzlipede"
+  ],
+  "features": [
+    "mythical_smp"
+  ]
+}

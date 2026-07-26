@@ -1,0 +1,48 @@
+{
+  "species": "cobblemon:naganadel",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_blazing"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0804_naganadel/naganadel_blazing.png"
+    },
+    {
+      "aspects": [
+        "mythical_blazing",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0804_naganadel/naganadel_shiny_blazing.png"
+    },
+    {
+      "aspects": [
+        "mythical_shadow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0804_naganadel/naganadel_shadow.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0804_naganadel/naganadel_emissive_shadow.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_shadow",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0804_naganadel/naganadel_shiny_shadow.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0804_naganadel/naganadel_shiny_emissive_shadow.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    }
+  ]
+}

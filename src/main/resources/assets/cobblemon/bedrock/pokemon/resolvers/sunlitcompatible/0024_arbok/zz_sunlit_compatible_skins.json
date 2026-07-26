@@ -1,0 +1,117 @@
+{
+  "species": "cobblemon:arbok",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_radioactive"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0024_arbok/arbok_radioactive.png",
+      "layers": [
+        {
+          "name": "pattern",
+          "texture": "mythicalcobbled:textures/pokemon/0024_arbok/arbok_pattern_radioactive.png",
+          "emissive": false
+        },
+        {
+          "name": "glow",
+          "texture": "mythicalcobbled:textures/pokemon/0024_arbok/arbok_emissive_radioactive.png",
+          "emissive": false
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_radioactive",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0024_arbok/arbok_shiny_radioactive.png",
+      "layers": [
+        {
+          "name": "pattern",
+          "texture": "mythicalcobbled:textures/pokemon/0024_arbok/arbok_pattern_shiny_radioactive.png",
+          "emissive": false
+        },
+        {
+          "name": "glow",
+          "texture": "mythicalcobbled:textures/pokemon/0024_arbok/arbok_shiny_emissive_radioactive.png",
+          "emissive": false
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0024_arbok/arbok_gilded.png",
+      "layers": [
+        {
+          "name": "pattern",
+          "texture": "mythicalcobbled:textures/pokemon/0024_arbok/arbok_pattern_gilded.png",
+          "emissive": false
+        },
+        {
+          "name": "glow",
+          "texture": "mythicalcobbled:textures/pokemon/0024_arbok/arbok_emissive_gilded.png",
+          "emissive": false
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0024_arbok/arbok_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "pattern",
+          "texture": "mythicalcobbled:textures/pokemon/0024_arbok/arbok_pattern_shiny_gilded.png",
+          "emissive": false
+        },
+        {
+          "name": "glow",
+          "texture": "mythicalcobbled:textures/pokemon/0024_arbok/arbok_emissive_gilded.png",
+          "emissive": false
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_ominous"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0024_arbok/arbok_ominous.png",
+      "layers": [
+        {
+          "name": "pattern",
+          "texture": "mythicalcobbled:textures/pokemon/0024_arbok/arbok_pattern_ominous.png",
+          "emissive": false
+        },
+        {
+          "name": "glow",
+          "texture": "mythicalcobbled:textures/pokemon/0024_arbok/arbok_emissive_ominous.png",
+          "emissive": false
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_ominous",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0024_arbok/arbok_shiny_ominous.png",
+      "layers": [
+        {
+          "name": "pattern",
+          "texture": "mythicalcobbled:textures/pokemon/0024_arbok/arbok_pattern_shiny_ominous.png",
+          "emissive": false
+        },
+        {
+          "name": "glow",
+          "texture": "mythicalcobbled:textures/pokemon/0024_arbok/arbok_emissive_ominous.png",
+          "emissive": false
+        }
+      ]
+    }
+  ]
+}

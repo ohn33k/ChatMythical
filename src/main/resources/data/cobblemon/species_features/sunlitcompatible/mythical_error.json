@@ -1,0 +1,8 @@
+{
+  "type": "flag",
+  "keys": [
+    "mythical_error"
+  ],
+  "default": false,
+  "isAspect": true
+}

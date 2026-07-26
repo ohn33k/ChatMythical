@@ -1,0 +1,71 @@
+{
+  "species": "cobblemon:metang",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0375_metang/metang_gilded.png"
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0375_metang/metang_shiny_gilded.png"
+    },
+    {
+      "aspects": [
+        "mythical_blazing"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0375_metang/metang_blazing.png"
+    },
+    {
+      "aspects": [
+        "mythical_blazing",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0375_metang/metang_shiny_blazing.png"
+    },
+    {
+      "aspects": [
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0375_metang/metang_rainbow.png"
+    },
+    {
+      "aspects": [
+        "mythical_rainbow",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0375_metang/metang_shiny_rainbow.png"
+    },
+    {
+      "aspects": [
+        "mythical_metallic"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0375_metang/metang_metallic.png"
+    },
+    {
+      "aspects": [
+        "mythical_metallic",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0375_metang/metang_shiny_metallic.png"
+    },
+    {
+      "aspects": [
+        "mythical_independence_day"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0375_metang/metang_independence_day.png"
+    },
+    {
+      "aspects": [
+        "mythical_independence_day",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0375_metang/metang_shiny_independence_day.png"
+    }
+  ]
+}

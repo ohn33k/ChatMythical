@@ -1,0 +1,64 @@
+{
+  "species": "cobblemon:slugma",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_frosted"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0218_slugma/slugma_frosted.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0218_slugma/slugma_emissive_frosted.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_frosted",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0218_slugma/slugma_shiny_frosted.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0218_slugma/slugma_shiny_emissive_frosted.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_ominous"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0218_slugma/slugma_ominous.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0218_slugma/slugma_emissive_ominous.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_ominous",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0218_slugma/slugma_shiny_ominous.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0218_slugma/slugma_shiny_emissive_ominous.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    }
+  ]
+}

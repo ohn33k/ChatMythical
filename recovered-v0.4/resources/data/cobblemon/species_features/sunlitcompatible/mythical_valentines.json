@@ -1,0 +1,8 @@
+{
+  "type": "flag",
+  "keys": [
+    "mythical_valentines"
+  ],
+  "default": false,
+  "isAspect": true
+}

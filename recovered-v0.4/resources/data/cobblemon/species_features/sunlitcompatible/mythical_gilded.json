@@ -1,0 +1,8 @@
+{
+  "type": "flag",
+  "keys": [
+    "mythical_gilded"
+  ],
+  "default": false,
+  "isAspect": true
+}

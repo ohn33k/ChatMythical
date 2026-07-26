@@ -1,0 +1,19 @@
+{
+  "species": "cobblemon:tinkaton",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_blazing"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0959_tinkaton/tinkaton_blazing.png"
+    },
+    {
+      "aspects": [
+        "mythical_blazing",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0959_tinkaton/tinkaton_shiny_blazing.png"
+    }
+  ]
+}

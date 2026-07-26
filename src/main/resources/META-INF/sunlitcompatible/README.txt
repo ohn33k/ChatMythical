@@ -1,0 +1,1 @@
+This overlay contains no replacement Pokémon models, posers, or animations. Static skins passed a strict UV alpha-layout comparison against the native Cobblemon 1.5.2 texture. Animated families use the existing Oculus/shader render bridge.

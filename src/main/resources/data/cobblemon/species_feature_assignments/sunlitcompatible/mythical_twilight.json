@@ -1,0 +1,40 @@
+{
+  "pokemon": [
+    "wartortle",
+    "blastoise",
+    "dratini",
+    "dragonair",
+    "dragonite",
+    "wailmer",
+    "wailord",
+    "tropius",
+    "buneary",
+    "lopunny",
+    "riolu",
+    "galvantula",
+    "froakie",
+    "frogadier",
+    "greninja",
+    "mimikyu",
+    "grookey",
+    "thwackey",
+    "rillaboom",
+    "dubwool",
+    "obstagoon",
+    "stonjourner",
+    "dracozolt",
+    "arctozolt",
+    "dracovish",
+    "arctovish",
+    "floragato",
+    "meowscarada",
+    "fuecoco",
+    "quaxly",
+    "quaxwell",
+    "quaquaval",
+    "walkingwake"
+  ],
+  "features": [
+    "mythical_twilight"
+  ]
+}

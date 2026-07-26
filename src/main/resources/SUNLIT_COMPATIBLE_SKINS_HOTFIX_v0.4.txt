@@ -1,0 +1,17 @@
+Sunlit Compatible Skins ALPHA v0.4 COMBINED FIX
+
+Jade labels
+- With Jade installed, looking at a non-default Cobblemon displays only the clean variant name.
+- Examples: Glitched, Blazing, Gilded.
+- Default Pokemon display no extra variant line.
+
+Static skin repair
+- Restored original Mythical texture files for Gyarados Pixie, all accepted Moltres statics,
+  and all accepted Mewtwo statics.
+- Those variations now select the matching legacy-UV geometry instead of repainting the textures.
+
+Spawn systems
+- Wild appearance assignment remains configurable.
+- Nonlegendary and legendary normal chances are independently configurable.
+- The random legendary scheduler counts only player-online time and persists its timer.
+- If present, the old mythicalbackport-state.properties timer is imported automatically.

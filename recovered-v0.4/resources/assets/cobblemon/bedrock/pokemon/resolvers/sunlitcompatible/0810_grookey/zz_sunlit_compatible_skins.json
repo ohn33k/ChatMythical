@@ -1,0 +1,74 @@
+{
+  "species": "cobblemon:grookey",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0810_grookey/grookey_gilded.png"
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0810_grookey/grookey_shiny_gilded.png"
+    },
+    {
+      "aspects": [
+        "mythical_twilight"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0810_grookey/grookey_twilight.png"
+    },
+    {
+      "aspects": [
+        "mythical_twilight",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0810_grookey/grookey_shiny_twilight.png"
+    },
+    {
+      "aspects": [
+        "mythical_nebula"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0810_grookey/grookey_nebula.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0810_grookey/grookey_emissive_nebula.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_nebula",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0810_grookey/grookey_shiny_nebula.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0810_grookey/grookey_shiny_emissive_nebula.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_sakura"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0810_grookey/grookey_sakura.png"
+    },
+    {
+      "aspects": [
+        "mythical_sakura",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0810_grookey/grookey_shiny_sakura.png"
+    }
+  ]
+}

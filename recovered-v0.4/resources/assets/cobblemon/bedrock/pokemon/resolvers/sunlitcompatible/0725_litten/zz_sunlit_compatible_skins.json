@@ -1,0 +1,45 @@
+{
+  "species": "cobblemon:litten",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0725_litten/litten_gilded.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0725_litten/litten_shiny_gilded.png"
+    },
+    {
+      "aspects": [
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0725_litten/litten_rainbow.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0725_litten/litten_shiny_rainbow.png"
+    },
+    {
+      "aspects": [
+        "mythical_valentines"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0725_litten/litten_valentines.png"
+    },
+    {
+      "aspects": [
+        "mythical_valentines",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0725_litten/litten_shiny_valentines.png"
+    }
+  ]
+}

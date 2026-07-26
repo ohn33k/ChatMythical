@@ -1,0 +1,8 @@
+{
+  "type": "flag",
+  "keys": [
+    "mythical_sakura"
+  ],
+  "default": false,
+  "isAspect": true
+}

@@ -1,0 +1,76 @@
+{
+  "species": "cobblemon:dartrix",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0723_dartrix/dartrix_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0723_dartrix/dartrix_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0723_dartrix/dartrix_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0723_dartrix/dartrix_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0723_dartrix/dartrix_rainbow.png"
+    },
+    {
+      "aspects": [
+        "mythical_rainbow",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0723_dartrix/dartrix_shiny_rainbow.png"
+    },
+    {
+      "aspects": [
+        "mythical_sakura"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0723_dartrix/dartrix_sakura.png"
+    },
+    {
+      "aspects": [
+        "mythical_sakura",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0723_dartrix/dartrix_shiny_sakura.png"
+    },
+    {
+      "aspects": [
+        "mythical_sakura",
+        "region-bias-hisui"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0723_dartrix/dartrix_hisui_bias_sakura.png"
+    },
+    {
+      "aspects": [
+        "mythical_sakura",
+        "region-bias-hisui",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0723_dartrix/dartrix_hisui_bias_shiny_sakura.png"
+    }
+  ]
+}

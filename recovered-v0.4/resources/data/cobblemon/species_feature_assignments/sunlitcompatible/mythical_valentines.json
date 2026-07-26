@@ -1,0 +1,23 @@
+{
+  "pokemon": [
+    "grovyle",
+    "sceptile",
+    "torchic",
+    "combusken",
+    "blaziken",
+    "kirlia",
+    "buneary",
+    "lopunny",
+    "gallade",
+    "litten",
+    "torracat",
+    "incineroar",
+    "brionne",
+    "primarina",
+    "floragato",
+    "meowscarada"
+  ],
+  "features": [
+    "mythical_valentines"
+  ]
+}

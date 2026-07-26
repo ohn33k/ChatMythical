@@ -1,0 +1,8 @@
+{
+  "type": "flag",
+  "keys": [
+    "mythical_independence_day"
+  ],
+  "default": false,
+  "isAspect": true
+}

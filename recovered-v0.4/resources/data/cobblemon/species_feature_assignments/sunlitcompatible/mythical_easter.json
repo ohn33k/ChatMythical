@@ -1,0 +1,26 @@
+{
+  "pokemon": [
+    "metapod",
+    "butterfree",
+    "vulpix",
+    "ninetales",
+    "psyduck",
+    "golduck",
+    "arcanine",
+    "ditto",
+    "dratini",
+    "dragonair",
+    "dragonite",
+    "shuckle",
+    "buneary",
+    "lopunny",
+    "spiritomb",
+    "bounsweet",
+    "steenee",
+    "tsareena",
+    "mimikyu"
+  ],
+  "features": [
+    "mythical_easter"
+  ]
+}

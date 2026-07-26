@@ -1,0 +1,140 @@
+{
+  "species": "cobblemon:fuecoco",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_blazing"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0909_fuecoco/fuecoco_blazing.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0909_fuecoco/fuecoco_emissive_blazing.png",
+          "emissive": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_blazing",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0909_fuecoco/fuecoco_shiny_blazing.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0909_fuecoco/fuecoco_shiny_emissive_blazing.png",
+          "emissive": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0909_fuecoco/fuecoco_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0909_fuecoco/fuecoco_emissive_gilded.png",
+          "emissive": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0909_fuecoco/fuecoco_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0909_fuecoco/fuecoco_emissive_gilded.png",
+          "emissive": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0909_fuecoco/fuecoco_rainbow.png"
+    },
+    {
+      "aspects": [
+        "mythical_rainbow",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0909_fuecoco/fuecoco_shiny_rainbow.png"
+    },
+    {
+      "aspects": [
+        "mythical_twilight"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0909_fuecoco/fuecoco_twilight.png"
+    },
+    {
+      "aspects": [
+        "mythical_twilight",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0909_fuecoco/fuecoco_shiny_twilight.png"
+    },
+    {
+      "aspects": [
+        "mythical_pixie"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0909_fuecoco/fuecoco_pixie.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0909_fuecoco/fuecoco_emissive_pixie.png",
+          "emissive": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_pixie",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0909_fuecoco/fuecoco_shiny_pixie.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0909_fuecoco/fuecoco_shiny_emissive_pixie.png",
+          "emissive": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_frosted"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0909_fuecoco/fuecoco_frosted.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0909_fuecoco/fuecoco_emissive_frosted.png",
+          "emissive": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_frosted",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0909_fuecoco/fuecoco_shiny_frosted.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0909_fuecoco/fuecoco_shiny_emissive_frosted.png",
+          "emissive": true
+        }
+      ]
+    }
+  ]
+}

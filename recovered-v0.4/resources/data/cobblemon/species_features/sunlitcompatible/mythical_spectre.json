@@ -1,0 +1,8 @@
+{
+  "type": "flag",
+  "keys": [
+    "mythical_spectre"
+  ],
+  "default": false,
+  "isAspect": true
+}

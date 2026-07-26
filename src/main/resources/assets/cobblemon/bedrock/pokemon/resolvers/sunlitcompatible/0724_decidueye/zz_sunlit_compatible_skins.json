@@ -1,0 +1,76 @@
+{
+  "species": "cobblemon:decidueye",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0724_decidueye/decidueye_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0724_decidueye/decidueye_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0724_decidueye/decidueye_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0724_decidueye/decidueye_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0724_decidueye/decidueye_rainbow.png"
+    },
+    {
+      "aspects": [
+        "mythical_rainbow",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0724_decidueye/decidueye_shiny_rainbow.png"
+    },
+    {
+      "aspects": [
+        "mythical_sakura"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0724_decidueye/decidueye_sakura.png"
+    },
+    {
+      "aspects": [
+        "mythical_sakura",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0724_decidueye/decidueye_shiny_sakura.png"
+    },
+    {
+      "aspects": [
+        "mythical_sakura",
+        "hisuian"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0724_decidueye/decidueye_hisuian_sakura.png"
+    },
+    {
+      "aspects": [
+        "mythical_sakura",
+        "hisuian",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0724_decidueye/decidueye_hisuian_shiny_sakura.png"
+    }
+  ]
+}

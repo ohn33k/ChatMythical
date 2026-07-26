@@ -1,0 +1,8 @@
+{
+  "type": "flag",
+  "keys": [
+    "mythical_plasma"
+  ],
+  "default": false,
+  "isAspect": true
+}

@@ -1,0 +1,57 @@
+{
+  "species": "cobblemon:rayquaza",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "shiny",
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0384_rayquaza/rayquaza_shiny_gilded.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_shadow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0384_rayquaza/rayquaza_shiny_shadow.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_radioactive"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0384_rayquaza/rayquaza_shiny_radioactive.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0384_rayquaza/rayquaza_shiny_emissive_radioactive.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_error"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0384_rayquaza/rayquaza_shiny_error.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0384_rayquaza/rayquaza_shiny_emissive_error.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_jungle",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0384_rayquaza/rayquaza_shiny_jungle.png"
+    }
+  ]
+}

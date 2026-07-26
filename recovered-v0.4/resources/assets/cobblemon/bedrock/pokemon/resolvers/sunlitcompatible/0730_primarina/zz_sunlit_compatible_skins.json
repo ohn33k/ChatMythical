@@ -1,0 +1,61 @@
+{
+  "species": "cobblemon:primarina",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0730_primarina/primarina_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0730_primarina/primarina_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0730_primarina/primarina_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0730_primarina/primarina_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0730_primarina/primarina_rainbow.png"
+    },
+    {
+      "aspects": [
+        "mythical_rainbow",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0730_primarina/primarina_shiny_rainbow.png"
+    },
+    {
+      "aspects": [
+        "mythical_valentines"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0730_primarina/primarina_valentines.png"
+    },
+    {
+      "aspects": [
+        "mythical_valentines",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0730_primarina/primarina_shiny_valentines.png"
+    }
+  ]
+}

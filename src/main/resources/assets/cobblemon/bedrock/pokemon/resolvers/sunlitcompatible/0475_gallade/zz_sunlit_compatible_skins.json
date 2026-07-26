@@ -1,0 +1,61 @@
+{
+  "species": "cobblemon:gallade",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_radioactive"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0475_gallade/gallade_radioactive.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0475_gallade/gallade_emissive_radioactive.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_radioactive",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0475_gallade/gallade_shiny_radioactive.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0475_gallade/gallade_shiny_emissive_radioactive.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_valentines"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0475_gallade/gallade_valentines.png"
+    },
+    {
+      "aspects": [
+        "mythical_valentines",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0475_gallade/gallade_shiny_valentines.png"
+    },
+    {
+      "aspects": [
+        "mythical_independence_day"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0475_gallade/gallade_independence_day.png"
+    },
+    {
+      "aspects": [
+        "mythical_independence_day",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0475_gallade/gallade_shiny_independence_day.png"
+    }
+  ]
+}

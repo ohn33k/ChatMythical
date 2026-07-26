@@ -1,0 +1,8 @@
+{
+  "type": "flag",
+  "keys": [
+    "mythical_gingerbread"
+  ],
+  "default": false,
+  "isAspect": true
+}

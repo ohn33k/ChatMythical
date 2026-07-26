@@ -1,0 +1,11 @@
+{
+  "project": "Sunlit Compatible Skins",
+  "version": "ALPHA v0.2",
+  "base": "Cobblemon 1.5.2 / Forge 1.20.1 / Java 17",
+  "supported_species": 633,
+  "registered_feature_families": 44,
+  "accepted_texture_variations": 2144,
+  "grid_entries": 6073,
+  "grid_pages": 95,
+  "autocomplete": "species-filtered mythical_* keys after a species is typed"
+}

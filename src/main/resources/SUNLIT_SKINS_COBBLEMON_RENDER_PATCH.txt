@@ -1,0 +1,3 @@
+Sunlit Compatible Skins: selects a custom effect RenderType from Mythical aspects.
+Unlike V2/V3, it does not flush global buffers; setup/clear occurs when each batch is drawn.
+Client side only; server must retain the original Cobblemon 1.5.2 jar.

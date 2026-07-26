@@ -1,0 +1,8 @@
+{
+  "type": "flag",
+  "keys": [
+    "mythical_frosted"
+  ],
+  "default": false,
+  "isAspect": true
+}

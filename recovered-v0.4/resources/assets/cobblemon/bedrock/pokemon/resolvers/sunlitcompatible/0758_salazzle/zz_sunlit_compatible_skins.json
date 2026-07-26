@@ -1,0 +1,48 @@
+{
+  "species": "cobblemon:salazzle",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_nebula"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0758_salazzle/salazzle_nebula.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0758_salazzle/salazzle_emissive_nebula.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_nebula",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0758_salazzle/salazzle_shiny_nebula.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0758_salazzle/salazzle_shiny_emissive_nebula.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_sakura"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0758_salazzle/salazzle_sakura.png"
+    },
+    {
+      "aspects": [
+        "mythical_sakura",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0758_salazzle/salazzle_shiny_sakura.png"
+    }
+  ]
+}

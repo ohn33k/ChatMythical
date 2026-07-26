@@ -1,0 +1,48 @@
+{
+  "species": "cobblemon:gardevoir",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_radioactive"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0282_gardevoir/gardevoir_radioactive.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0282_gardevoir/gardevoir_emissive_radioactive.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_radioactive",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0282_gardevoir/gardevoir_shiny_radioactive.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0282_gardevoir/gardevoir_shiny_emissive_radioactive.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_independence_day"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0282_gardevoir/gardevoir_independence_day.png"
+    },
+    {
+      "aspects": [
+        "mythical_independence_day",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0282_gardevoir/gardevoir_shiny_independence_day.png"
+    }
+  ]
+}

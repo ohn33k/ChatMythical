@@ -1,0 +1,105 @@
+{
+  "species": "cobblemon:ninetales",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_easter"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0038_ninetales/ninetales_easter.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_easter"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0038_ninetales/ninetales_shiny_easter.png"
+    },
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0038_ninetales/ninetales_gilded.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0038_ninetales/ninetales_shiny_gilded.png"
+    },
+    {
+      "aspects": [
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0038_ninetales/ninetales_rainbow.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0038_ninetales/ninetales_shiny_rainbow.png"
+    },
+    {
+      "aspects": [
+        "alolan",
+        "mythical_easter"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0038_ninetales/ninetales_alolan_easter.png"
+    },
+    {
+      "aspects": [
+        "alolan",
+        "shiny",
+        "mythical_easter"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0038_ninetales/ninetales_alolan_shiny_easter.png"
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "alolan"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0038_ninetales/ninetales_alolan_gilded.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "alolan",
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0038_ninetales/ninetales_alolan_shiny_gilded.png"
+    },
+    {
+      "aspects": [
+        "alolan",
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0038_ninetales/ninetales_alolan_rainbow.png"
+    },
+    {
+      "aspects": [
+        "alolan",
+        "shiny",
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0038_ninetales/ninetales_alolan_shiny_rainbow.png"
+    },
+    {
+      "aspects": [
+        "alolan",
+        "mythical_pixie"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0038_ninetales/ninetales_alolan_pixie.png"
+    },
+    {
+      "aspects": [
+        "alolan",
+        "shiny",
+        "mythical_pixie"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0038_ninetales/ninetales_alolan_shiny_pixie.png"
+    }
+  ]
+}

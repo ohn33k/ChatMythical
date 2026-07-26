@@ -1,0 +1,6 @@
+Sunlit Compatible Skins
+ALPHA v0.4 Combined Fix Java 17
+- Cobblemon 1.5.2 base models/posers/animations retained.
+- Optional Jade 11.13.2 entity tooltip integration included.
+- Gyarados Pixie, Moltres static variants, and Mewtwo static variants use their exact legacy-UV models.
+- Wild appearance configuration and player-online legendary timer are included.

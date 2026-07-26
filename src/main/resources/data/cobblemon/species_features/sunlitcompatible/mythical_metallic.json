@@ -1,0 +1,8 @@
+{
+  "type": "flag",
+  "keys": [
+    "mythical_metallic"
+  ],
+  "default": false,
+  "isAspect": true
+}

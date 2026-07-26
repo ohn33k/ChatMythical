@@ -1,0 +1,89 @@
+{
+  "species": "cobblemon:ironleaves",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_blazing"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/1010_ironleaves/ironleaves_blazing.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/1010_ironleaves/ironleaves_emissive_blazing.png",
+          "emissive": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_blazing"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/1010_ironleaves/ironleaves_shiny_blazing.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/1010_ironleaves/ironleaves_shiny_emissive_blazing.png",
+          "emissive": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/1010_ironleaves/ironleaves_rainbow.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/1010_ironleaves/ironleaves_emissive_rainbow.png",
+          "emissive": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/1010_ironleaves/ironleaves_shiny_rainbow.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/1010_ironleaves/ironleaves_shiny_emissive_rainbow.png",
+          "emissive": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_metallic"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/1010_ironleaves/ironleaves_metallic.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "emissive": true,
+          "texture": "mythicalcobbled:textures/pokemon/1010_ironleaves/ironleaves_emissive_metallic.png",
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_metallic",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/1010_ironleaves/ironleaves_shiny_metallic.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "emissive": true,
+          "texture": "mythicalcobbled:textures/pokemon/1010_ironleaves/ironleaves_shiny_emissive_metallic.png",
+          "translucent": true
+        }
+      ]
+    }
+  ]
+}

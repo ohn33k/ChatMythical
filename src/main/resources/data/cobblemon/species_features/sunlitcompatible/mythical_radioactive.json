@@ -1,0 +1,8 @@
+{
+  "type": "flag",
+  "keys": [
+    "mythical_radioactive"
+  ],
+  "default": false,
+  "isAspect": true
+}

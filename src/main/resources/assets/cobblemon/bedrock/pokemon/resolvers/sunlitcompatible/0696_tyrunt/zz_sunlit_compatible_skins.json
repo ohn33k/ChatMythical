@@ -1,0 +1,74 @@
+{
+  "species": "cobblemon:tyrunt",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0696_tyrunt/tyrunt_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0696_tyrunt/tyrunt_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0696_tyrunt/tyrunt_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0696_tyrunt/tyrunt_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_pixie"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0696_tyrunt/tyrunt_pixie.png"
+    },
+    {
+      "aspects": [
+        "mythical_pixie",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0696_tyrunt/tyrunt_shiny_pixie.png"
+    },
+    {
+      "aspects": [
+        "mythical_frosted"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0696_tyrunt/tyrunt_frosted.png"
+    },
+    {
+      "aspects": [
+        "mythical_frosted",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0696_tyrunt/tyrunt_shiny_frosted.png"
+    },
+    {
+      "aspects": [
+        "mythical_jungle"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0696_tyrunt/tyrunt_jungle.png"
+    },
+    {
+      "aspects": [
+        "mythical_jungle",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0696_tyrunt/tyrunt_shiny_jungle.png"
+    }
+  ]
+}

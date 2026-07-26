@@ -1,0 +1,19 @@
+{
+  "species": "cobblemon:gossifleur",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_sakura"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0829_gossifleur/gossifleur_sakura.png"
+    },
+    {
+      "aspects": [
+        "mythical_sakura",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0829_gossifleur/gossifleur_shiny_sakura.png"
+    }
+  ]
+}

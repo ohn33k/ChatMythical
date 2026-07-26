@@ -1,0 +1,34 @@
+{
+  "pokemon": [
+    "wartortle",
+    "blastoise",
+    "buneary",
+    "lopunny",
+    "spiritomb",
+    "gible",
+    "gabite",
+    "garchomp",
+    "riolu",
+    "ferroseed",
+    "ferrothorn",
+    "larvesta",
+    "volcarona",
+    "goomy",
+    "sliggoo",
+    "goodra",
+    "jangmoo",
+    "hakamoo",
+    "kommoo",
+    "sizzlipede",
+    "centiskorch",
+    "impidimp",
+    "morgrem",
+    "dracozolt",
+    "arctozolt",
+    "dracovish",
+    "arctovish"
+  ],
+  "features": [
+    "mythical_marine"
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "species": "cobblemon:copperajah",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_blazing"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0879_copperajah/copperajah_blazing.png",
+      "layers": [
+        {
+          "name": "glow",
+          "texture": "mythicalcobbled:textures/pokemon/0879_copperajah/copperajah_emissive_blazing.png",
+          "emissive": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_blazing",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0879_copperajah/copperajah_shiny_blazing.png",
+      "layers": [
+        {
+          "name": "glow",
+          "texture": "mythicalcobbled:textures/pokemon/0879_copperajah/copperajah_shiny_emissive_blazing.png",
+          "emissive": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0879_copperajah/copperajah_gilded.png"
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0879_copperajah/copperajah_shiny_gilded.png"
+    },
+    {
+      "aspects": [
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0879_copperajah/copperajah_rainbow.png"
+    },
+    {
+      "aspects": [
+        "mythical_rainbow",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0879_copperajah/copperajah_shiny_rainbow.png"
+    }
+  ]
+}

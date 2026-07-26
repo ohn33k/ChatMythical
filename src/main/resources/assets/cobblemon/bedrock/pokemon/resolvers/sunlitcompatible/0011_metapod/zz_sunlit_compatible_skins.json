@@ -1,0 +1,116 @@
+{
+  "species": "cobblemon:metapod",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_blazing"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0011_metapod/metapod_blazing.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_blazing"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0011_metapod/metapod_shiny_blazing.png"
+    },
+    {
+      "aspects": [
+        "mythical_easter"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0011_metapod/metapod_easter.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_easter"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0011_metapod/metapod_shiny_easter.png"
+    },
+    {
+      "aspects": [
+        "mythical_shadow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0011_metapod/metapod_shadow.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0011_metapod/metapod_emissive_shadow.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_shadow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0011_metapod/metapod_shiny_shadow.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0011_metapod/metapod_shiny_emissive_shadow.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0011_metapod/metapod_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0011_metapod/metapod_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0011_metapod/metapod_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0011_metapod/metapod_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_pixie"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0011_metapod/metapod_pixie.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_pixie"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0011_metapod/metapod_shiny_pixie.png"
+    },
+    {
+      "aspects": [
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0011_metapod/metapod_rainbow.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0011_metapod/metapod_shiny_rainbow.png"
+    }
+  ]
+}

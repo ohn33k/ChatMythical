@@ -1,0 +1,27 @@
+PASS: main Cobblemon replacement JAR archive integrity
+PASS: patched Oculus JAR archive integrity
+PASS: shader pack archive integrity
+PASS: required appearance, autocomplete, Jade, legendary, and legacy-model entries present
+PASS: Java 17 class compatibility (maximum class major 61)
+PASS: ServerTickHandler contains exactly one Sunlit legendary timer hook
+PASS: Jade provider is annotated and uses clean variant-name mapping
+PASS: full species feature registry chain retained (44 definitions and 44 assignments)
+PASS: native legendary scheduler table contains 9 supported species
+PASS: 0130_gyarados all 2 accepted static variations select mythicalbackport:gyarados_legacy.geo
+PASS: 0146_moltres all 8 accepted static variations select mythicalbackport:moltres_legacy.geo
+PASS: 0150_mewtwo all 12 accepted static variations select mythicalbackport:mewtwo_legacy.geo
+PASS: 0130_gyarados restored 2 PNGs byte-for-byte from known-good Mythical assets
+PASS: 0146_moltres restored 16 PNGs byte-for-byte from known-good Mythical assets
+PASS: 0150_mewtwo restored 21 PNGs byte-for-byte from known-good Mythical assets
+PASS: gyarados legacy geometry has the same 38 poser bone names as the native model
+PASS: moltres legacy geometry has the same 20 poser bone names as the native model
+PASS: mewtwo legacy geometry has the same 44 poser bone names as the native model
+PASS: Wailord/Avalugg 512-pixel animated-effect exclusion remains removed
+PASS: grid remains 5x5 and fixed to the default-flatworld origin
+PASS: appearance rates and persistent legendary timer settings included
+SHA256: adf4f82c7f54781c2e6eb5a570511fe38e42a38e77dd03b782ebf1b2d948dc2c  server-and-client-mods/Cobblemon-forge-1.5.2+1.20.1-SunlitCompatibleSkins-ALPHA-v0.4-COMBINED-Java17.jar
+SHA256: 6104d728f790bf4e5ab68ba06a70b176d15b306de68adbabc853497c45a286cb  client-mods/oculus-mc1.20.1-1.8.0-SunlitCompatibleSkins-Java17.jar
+SHA256: 998d36a05341927d3d6867f352e7489ba54a1b237334ccad127c6ac8905f74db  shaderpacks/ComplementaryReimagined-r5.6.1-SunlitCompatibleSkins-v0.4-NoReflection.zip
+SHA256: b18413dfe10794ed5bc7d8a07c3f957ba9aba94f70084ef2d6fcb0abae84ebc2  kubejs/server_scripts/sunlitSkinGrid.js
+
+LIMIT: These checks validate archives, code hooks, resources, exact source assets, and model/poser bone compatibility. Final visual rendering and Jade placement must still be confirmed in-game in the user's exact modpack.

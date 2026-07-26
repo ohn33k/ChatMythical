@@ -1,0 +1,53 @@
+{
+  "species": "cobblemon:lairon",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_metallic"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0305_lairon/lairon_metallic.png"
+    },
+    {
+      "aspects": [
+        "mythical_metallic",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0305_lairon/lairon_shiny_metallic.png"
+    },
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0305_lairon/lairon_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0305_lairon/lairon_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0305_lairon/lairon_shiny_gilded.png"
+    },
+    {
+      "aspects": [
+        "mythical_spectre"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0305_lairon/lairon_spectre.png"
+    },
+    {
+      "aspects": [
+        "mythical_spectre",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0305_lairon/lairon_shiny_spectre.png"
+    }
+  ]
+}

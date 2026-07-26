@@ -1,0 +1,8 @@
+{
+  "type": "flag",
+  "keys": [
+    "mythical_matrix"
+  ],
+  "default": false,
+  "isAspect": true
+}

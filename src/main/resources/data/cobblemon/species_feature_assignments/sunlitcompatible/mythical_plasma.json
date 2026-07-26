@@ -1,0 +1,25 @@
+{
+  "pokemon": [
+    "arcanine",
+    "dratini",
+    "dragonair",
+    "dragonite",
+    "larvitar",
+    "pupitar",
+    "tyranitar",
+    "grovyle",
+    "sceptile",
+    "torchic",
+    "combusken",
+    "blaziken",
+    "lileep",
+    "cradily",
+    "zorua",
+    "obstagoon",
+    "charcadet",
+    "armarouge"
+  ],
+  "features": [
+    "mythical_plasma"
+  ]
+}

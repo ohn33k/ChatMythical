@@ -1,0 +1,238 @@
+{
+  "species": "cobblemon:butterfree",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_blazing"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_blazing.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_blazing"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_shiny_blazing.png"
+    },
+    {
+      "aspects": [
+        "mythical_easter"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_easter.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_easter"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_shiny_easter.png"
+    },
+    {
+      "aspects": [
+        "mythical_shadow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_shadow.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_emissive_shadow.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_shadow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_shiny_shadow.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_shiny_emissive_shadow.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_pixie"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_pixie.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_pixie"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_shiny_pixie.png"
+    },
+    {
+      "aspects": [
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_rainbow.png"
+    },
+    {
+      "aspects": [
+        "shiny",
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_shiny_rainbow.png"
+    },
+    {
+      "aspects": [
+        "valencian",
+        "mythical_blazing"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_valencian_blazing.png"
+    },
+    {
+      "aspects": [
+        "valencian",
+        "shiny",
+        "mythical_blazing"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_valencian_shiny_blazing.png"
+    },
+    {
+      "aspects": [
+        "valencian",
+        "mythical_easter"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_valencian_easter.png"
+    },
+    {
+      "aspects": [
+        "valencian",
+        "shiny",
+        "mythical_easter"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_valencian_shiny_easter.png"
+    },
+    {
+      "aspects": [
+        "valencian",
+        "mythical_shadow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_valencian_shadow.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_valencian_emissive_shadow.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "valencian",
+        "shiny",
+        "mythical_shadow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_valencian_shiny_shadow.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_valencian_shiny_emissive_shadow.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "valencian",
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_valencian_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_valencian_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "valencian",
+        "shiny",
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_valencian_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_valencian_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "valencian",
+        "mythical_pixie"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_valencian_pixie.png"
+    },
+    {
+      "aspects": [
+        "valencian",
+        "shiny",
+        "mythical_pixie"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_valencian_shiny_pixie.png"
+    },
+    {
+      "aspects": [
+        "valencian",
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_valencian_rainbow.png"
+    },
+    {
+      "aspects": [
+        "valencian",
+        "shiny",
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0012_butterfree/butterfree_valencian_shiny_rainbow.png"
+    }
+  ]
+}

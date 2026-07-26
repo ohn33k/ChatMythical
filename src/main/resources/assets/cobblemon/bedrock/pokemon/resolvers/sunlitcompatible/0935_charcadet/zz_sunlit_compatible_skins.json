@@ -1,0 +1,64 @@
+{
+  "species": "cobblemon:charcadet",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0935_charcadet/charcadet_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0935_charcadet/charcadet_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_gilded",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0935_charcadet/charcadet_shiny_gilded.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0935_charcadet/charcadet_emissive_gilded.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_plasma"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0935_charcadet/charcadet_plasma.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0935_charcadet/charcadet_emissive_plasma.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_plasma",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0935_charcadet/charcadet_shiny_plasma.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0935_charcadet/charcadet_shiny_emissive_plasma.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    }
+  ]
+}

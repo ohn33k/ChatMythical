@@ -1,0 +1,4 @@
+Sunlit Compatible Skins Jade labels
+Compatible with Jade 11.13.2 on Forge 1.20.1.
+Shows only the non-default variant name, for example Glitched, Blazing, or Gilded.
+Default Pokemon receive no extra line.

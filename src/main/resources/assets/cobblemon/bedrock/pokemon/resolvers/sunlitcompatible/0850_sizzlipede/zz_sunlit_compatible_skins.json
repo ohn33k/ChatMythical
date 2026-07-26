@@ -1,0 +1,25 @@
+{
+  "species": "cobblemon:sizzlipede",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_smp"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0850_sizzlipede/sizzlipede_fruit_stripe_gum.png"
+    },
+    {
+      "aspects": [
+        "mythical_smp",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0850_sizzlipede/sizzlipede_shiny_fruit_stripe_gum.png"
+    },
+    {
+      "aspects": [
+        "mythical_marine"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0850_sizzlipede/sizzlipede_marine.png"
+    }
+  ]
+}

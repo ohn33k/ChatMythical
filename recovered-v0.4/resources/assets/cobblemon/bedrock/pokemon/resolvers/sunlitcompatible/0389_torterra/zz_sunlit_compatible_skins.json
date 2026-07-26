@@ -1,0 +1,24 @@
+{
+  "species": "cobblemon:torterra",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_gilded"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0389_torterra/torterra_gilded.png"
+    },
+    {
+      "aspects": [
+        "mythical_rainbow"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0389_torterra/torterra_rainbow.png"
+    },
+    {
+      "aspects": [
+        "mythical_sakura"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0389_torterra/torterra_sakura.png"
+    }
+  ]
+}

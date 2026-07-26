@@ -1,0 +1,24 @@
+{
+  "pokemon": [
+    "ditto",
+    "trapinch",
+    "vibrava",
+    "flygon",
+    "tirtouga",
+    "carracosta",
+    "deino",
+    "zweilous",
+    "fletchinder",
+    "talonflame",
+    "amaura",
+    "aurorus",
+    "salandit",
+    "salazzle",
+    "grookey",
+    "thwackey",
+    "rillaboom"
+  ],
+  "features": [
+    "mythical_nebula"
+  ]
+}

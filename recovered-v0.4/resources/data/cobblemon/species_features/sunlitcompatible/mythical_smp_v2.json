@@ -1,0 +1,8 @@
+{
+  "type": "flag",
+  "keys": [
+    "mythical_smp_v2"
+  ],
+  "default": false,
+  "isAspect": true
+}

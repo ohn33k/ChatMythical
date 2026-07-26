@@ -1,0 +1,8 @@
+{
+  "type": "flag",
+  "keys": [
+    "mythical_tropical"
+  ],
+  "default": false,
+  "isAspect": true
+}

@@ -1,0 +1,88 @@
+{
+  "species": "cobblemon:goodra",
+  "order": 90,
+  "variations": [
+    {
+      "aspects": [
+        "mythical_metallic"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0706_goodra/goodra_metallic.png"
+    },
+    {
+      "aspects": [
+        "mythical_metallic",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0706_goodra/goodra_shiny_metallic.png"
+    },
+    {
+      "aspects": [
+        "mythical_marine"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0706_goodra/goodra_marine.png"
+    },
+    {
+      "aspects": [
+        "mythical_marine",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0706_goodra/goodra_shiny_marine.png",
+      "layers": [
+        {
+          "name": "emissive",
+          "texture": "mythicalcobbled:textures/pokemon/0706_goodra/goodra_shiny_emissive_marine.png",
+          "emissive": true,
+          "translucent": true
+        }
+      ]
+    },
+    {
+      "aspects": [
+        "mythical_canada_day",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0706_goodra/goodra_shiny_canada_day.png"
+    },
+    {
+      "aspects": [
+        "mythical_frosted"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0706_goodra/goodra_frosted.png"
+    },
+    {
+      "aspects": [
+        "mythical_frosted",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0706_goodra/goodra_shiny_frosted.png"
+    },
+    {
+      "aspects": [
+        "mythical_jungle"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0706_goodra/goodra_jungle.png"
+    },
+    {
+      "aspects": [
+        "mythical_jungle",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0706_goodra/goodra_shiny_jungle.png"
+    },
+    {
+      "aspects": [
+        "hisuian",
+        "mythical_frosted"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0706_goodra/goodra_hisuian_frosted.png"
+    },
+    {
+      "aspects": [
+        "hisuian",
+        "mythical_frosted",
+        "shiny"
+      ],
+      "texture": "mythicalcobbled:textures/pokemon/0706_goodra/goodra_hisuian_shiny_frosted.png"
+    }
+  ]
+}
