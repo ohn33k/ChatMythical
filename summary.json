@@ -1,0 +1,16 @@
+{
+  "total_files": 35239,
+  "text_files": 15813,
+  "java_or_kotlin_files": 31,
+  "metadata_files": 6,
+  "target_text_files": 3703,
+  "relevant_asset_paths": 8914,
+  "reports": [
+    "complete-tree.txt",
+    "all-java-and-kotlin.txt",
+    "build-and-metadata.txt",
+    "target-paths.txt",
+    "target-source-context.txt",
+    "relevant-assets-and-resolvers.txt"
+  ]
+}

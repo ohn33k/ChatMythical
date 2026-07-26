@@ -1,0 +1,2594 @@
+
+
+===== FILE: recovered-v0.4/decompiled-java/com/openai/mythicalbridge/EffectRenderTypeFactory.java =====
+000001: /*
+000002:  * Decompiled with CFR 0.152.
+000003:  * 
+000004:  * Could not load the following classes:
+000005:  *  com.mojang.blaze3d.vertex.DefaultVertexFormat
+000006:  *  com.mojang.blaze3d.vertex.VertexFormat
+000007:  *  com.mojang.blaze3d.vertex.VertexFormat$Mode
+000008:  *  net.minecraft.client.renderer.RenderStateShard
+000009:  *  net.minecraft.client.renderer.RenderStateShard$EmptyTextureStateShard
+000010:  *  net.minecraft.client.renderer.RenderStateShard$TextureStateShard
+000011:  *  net.minecraft.client.renderer.RenderStateShard$TexturingStateShard
+000012:  *  net.minecraft.client.renderer.RenderType
+000013:  *  net.minecraft.client.renderer.RenderType$CompositeRenderType
+000014:  *  net.minecraft.client.renderer.RenderType$CompositeState
+000015:  *  net.minecraft.resources.ResourceLocation
+000016:  */
+000017: package com.openai.mythicalbridge;
+000018: 
+000019: import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+000020: import com.mojang.blaze3d.vertex.VertexFormat;
+000021: import com.openai.mythicalbridge.EffectTexturingState;
+000022: import java.util.concurrent.ConcurrentHashMap;
+000023: import net.minecraft.client.renderer.RenderStateShard;
+000024: import net.minecraft.client.renderer.RenderType;
+000025: import net.minecraft.resources.ResourceLocation;
+000026: 
+000027: public final class EffectRenderTypeFactory {
+000028:     private static final ConcurrentHashMap<String, RenderType> CACHE = new ConcurrentHashMap();
+000029: 
+000030:     private EffectRenderTypeFactory() {
+000031:     }
+000032: 
+000033:     public static RenderType cutout(ResourceLocation resourceLocation, int n) {
+000034:         String string2 = resourceLocation.toString() + "\u0000" + n;
+000035:         return CACHE.computeIfAbsent(string2, string -> EffectRenderTypeFactory.createCutout(resourceLocation, n));
+000036:     }
+000037: 
+000038:     private static RenderType createCutout(ResourceLocation resourceLocation, int n) {
+000039:         RenderType.CompositeState compositeState = RenderType.CompositeState.m_110628_().m_173292_(RenderStateShard.f_173113_).m_173290_((RenderStateShard.EmptyTextureStateShard)new RenderStateShard.TextureStateShard(resourceLocation, false, false)).m_110685_(RenderStateShard.f_110134_).m_110671_(RenderStateShard.f_110152_).m_110677_(RenderStateShard.f_110154_).m_110683_((RenderStateShard.TexturingStateShard)new EffectTexturingState(n)).m_110691_(true);
+000040:         RenderType.CompositeRenderType compositeRenderType = RenderType.m_173215_((String)("mythical_effect_entity_cutout_" + n), (VertexFormat)DefaultVertexFormat.f_85812_, (VertexFormat.Mode)VertexFormat.Mode.QUADS, (int)256, (boolean)true, (boolean)false, (RenderType.CompositeState)compositeState);
+000041:         System.out.println("[MythicalEffectsBridge/V4] Created effect RenderType id=" + n + " texture=" + String.valueOf(resourceLocation) + ".");
+000042:         return compositeRenderType;
+000043:     }
+000044: }
+000045: 
+
+
+===== FILE: recovered-v0.4/decompiled-java/com/openai/mythicalbridge/EffectTexturingState.java =====
+000001: /*
+000002:  * Decompiled with CFR 0.152.
+000003:  * 
+000004:  * Could not load the following classes:
+000005:  *  net.minecraft.client.renderer.RenderStateShard$TexturingStateShard
+000006:  */
+000007: package com.openai.mythicalbridge;
+000008: 
+000009: import com.openai.mythicalbridge.OculusEffectState;
+000010: import net.minecraft.client.renderer.RenderStateShard;
+000011: 
+000012: public final class EffectTexturingState
+000013: extends RenderStateShard.TexturingStateShard {
+000014:     public EffectTexturingState(int n) {
+000015:         super("mythical_effect_" + n, () -> OculusEffectState.set(n), () -> OculusEffectState.set(0));
+000016:     }
+000017: }
+000018: 
+
+
+===== FILE: recovered-v0.4/decompiled-java/com/openai/mythicalbridge/OculusEffectState.java =====
+000001: /*
+000002:  * Decompiled with CFR 0.152.
+000003:  */
+000004: package com.openai.mythicalbridge;
+000005: 
+000006: import java.lang.reflect.Method;
+000007: 
+000008: public final class OculusEffectState {
+000009:     private static volatile Method setter;
+000010:     private static volatile boolean lookupDone;
+000011:     private static volatile boolean failureReported;
+000012:     private static volatile boolean firstSetLogged;
+000013: 
+000014:     private OculusEffectState() {
+000015:     }
+000016: 
+000017:     /*
+000018:      * WARNING - Removed try catching itself - possible behaviour change.
+000019:      * Enabled aggressive block sorting
+000020:      * Enabled unnecessary exception pruning
+000021:      * Enabled aggressive exception aggregation
+000022:      * Converted monitor instructions to comments
+000023:      * Lifted jumps to return sites
+000024:      */
+000025:     public static void set(int n) {
+000026:         int n2 = n >= 1 && n <= 7 ? n : 0;
+000027:         Method method = setter;
+000028:         if (!lookupDone) {
+000029:             Class<OculusEffectState> clazz = OculusEffectState.class;
+000030:             // MONITORENTER : com.openai.mythicalbridge.OculusEffectState.class
+000031:             if (!lookupDone) {
+000032:                 try {
+000033:                     Class<?> clazz2 = Class.forName("net.irisshaders.iris.uniforms.CobblemonBridge");
+000034:                     setter = method = clazz2.getMethod("setEffectForEntity", Integer.TYPE);
+000035:                     System.out.println("[MythicalEffectsBridge/V4] Connected draw-time RenderType state to Oculus.");
+000036:                 }
+000037:                 catch (Throwable throwable) {
+000038:                     OculusEffectState.report("Could not connect to Oculus CobblemonBridge", throwable);
+000039:                 }
+000040:                 finally {
+000041:                     lookupDone = true;
+000042:                 }
+000043:             }
+000044:             // MONITOREXIT : clazz
+000045:         }
+000046:         if (method == null) return;
+000047:         try {
+000048:             method.invoke(null, n2);
+000049:             if (firstSetLogged) return;
+000050:             if (n2 <= 0) return;
+000051:             firstSetLogged = true;
+000052:             System.out.println("[MythicalEffectsBridge/V4] First effect activated at actual batch draw time; id=" + n2 + ".");
+000053:             return;
+000054:         }
+000055:         catch (Throwable throwable) {
+000056:             OculusEffectState.report("Could not update Oculus effect state", throwable);
+000057:         }
+000058:     }
+000059: 
+000060:     private static void report(String string, Throwable throwable) {
+000061:         if (!failureReported) {
+000062:             failureReported = true;
+000063:             System.err.println("[MythicalEffectsBridge/V4] " + string + ": " + String.valueOf(throwable));
+000064:             throwable.printStackTrace(System.err);
+000065:         }
+000066:     }
+000067: }
+000068: 
+
+
+===== FILE: recovered-v0.4/decompiled-java/com/openai/mythicalbridge/RenderTypeBridge.java =====
+000001: /*
+000002:  * Decompiled with CFR 0.152.
+000003:  * 
+000004:  * Could not load the following classes:
+000005:  *  net.minecraft.client.renderer.RenderType
+000006:  *  net.minecraft.resources.ResourceLocation
+000007:  */
+000008: package com.openai.mythicalbridge;
+000009: 
+000010: import com.openai.mythicalbridge.EffectRenderTypeFactory;
+000011: import java.lang.reflect.Method;
+000012: import java.util.Locale;
+000013: import java.util.Set;
+000014: import java.util.concurrent.ConcurrentHashMap;
+000015: import net.minecraft.client.renderer.RenderType;
+000016: import net.minecraft.resources.ResourceLocation;
+000017: 
+000018: public final class RenderTypeBridge {
+000019:     private static final ThreadLocal<Object> CURRENT_ENTITY = new ThreadLocal();
+000020:     private static final ConcurrentHashMap<Class<?>, Method> ASPECT_METHODS = new ConcurrentHashMap();
+000021:     private static final ConcurrentHashMap<Class<?>, Method> INVOKE_METHODS = new ConcurrentHashMap();
+000022:     private static final Set<String> REPORTED = ConcurrentHashMap.newKeySet();
+000023:     private static volatile boolean failureReported;
+000024: 
+000025:     private RenderTypeBridge() {
+000026:     }
+000027: 
+000028:     public static void setCurrentEntity(Object object) {
+000029:         if (object == null) {
+000030:             CURRENT_ENTITY.remove();
+000031:         } else {
+000032:             CURRENT_ENTITY.set(object);
+000033:         }
+000034:     }
+000035: 
+000036:     public static void clearCurrentEntity() {
+000037:         CURRENT_ENTITY.remove();
+000038:     }
+000039: 
+000040:     public static RenderType choose(Object object, ResourceLocation resourceLocation) {
+000041:         Object object2 = CURRENT_ENTITY.get();
+000042:         int n = RenderTypeBridge.effectFor(object2);
+000043:         if (n > 0) {
+000044:             String string = n + ":" + (object2 == null ? "null" : object2.getClass().getName());
+000045:             if (REPORTED.add(string)) {
+000046:                 System.out.println("[MythicalEffectsBridge/V4] Selected effect id " + n + " from synchronized Pok\u00e9mon aspects; using a draw-time custom RenderType.");
+000047:             }
+000048:             return EffectRenderTypeFactory.cutout(resourceLocation, n);
+000049:         }
+000050:         return RenderTypeBridge.invokeOriginal(object, resourceLocation);
+000051:     }
+000052: 
+000053:     private static RenderType invokeOriginal(Object object, ResourceLocation resourceLocation) {
+000054:         if (object == null) {
+000055:             return null;
+000056:         }
+000057:         try {
+000058:             Method method = INVOKE_METHODS.computeIfAbsent(object.getClass(), clazz -> {
+000059:                 try {
+000060:                     Method method = clazz.getMethod("invoke", Object.class);
+000061:                     method.setAccessible(true);
+000062:                     return method;
+000063:                 }
+000064:                 catch (ReflectiveOperationException reflectiveOperationException) {
+000065:                     throw new MethodLookupFailure(reflectiveOperationException);
+000066:                 }
+000067:             });
+000068:             return (RenderType)method.invoke(object, resourceLocation);
+000069:         }
+000070:         catch (Throwable throwable) {
+000071:             Throwable throwable2 = throwable instanceof MethodLookupFailure && throwable.getCause() != null ? throwable.getCause() : throwable;
+000072:             RenderTypeBridge.report("Could not invoke Cobblemon's original RenderType selector", throwable2);
+000073:             return null;
+000074:         }
+000075:     }
+000076: 
+000077:     private static int effectFor(Object object) {
+000078:         if (object == null) {
+000079:             return 0;
+000080:         }
+000081:         try {
+000082:             Method method = ASPECT_METHODS.computeIfAbsent(object.getClass(), clazz -> {
+000083:                 try {
+000084:                     Method method = clazz.getMethod("getAspects", new Class[0]);
+000085:                     method.setAccessible(true);
+000086:                     return method;
+000087:                 }
+000088:                 catch (ReflectiveOperationException reflectiveOperationException) {
+000089:                     throw new MethodLookupFailure(reflectiveOperationException);
+000090:                 }
+000091:             });
+000092:             Object object2 = method.invoke(object, new Object[0]);
+000093:             if (!(object2 instanceof Iterable)) {
+000094:                 return 0;
+000095:             }
+000096:             Iterable iterable = (Iterable)object2;
+000097:             for (Object t : iterable) {
+000098:                 String string;
+000099:                 if (t == null) continue;
+000100:                 switch (string = t.toString().toLowerCase(Locale.ROOT)) {
+000101:                     case "mythical_radiant": 
+000102:                     case "radiant": {
+000103:                         return 1;
+000104:                     }
+000105:                     case "mythical_magma": 
+000106:                     case "magma": {
+000107:                         return 2;
+000108:                     }
+000109:                     case "mythical_glitch": 
+000110:                     case "glitch": {
+000111:                         return 3;
+000112:                     }
+000113:                     case "mythical_galaxy": 
+000114:                     case "galaxy": {
+000115:                         return 4;
+000116:                     }
+000117:                     case "mythical_matrix": 
+000118:                     case "matrix": {
+000119:                         return 5;
+000120:                     }
+000121:                     case "mythical_fireworks": 
+000122:                     case "mythical_firework": 
+000123:                     case "fireworks": 
+000124:                     case "firework": {
+000125:                         return 6;
+000126:                     }
+000127:                     case "mythical_holographic": 
+000128:                     case "holographic": {
+000129:                         return 7;
+000130:                     }
+000131:                 }
+000132:             }
+000133:         }
+000134:         catch (Throwable throwable) {
+000135:             Throwable throwable2 = throwable instanceof MethodLookupFailure && throwable.getCause() != null ? throwable.getCause() : throwable;
+000136:             RenderTypeBridge.report("Could not inspect Pok\u00e9mon aspects", throwable2);
+000137:         }
+000138:         return 0;
+000139:     }
+000140: 
+000141:     private static void report(String string, Throwable throwable) {
+000142:         if (!failureReported) {
+000143:             failureReported = true;
+000144:             System.err.println("[MythicalEffectsBridge/V4] " + string + ": " + String.valueOf(throwable));
+000145:             throwable.printStackTrace(System.err);
+000146:         }
+000147:     }
+000148: 
+000149:     private static final class MethodLookupFailure
+000150:     extends RuntimeException {
+000151:         MethodLookupFailure(Throwable throwable) {
+000152:             super(throwable);
+000153:         }
+000154:     }
+000155: }
+000156: 
+
+
+===== FILE: recovered-v0.4/decompiled-java/com/openai/sunlitskins/AppearanceManager.java =====
+000001: /*
+000002:  * Decompiled with CFR 0.152.
+000003:  */
+000004: package com.openai.sunlitskins;
+000005: 
+000006: import com.openai.sunlitskins.ReflectionUtil;
+000007: import com.openai.sunlitskins.SunlitSkinsConfig;
+000008: import java.io.BufferedReader;
+000009: import java.io.InputStream;
+000010: import java.io.InputStreamReader;
+000011: import java.nio.charset.StandardCharsets;
+000012: import java.util.ArrayList;
+000013: import java.util.Collections;
+000014: import java.util.LinkedHashMap;
+000015: import java.util.LinkedHashSet;
+000016: import java.util.List;
+000017: import java.util.Locale;
+000018: import java.util.Map;
+000019: import java.util.Set;
+000020: import java.util.concurrent.ThreadLocalRandom;
+000021: 
+000022: public final class AppearanceManager {
+000023:     public static final String TAG = "sunlitcompatible_appearance";
+000024:     private static final String LEGACY_TAG = "mythicalbackport_appearance";
+000025:     private static final Map<String, List<Variant>> VARIANTS = AppearanceManager.loadVariants();
+000026:     private static final Set<String> LEGENDARIES = AppearanceManager.loadLegendaryNames();
+000027:     private static final Set<String> RECOGNIZED = AppearanceManager.recognized();
+000028:     private static volatile boolean errorLogged;
+000029: 
+000030:     private AppearanceManager() {
+000031:     }
+000032: 
+000033:     public static void onAssigned(Object object, Object object2) {
+000034:         if (object == null || object2 == null) {
+000035:             return;
+000036:         }
+000037:         try {
+000038:             double d;
+000039:             Object object3;
+000040:             String string;
+000041:             if (AppearanceManager.isClient(object)) {
+000042:                 AppearanceManager.restorePersistentAspect(object2);
+000043:                 return;
+000044:             }
+000045:             String string2 = AppearanceManager.readPersistent(object2);
+000046:             if (!string2.isBlank()) {
+000047:                 AppearanceManager.addAspects(object2, string2);
+000048:                 return;
+000049:             }
+000050:             Set<String> set = AppearanceManager.aspects(object2);
+000051:             ArrayList<String> arrayList = new ArrayList<String>();
+000052:             for (String string3 : set) {
+000053:                 string = AppearanceManager.normalize(string3);
+000054:                 if (!RECOGNIZED.contains(string)) continue;
+000055:                 arrayList.add(string);
+000056:             }
+000057:             if (!arrayList.isEmpty()) {
+000058:                 object3 = String.join((CharSequence)",", arrayList);
+000059:                 AppearanceManager.writePersistent(object2, (String)object3);
+000060:                 AppearanceManager.addAspects(object2, (String)object3);
+000061:                 return;
+000062:             }
+000063:             object3 = SunlitSkinsConfig.get();
+000064:             if (!((SunlitSkinsConfig)object3).assignToWildPokemon) {
+000065:                 return;
+000066:             }
+000067:             boolean bl = (Boolean)ReflectionUtil.method(object2.getClass(), "isWild", new String[]{"isWild"}, 0).invoke(object2, new Object[0]);
+000068:             if (!bl) {
+000069:                 return;
+000070:             }
+000071:             string = AppearanceManager.speciesName(object2);
+000072:             List list = VARIANTS.getOrDefault(string, List.of());
+000073:             if (list.isEmpty()) {
+000074:                 return;
+000075:             }
+000076:             ArrayList<Variant> arrayList2 = new ArrayList<Variant>();
+000077:             for (Variant variant : list) {
+000078:                 if (variant.shader && !((SunlitSkinsConfig)object3).includeShaderEffects || !variant.shader && !((SunlitSkinsConfig)object3).includeTextureVariants || !((SunlitSkinsConfig)object3).familyEnabled(variant.aspect)) continue;
+000079:                 arrayList2.add(variant);
+000080:             }
+000081:             if (arrayList2.isEmpty()) {
+000082:                 return;
+000083:             }
+000084:             double d2 = d = LEGENDARIES.contains(string) ? ((SunlitSkinsConfig)object3).legendaryNormalChancePercent : ((SunlitSkinsConfig)object3).normalChancePercent;
+000085:             if (ThreadLocalRandom.current().nextDouble(100.0) < d) {
+000086:                 return;
+000087:             }
+000088:             Variant variant = (Variant)arrayList2.get(ThreadLocalRandom.current().nextInt(arrayList2.size()));
+000089:             AppearanceManager.writePersistent(object2, variant.aspect);
+000090:             AppearanceManager.addAspects(object2, variant.aspect);
+000091:         }
+000092:         catch (Throwable throwable) {
+000093:             AppearanceManager.report("appearance assignment", throwable);
+000094:         }
+000095:     }
+000096: 
+000097:     public static void restorePersistentAspect(Object object) {
+000098:         if (object == null) {
+000099:             return;
+000100:         }
+000101:         try {
+000102:             String string = AppearanceManager.readPersistent(object);
+000103:             if (!string.isBlank()) {
+000104:                 AppearanceManager.addAspects(object, string);
+000105:             }
+000106:         }
+000107:         catch (Throwable throwable) {
+000108:             AppearanceManager.report("appearance restoration", throwable);
+000109:         }
+000110:     }
+000111: 
+000112:     private static boolean isClient(Object object) throws Exception {
+000113:         Object object2 = ReflectionUtil.method(object.getClass(), "level", new String[]{"m_9236_", "level"}, 0).invoke(object, new Object[0]);
+000114:         try {
+000115:             return ReflectionUtil.field(object2.getClass(), "isClientSide", "f_46443_", "isClientSide").getBoolean(object2);
+000116:         }
+000117:         catch (Throwable throwable) {
+000118:             return false;
+000119:         }
+000120:     }
+000121: 
+000122:     private static String speciesName(Object object) throws Exception {
+000123:         Object object2 = ReflectionUtil.method(object.getClass(), "getSpecies", new String[]{"getSpecies"}, 0).invoke(object, new Object[0]);
+000124:         Object object3 = ReflectionUtil.method(object2.getClass(), "getResourceIdentifier", new String[]{"getResourceIdentifier"}, 0).invoke(object2, new Object[0]);
+000125:         String string = String.valueOf(object3).toLowerCase(Locale.ROOT);
+000126:         int n = string.indexOf(58);
+000127:         return n >= 0 ? string.substring(n + 1) : string;
+000128:     }
+000129: 
+000130:     private static Set<String> aspects(Object object) throws Exception {
+000131:         Object object2 = ReflectionUtil.method(object.getClass(), "getAspects", new String[]{"getAspects"}, 0).invoke(object, new Object[0]);
+000132:         return object2 instanceof Set ? (Set)object2 : Set.of();
+000133:     }
+000134: 
+000135:     private static void addAspects(Object object, String string) throws Exception {
+000136:         LinkedHashSet<String> linkedHashSet = new LinkedHashSet<String>(AppearanceManager.aspects(object));
+000137:         for (String string2 : string.split(",")) {
+000138:             if (string2.isBlank()) continue;
+000139:             linkedHashSet.add(AppearanceManager.normalize(string2));
+000140:         }
+000141:         ReflectionUtil.method(object.getClass(), "setAspects", new String[]{"setAspects"}, 1).invoke(object, linkedHashSet);
+000142:     }
+000143: 
+000144:     private static Object persistentTag(Object object) throws Exception {
+000145:         return ReflectionUtil.method(object.getClass(), "getPersistentData", new String[]{"getPersistentData"}, 0).invoke(object, new Object[0]);
+000146:     }
+000147: 
+000148:     private static String readPersistent(Object object) throws Exception {
+000149:         Object object2 = AppearanceManager.persistentTag(object);
+000150:         if (object2 == null) {
+000151:             return "";
+000152:         }
+000153:         String string = AppearanceManager.readTagString(object2, TAG);
+000154:         if (!string.isBlank()) {
+000155:             return string;
+000156:         }
+000157:         return AppearanceManager.readTagString(object2, LEGACY_TAG);
+000158:     }
+000159: 
+000160:     private static String readTagString(Object object, String string) {
+000161:         for (String string2 : new String[]{"getString", "m_128461_"}) {
+000162:             try {
+000163:                 return String.valueOf(ReflectionUtil.method(object.getClass(), "tagGetString", new String[]{string2}, 1).invoke(object, string));
+000164:             }
+000165:             catch (Throwable throwable) {
+000166:             }
+000167:         }
+000168:         return "";
+000169:     }
+000170: 
+000171:     private static void writePersistent(Object object, String string) throws Exception {
+000172:         Object object2 = AppearanceManager.persistentTag(object);
+000173:         if (object2 == null) {
+000174:             return;
+000175:         }
+000176:         for (String string2 : new String[]{"putString", "m_128359_"}) {
+000177:             try {
+000178:                 ReflectionUtil.method(object2.getClass(), "tagPutString", new String[]{string2}, 2).invoke(object2, TAG, string);
+000179:                 return;
+000180:             }
+000181:             catch (Throwable throwable) {
+000182:             }
+000183:         }
+000184:         throw new NoSuchMethodException("CompoundTag.putString");
+000185:     }
+000186: 
+000187:     private static String normalize(String string) {
+000188:         String string2 = string.toLowerCase(Locale.ROOT).trim();
+000189:         if (string2.equals("radar_spawned")) {
+000190:             return "mythical_holographic";
+000191:         }
+000192:         if (string2.equals("mythical_fireworks")) {
+000193:             return "mythical_firework";
+000194:         }
+000195:         return string2;
+000196:     }
+000197: 
+000198:     /*
+000199:      * Enabled aggressive block sorting
+000200:      * Enabled unnecessary exception pruning
+000201:      * Enabled aggressive exception aggregation
+000202:      */
+000203:     private static Map<String, List<Variant>> loadVariants() {
+000204:         LinkedHashMap linkedHashMap = new LinkedHashMap();
+000205:         try (InputStream inputStream = AppearanceManager.class.getClassLoader().getResourceAsStream("META-INF/sunlitcompatible/appearance-variants.tsv");){
+000206:             if (inputStream == null) {
+000207:                 Map<String, List<Variant>> map = Map.of();
+000208:                 return map;
+000209:             }
+000210:             try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));){
+000211:                 String string;
+000212:                 while ((string = bufferedReader.readLine()) != null) {
+000213:                     String[] stringArray;
+000214:                     if (string.isBlank() || string.startsWith("#") || (stringArray = string.split("\\t", 2)).length < 2) continue;
+000215:                     ArrayList<Variant> arrayList = new ArrayList<Variant>();
+000216:                     for (String string2 : stringArray[1].split(",")) {
+000217:                         String[] stringArray2 = string2.split(":", 2);
+000218:                         if (stringArray2.length != 2) continue;
+000219:                         arrayList.add(new Variant(AppearanceManager.normalize(stringArray2[0]), stringArray2[1].equals("shader")));
+000220:                     }
+000221:                     linkedHashMap.put(stringArray[0], Collections.unmodifiableList(arrayList));
+000222:                 }
+000223:                 return Collections.unmodifiableMap(linkedHashMap);
+000224:             }
+000225:         }
+000226:         catch (Throwable throwable) {
+000227:             AppearanceManager.report("variant table load", throwable);
+000228:         }
+000229:         return Collections.unmodifiableMap(linkedHashMap);
+000230:     }
+000231: 
+000232:     private static Set<String> loadLegendaryNames() {
+000233:         LinkedHashSet<String> linkedHashSet;
+000234:         block14: {
+000235:             linkedHashSet = new LinkedHashSet<String>();
+000236:             try (InputStream inputStream = AppearanceManager.class.getClassLoader().getResourceAsStream("META-INF/sunlitcompatible/legendary-species.tsv");){
+000237:                 if (inputStream == null) break block14;
+000238:                 try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));){
+000239:                     String string;
+000240:                     while ((string = bufferedReader.readLine()) != null) {
+000241:                         if (string.isBlank() || string.startsWith("#")) continue;
+000242:                         linkedHashSet.add(string.split("\\t")[0]);
+000243:                     }
+000244:                 }
+000245:             }
+000246:             catch (Throwable throwable) {
+000247:                 AppearanceManager.report("legendary table load", throwable);
+000248:             }
+000249:         }
+000250:         return Collections.unmodifiableSet(linkedHashSet);
+000251:     }
+000252: 
+000253:     private static Set<String> recognized() {
+000254:         LinkedHashSet<String> linkedHashSet = new LinkedHashSet<String>();
+000255:         for (List<Variant> list : VARIANTS.values()) {
+000256:             for (Variant variant : list) {
+000257:                 linkedHashSet.add(variant.aspect);
+000258:             }
+000259:         }
+000260:         return Collections.unmodifiableSet(linkedHashSet);
+000261:     }
+000262: 
+000263:     private static void report(String string, Throwable throwable) {
+000264:         if (!errorLogged) {
+000265:             errorLogged = true;
+000266:             System.err.println("[SunlitCompatibleSkins] Failed during " + string + ": " + String.valueOf(throwable));
+000267:             throwable.printStackTrace(System.err);
+000268:         }
+000269:     }
+000270: 
+000271:     private record Variant(String aspect, boolean shader) {
+000272:     }
+000273: }
+000274: 
+
+
+===== FILE: recovered-v0.4/decompiled-java/com/openai/sunlitskins/jade/SkinVariantProvider.java =====
+000001: /*
+000002:  * Decompiled with CFR 0.152.
+000003:  * 
+000004:  * Could not load the following classes:
+000005:  *  net.minecraft.network.chat.Component
+000006:  *  net.minecraft.resources.ResourceLocation
+000007:  *  net.minecraft.world.entity.Entity
+000008:  *  snownee.jade.api.EntityAccessor
+000009:  *  snownee.jade.api.IEntityComponentProvider
+000010:  *  snownee.jade.api.ITooltip
+000011:  *  snownee.jade.api.config.IPluginConfig
+000012:  */
+000013: package com.openai.sunlitskins.jade;
+000014: 
+000015: import java.lang.reflect.Method;
+000016: import java.util.ArrayList;
+000017: import java.util.Collection;
+000018: import java.util.Iterator;
+000019: import java.util.LinkedHashSet;
+000020: import java.util.Locale;
+000021: import java.util.Set;
+000022: import net.minecraft.network.chat.Component;
+000023: import net.minecraft.resources.ResourceLocation;
+000024: import net.minecraft.world.entity.Entity;
+000025: import snownee.jade.api.EntityAccessor;
+000026: import snownee.jade.api.IEntityComponentProvider;
+000027: import snownee.jade.api.ITooltip;
+000028: import snownee.jade.api.config.IPluginConfig;
+000029: 
+000030: public enum SkinVariantProvider implements IEntityComponentProvider
+000031: {
+000032:     INSTANCE;
+000033: 
+000034:     private static final ResourceLocation UID;
+000035:     private static final String PERSISTENT_KEY = "sunlitcompatible_appearance";
+000036: 
+000037:     public void appendTooltip(ITooltip iTooltip, EntityAccessor entityAccessor, IPluginConfig iPluginConfig) {
+000038:         try {
+000039:             Object object;
+000040:             Object object2;
+000041:             Entity entity = entityAccessor.getEntity();
+000042:             Object object3 = SkinVariantProvider.invokeNoArgs(entity, "getPokemon");
+000043:             if (object3 == null) {
+000044:                 return;
+000045:             }
+000046:             LinkedHashSet<String> linkedHashSet = new LinkedHashSet<String>();
+000047:             Object object4 = SkinVariantProvider.invokeNoArgs(object3, "getAspects");
+000048:             if (object4 instanceof Collection) {
+000049:                 object2 = (Collection)object4;
+000050:                 var10_10 = object2.iterator();
+000051:                 while (var10_10.hasNext()) {
+000052:                     var11_11 = var10_10.next();
+000053:                     SkinVariantProvider.addLabel(linkedHashSet, String.valueOf(var11_11));
+000054:                 }
+000055:             } else if (object4 instanceof Iterable) {
+000056:                 object = (Iterable)object4;
+000057:                 var10_10 = object.iterator();
+000058:                 while (var10_10.hasNext()) {
+000059:                     var11_11 = var10_10.next();
+000060:                     SkinVariantProvider.addLabel(linkedHashSet, String.valueOf(var11_11));
+000061:                 }
+000062:             }
+000063:             if (linkedHashSet.isEmpty() && (object = SkinVariantProvider.invokeOneArg(object2 = SkinVariantProvider.invokeNoArgs(object3, "getPersistentData"), "getString", PERSISTENT_KEY)) != null) {
+000064:                 for (Iterator<Object> iterator : String.valueOf(object).split(",")) {
+000065:                     SkinVariantProvider.addLabel(linkedHashSet, iterator);
+000066:                 }
+000067:             }
+000068:             if (!linkedHashSet.isEmpty()) {
+000069:                 iTooltip.add(Component.literal((String)String.join((CharSequence)" / ", linkedHashSet)), UID);
+000070:             }
+000071:         }
+000072:         catch (Throwable throwable) {
+000073:             // empty catch block
+000074:         }
+000075:     }
+000076: 
+000077:     public ResourceLocation getUid() {
+000078:         return UID;
+000079:     }
+000080: 
+000081:     private static void addLabel(Set<String> set, String string) {
+000082:         String string2 = SkinVariantProvider.normalize(string);
+000083:         String string3 = SkinVariantProvider.displayName(string2);
+000084:         if (string3 != null && !string3.isBlank()) {
+000085:             set.add(string3);
+000086:         }
+000087:     }
+000088: 
+000089:     private static String normalize(String string) {
+000090:         String string2;
+000091:         String string3 = string2 = string == null ? "" : string.trim().toLowerCase(Locale.ROOT);
+000092:         if (string2.equals("radar_spawned")) {
+000093:             return "mythical_holographic";
+000094:         }
+000095:         if (string2.equals("mythical_fireworks")) {
+000096:             return "mythical_firework";
+000097:         }
+000098:         return string2;
+000099:     }
+000100: 
+000101:     private static String displayName(String string) {
+000102:         if (!string.startsWith("mythical_")) {
+000103:             return null;
+000104:         }
+000105:         String string2 = string.substring("mythical_".length());
+000106:         if (string2.isBlank() || string2.equals("normal") || string2.equals("default")) {
+000107:             return null;
+000108:         }
+000109:         if (string2.equals("glitch")) {
+000110:             return "Glitched";
+000111:         }
+000112:         if (string2.equals("fireworks")) {
+000113:             return "Firework";
+000114:         }
+000115:         if (string2.equals("smp")) {
+000116:             return "SMP";
+000117:         }
+000118:         if (string2.equals("smp_v2")) {
+000119:             return "SMP V2";
+000120:         }
+000121:         if (string2.equals("smp_v3")) {
+000122:             return "SMP V3";
+000123:         }
+000124:         if (string2.startsWith("amongus_")) {
+000125:             return "Among Us " + SkinVariantProvider.titleWords(string2.substring("amongus_".length()));
+000126:         }
+000127:         return SkinVariantProvider.titleWords(string2);
+000128:     }
+000129: 
+000130:     private static String titleWords(String string) {
+000131:         String[] stringArray = string.split("_+");
+000132:         ArrayList<Object> arrayList = new ArrayList<Object>(stringArray.length);
+000133:         for (String string2 : stringArray) {
+000134:             if (string2.isBlank()) continue;
+000135:             if (string2.equals("smp")) {
+000136:                 arrayList.add("SMP");
+000137:                 continue;
+000138:             }
+000139:             if (string2.matches("v\\d+")) {
+000140:                 arrayList.add(string2.toUpperCase(Locale.ROOT));
+000141:                 continue;
+000142:             }
+000143:             arrayList.add(Character.toUpperCase(string2.charAt(0)) + string2.substring(1));
+000144:         }
+000145:         return String.join((CharSequence)" ", arrayList);
+000146:     }
+000147: 
+000148:     private static Object invokeNoArgs(Object object, String string) throws Exception {
+000149:         if (object == null) {
+000150:             return null;
+000151:         }
+000152:         Method method = object.getClass().getMethod(string, new Class[0]);
+000153:         return method.invoke(object, new Object[0]);
+000154:     }
+000155: 
+000156:     private static Object invokeOneArg(Object object, String string, Object object2) throws Exception {
+000157:         if (object == null) {
+000158:             return null;
+000159:         }
+000160:         for (Method method : object.getClass().getMethods()) {
+000161:             if (!method.getName().equals(string) || method.getParameterCount() != 1) continue;
+000162:             return method.invoke(object, object2);
+000163:         }
+000164:         return null;
+000165:     }
+000166: 
+000167:     static {
+000168:         UID = new ResourceLocation("sunlitcompatible", "skin_variant");
+000169:     }
+000170: }
+000171: 
+
+
+===== FILE: recovered-v0.4/decompiled-java/com/openai/sunlitskins/jade/SunlitSkinsJadePlugin.java =====
+000001: /*
+000002:  * Decompiled with CFR 0.152.
+000003:  * 
+000004:  * Could not load the following classes:
+000005:  *  net.minecraft.world.entity.Entity
+000006:  *  snownee.jade.api.IEntityComponentProvider
+000007:  *  snownee.jade.api.IWailaClientRegistration
+000008:  *  snownee.jade.api.IWailaPlugin
+000009:  *  snownee.jade.api.WailaPlugin
+000010:  */
+000011: package com.openai.sunlitskins.jade;
+000012: 
+000013: import com.openai.sunlitskins.jade.SkinVariantProvider;
+000014: import net.minecraft.world.entity.Entity;
+000015: import snownee.jade.api.IEntityComponentProvider;
+000016: import snownee.jade.api.IWailaClientRegistration;
+000017: import snownee.jade.api.IWailaPlugin;
+000018: import snownee.jade.api.WailaPlugin;
+000019: 
+000020: @WailaPlugin
+000021: public final class SunlitSkinsJadePlugin
+000022: implements IWailaPlugin {
+000023:     private static final String POKEMON_ENTITY = "com.cobblemon.mod.common.entity.pokemon.PokemonEntity";
+000024: 
+000025:     public void registerClient(IWailaClientRegistration iWailaClientRegistration) {
+000026:         try {
+000027:             Class<?> clazz = Class.forName(POKEMON_ENTITY);
+000028:             if (Entity.class.isAssignableFrom(clazz)) {
+000029:                 iWailaClientRegistration.registerEntityComponent((IEntityComponentProvider)SkinVariantProvider.INSTANCE, clazz);
+000030:             }
+000031:         }
+000032:         catch (Throwable throwable) {
+000033:             System.err.println("[SunlitCompatibleSkins] Jade skin labels were not registered: " + String.valueOf(throwable));
+000034:         }
+000035:     }
+000036: }
+000037: 
+
+
+===== FILE: recovered-v0.4/decompiled-java/com/openai/sunlitskins/LegendarySpawnManager.java =====
+000001: /*
+000002:  * Decompiled with CFR 0.152.
+000003:  */
+000004: package com.openai.sunlitskins;
+000005: 
+000006: import com.openai.sunlitskins.ReflectionUtil;
+000007: import com.openai.sunlitskins.SunlitSkinsConfig;
+000008: import java.io.BufferedReader;
+000009: import java.io.InputStream;
+000010: import java.io.InputStreamReader;
+000011: import java.io.OutputStream;
+000012: import java.lang.reflect.Method;
+000013: import java.nio.charset.StandardCharsets;
+000014: import java.nio.file.Files;
+000015: import java.nio.file.LinkOption;
+000016: import java.nio.file.OpenOption;
+000017: import java.nio.file.Path;
+000018: import java.nio.file.attribute.FileAttribute;
+000019: import java.util.ArrayList;
+000020: import java.util.Collections;
+000021: import java.util.List;
+000022: import java.util.Properties;
+000023: import java.util.concurrent.ThreadLocalRandom;
+000024: 
+000025: public final class LegendarySpawnManager {
+000026:     private static final Path STATE = Path.of("config", "sunlit-compatible-skins-state.properties");
+000027:     private static final Path LEGACY_STATE = Path.of("config", "mythicalbackport-state.properties");
+000028:     private static final List<Legend> LEGENDS = LegendarySpawnManager.loadLegends();
+000029:     private static long onlineSeconds;
+000030:     private static long secondsSinceCheck;
+000031:     private static long ticks;
+000032:     private static long secondsSinceSave;
+000033:     private static boolean loaded;
+000034:     private static boolean errorLogged;
+000035: 
+000036:     private LegendarySpawnManager() {
+000037:     }
+000038: 
+000039:     public static void tick(Object object) {
+000040:         try {
+000041:             double d;
+000042:             if (!loaded) {
+000043:                 LegendarySpawnManager.loadState();
+000044:                 loaded = true;
+000045:             }
+000046:             if (++ticks < 20L) {
+000047:                 return;
+000048:             }
+000049:             ticks = 0L;
+000050:             List<?> list = LegendarySpawnManager.players(object);
+000051:             if (list.isEmpty()) {
+000052:                 return;
+000053:             }
+000054:             ++onlineSeconds;
+000055:             ++secondsSinceCheck;
+000056:             if (++secondsSinceSave >= 60L) {
+000057:                 LegendarySpawnManager.saveState();
+000058:                 secondsSinceSave = 0L;
+000059:             }
+000060:             SunlitSkinsConfig sunlitSkinsConfig = SunlitSkinsConfig.get();
+000061:             if (!sunlitSkinsConfig.legendaryEnabled || LEGENDS.isEmpty()) {
+000062:                 return;
+000063:             }
+000064:             long l = (long)sunlitSkinsConfig.minimumOnlineMinutes * 60L;
+000065:             long l2 = (long)sunlitSkinsConfig.maximumOnlineMinutes * 60L;
+000066:             long l3 = (long)sunlitSkinsConfig.checkIntervalMinutes * 60L;
+000067:             if (onlineSeconds < l || secondsSinceCheck < l3) {
+000068:                 return;
+000069:             }
+000070:             secondsSinceCheck = 0L;
+000071:             if (onlineSeconds >= l2) {
+000072:                 d = 100.0;
+000073:             } else {
+000074:                 double d2 = (double)(onlineSeconds - l) / (double)Math.max(1L, l2 - l);
+000075:                 d = sunlitSkinsConfig.initialCheckChancePercent + (sunlitSkinsConfig.maximumCheckChancePercent - sunlitSkinsConfig.initialCheckChancePercent) * d2;
+000076:             }
+000077:             if (ThreadLocalRandom.current().nextDouble(100.0) > d) {
+000078:                 return;
+000079:             }
+000080:             Object obj = list.get(ThreadLocalRandom.current().nextInt(list.size()));
+000081:             Legend legend = LegendarySpawnManager.choose(sunlitSkinsConfig);
+000082:             if (legend == null) {
+000083:                 return;
+000084:             }
+000085:             SpawnResult spawnResult = LegendarySpawnManager.spawnNear(obj, legend, sunlitSkinsConfig);
+000086:             if (spawnResult != null) {
+000087:                 LegendarySpawnManager.announce(list, legend, spawnResult, sunlitSkinsConfig);
+000088:                 onlineSeconds = 0L;
+000089:                 secondsSinceCheck = 0L;
+000090:                 LegendarySpawnManager.saveState();
+000091:             }
+000092:         }
+000093:         catch (Throwable throwable) {
+000094:             LegendarySpawnManager.report(throwable);
+000095:         }
+000096:     }
+000097: 
+000098:     private static Legend choose(SunlitSkinsConfig sunlitSkinsConfig) {
+000099:         double d = 0.0;
+000100:         for (Legend legend : LEGENDS) {
+000101:             d += sunlitSkinsConfig.weightFor(legend.species, legend.weight);
+000102:         }
+000103:         if (d <= 0.0) {
+000104:             return null;
+000105:         }
+000106:         double d2 = ThreadLocalRandom.current().nextDouble(d);
+000107:         for (Legend legend : LEGENDS) {
+000108:             if (!((d2 -= sunlitSkinsConfig.weightFor(legend.species, legend.weight)) <= 0.0)) continue;
+000109:             return legend;
+000110:         }
+000111:         return LEGENDS.get(LEGENDS.size() - 1);
+000112:     }
+000113: 
+000114:     private static SpawnResult spawnNear(Object object, Legend legend, SunlitSkinsConfig sunlitSkinsConfig) throws Exception {
+000115:         Object object2 = ReflectionUtil.method(object.getClass(), "level", new String[]{"m_9236_", "level"}, 0).invoke(object, new Object[0]);
+000116:         double d = ((Number)ReflectionUtil.method(object.getClass(), "getX", new String[]{"m_20185_", "getX"}, 0).invoke(object, new Object[0])).doubleValue();
+000117:         double d2 = ((Number)ReflectionUtil.method(object.getClass(), "getY", new String[]{"m_20186_", "getY"}, 0).invoke(object, new Object[0])).doubleValue();
+000118:         double d3 = ((Number)ReflectionUtil.method(object.getClass(), "getZ", new String[]{"m_20189_", "getZ"}, 0).invoke(object, new Object[0])).doubleValue();
+000119:         for (int i = 0; i < 12; ++i) {
+000120:             double d4 = ThreadLocalRandom.current().nextDouble(Math.PI * 2);
+000121:             double d5 = 24.0 + ThreadLocalRandom.current().nextDouble(32.0);
+000122:             int n = (int)Math.floor(d + Math.cos(d4) * d5);
+000123:             int n2 = (int)Math.floor(d3 + Math.sin(d4) * d5);
+000124:             int n3 = LegendarySpawnManager.surfaceY(object2, n, n2, (int)Math.floor(d2));
+000125:             int n4 = ThreadLocalRandom.current().nextInt(sunlitSkinsConfig.levelMin, sunlitSkinsConfig.levelMax + 1);
+000126:             Object object3 = LegendarySpawnManager.parseProperties(legend.species + " level=" + n4);
+000127:             Object object4 = LegendarySpawnManager.createEntity(object3, object2);
+000128:             if (object4 == null) continue;
+000129:             ReflectionUtil.method(object4.getClass(), "setPos", new String[]{"m_6034_", "setPos"}, 3).invoke(object4, (double)n + 0.5, (double)n3 + 1.0, (double)n2 + 0.5);
+000130:             Object object5 = ReflectionUtil.method(object2.getClass(), "addFreshEntity", new String[]{"m_7967_", "addFreshEntity"}, 1).invoke(object2, object4);
+000131:             if (object5 instanceof Boolean && !((Boolean)object5).booleanValue()) continue;
+000132:             return new SpawnResult(n, n3 + 1, n2, LegendarySpawnManager.playerName(object));
+000133:         }
+000134:         return null;
+000135:     }
+000136: 
+000137:     private static int surfaceY(Object object, int n, int n2, int n3) throws Exception {
+000138:         try {
+000139:             Class<?> clazz = Class.forName("net.minecraft.world.level.levelgen.Heightmap$Types");
+000140:             Object obj = Enum.valueOf(clazz, "MOTION_BLOCKING_NO_LEAVES");
+000141:             Object object2 = ReflectionUtil.method(object.getClass(), "height", new String[]{"m_6924_", "getHeight"}, 3).invoke(object, obj, n, n2);
+000142:             return ((Number)object2).intValue();
+000143:         }
+000144:         catch (Throwable throwable) {
+000145:             return n3;
+000146:         }
+000147:     }
+000148: 
+000149:     private static Object parseProperties(String string) throws Exception {
+000150:         Class<?> clazz = Class.forName("com.cobblemon.mod.common.api.pokemon.PokemonProperties");
+000151:         Object object = clazz.getField("Companion").get(null);
+000152:         return object.getClass().getMethod("parse", String.class).invoke(object, string);
+000153:     }
+000154: 
+000155:     private static Object createEntity(Object object, Object object2) throws Exception {
+000156:         for (Method method : object.getClass().getMethods()) {
+000157:             if (!method.getName().equals("createEntity") || method.getParameterCount() != 1) continue;
+000158:             return method.invoke(object, object2);
+000159:         }
+000160:         throw new NoSuchMethodException("PokemonProperties.createEntity");
+000161:     }
+000162: 
+000163:     private static List<?> players(Object object) throws Exception {
+000164:         Object object2 = ReflectionUtil.method(object.getClass(), "playerList", new String[]{"m_6846_", "getPlayerList"}, 0).invoke(object, new Object[0]);
+000165:         Object object3 = ReflectionUtil.method(object2.getClass(), "players", new String[]{"m_11314_", "getPlayers"}, 0).invoke(object2, new Object[0]);
+000166:         return object3 instanceof List ? (List)object3 : List.of();
+000167:     }
+000168: 
+000169:     private static String playerName(Object object) {
+000170:         try {
+000171:             Object object2 = ReflectionUtil.method(object.getClass(), "name", new String[]{"m_7755_", "getName"}, 0).invoke(object, new Object[0]);
+000172:             return String.valueOf(ReflectionUtil.method(object2.getClass(), "string", new String[]{"getString", "m_7532_"}, 0).invoke(object2, new Object[0]));
+000173:         }
+000174:         catch (Throwable throwable) {
+000175:             return "a player";
+000176:         }
+000177:     }
+000178: 
+000179:     private static void announce(List<?> list, Legend legend, SpawnResult spawnResult, SunlitSkinsConfig sunlitSkinsConfig) {
+000180:         if (!sunlitSkinsConfig.announceSpawns) {
+000181:             return;
+000182:         }
+000183:         StringBuilder stringBuilder = new StringBuilder("A legendary ").append(legend.display).append(" has appeared");
+000184:         if (sunlitSkinsConfig.includeNearbyPlayerName) {
+000185:             stringBuilder.append(" near ").append(spawnResult.player);
+000186:         }
+000187:         stringBuilder.append('!');
+000188:         if (sunlitSkinsConfig.includeCoordinates) {
+000189:             stringBuilder.append(" (").append(spawnResult.x).append(", ").append(spawnResult.y).append(", ").append(spawnResult.z).append(')');
+000190:         }
+000191:         try {
+000192:             Class<?> clazz = Class.forName("net.minecraft.network.chat.Component");
+000193:             Object object = clazz.getMethod("m_237113_", String.class).invoke(null, stringBuilder.toString());
+000194:             for (Object obj : list) {
+000195:                 ReflectionUtil.method(obj.getClass(), "sendSystemMessage", new String[]{"m_213846_", "sendSystemMessage"}, 1).invoke(obj, object);
+000196:             }
+000197:         }
+000198:         catch (Throwable throwable) {
+000199:             System.out.println("[SunlitCompatibleSkins] " + String.valueOf(stringBuilder));
+000200:         }
+000201:     }
+000202: 
+000203:     private static void loadState() {
+000204:         try {
+000205:             Path path;
+000206:             Path path2 = path = Files.exists(STATE, new LinkOption[0]) ? STATE : LEGACY_STATE;
+000207:             if (!Files.exists(path, new LinkOption[0])) {
+000208:                 return;
+000209:             }
+000210:             Properties properties = new Properties();
+000211:             try (InputStream inputStream = Files.newInputStream(path, new OpenOption[0]);){
+000212:                 properties.load(inputStream);
+000213:             }
+000214:             onlineSeconds = Long.parseLong(properties.getProperty("accumulated_online_seconds", "0"));
+000215:             secondsSinceCheck = Long.parseLong(properties.getProperty("seconds_since_check", "0"));
+000216:             if (path.equals(LEGACY_STATE)) {
+000217:                 System.out.println("[SunlitCompatibleSkins] Imported the previous Mythical legendary timer state.");
+000218:                 LegendarySpawnManager.saveState();
+000219:             }
+000220:         }
+000221:         catch (Throwable throwable) {
+000222:             System.err.println("[SunlitCompatibleSkins] Could not load legendary state: " + String.valueOf(throwable));
+000223:         }
+000224:     }
+000225: 
+000226:     private static void saveState() {
+000227:         try {
+000228:             Files.createDirectories(STATE.getParent(), new FileAttribute[0]);
+000229:             Properties properties = new Properties();
+000230:             properties.setProperty("accumulated_online_seconds", Long.toString(onlineSeconds));
+000231:             properties.setProperty("seconds_since_check", Long.toString(secondsSinceCheck));
+000232:             try (OutputStream outputStream = Files.newOutputStream(STATE, new OpenOption[0]);){
+000233:                 properties.store(outputStream, "Sunlit Compatible Skins legendary timer; counts player-online time only");
+000234:             }
+000235:         }
+000236:         catch (Throwable throwable) {
+000237:             System.err.println("[SunlitCompatibleSkins] Could not save legendary state: " + String.valueOf(throwable));
+000238:         }
+000239:     }
+000240: 
+000241:     private static List<Legend> loadLegends() {
+000242:         ArrayList<Legend> arrayList;
+000243:         block14: {
+000244:             arrayList = new ArrayList<Legend>();
+000245:             try (InputStream inputStream = LegendarySpawnManager.class.getClassLoader().getResourceAsStream("META-INF/sunlitcompatible/legendary-species.tsv");){
+000246:                 if (inputStream == null) break block14;
+000247:                 try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));){
+000248:                     String string;
+000249:                     while ((string = bufferedReader.readLine()) != null) {
+000250:                         if (string.isBlank() || string.startsWith("#")) continue;
+000251:                         String[] stringArray = string.split("\\t");
+000252:                         arrayList.add(new Legend(stringArray[0], stringArray.length > 1 ? stringArray[1] : stringArray[0], stringArray.length > 2 ? Double.parseDouble(stringArray[2]) : 1.0));
+000253:                     }
+000254:                 }
+000255:             }
+000256:             catch (Throwable throwable) {
+000257:                 LegendarySpawnManager.report(throwable);
+000258:             }
+000259:         }
+000260:         return Collections.unmodifiableList(arrayList);
+000261:     }
+000262: 
+000263:     private static void report(Throwable throwable) {
+000264:         if (!errorLogged) {
+000265:             errorLogged = true;
+000266:             System.err.println("[SunlitCompatibleSkins] Legendary spawn system failed: " + String.valueOf(throwable));
+000267:             throwable.printStackTrace(System.err);
+000268:         }
+000269:     }
+000270: 
+000271:     private record Legend(String species, String display, double weight) {
+000272:     }
+000273: 
+000274:     private record SpawnResult(int x, int y, int z, String player) {
+000275:     }
+000276: }
+000277: 
+
+
+===== FILE: recovered-v0.4/decompiled-java/com/openai/sunlitskins/ReflectionUtil.java =====
+000001: /*
+000002:  * Decompiled with CFR 0.152.
+000003:  */
+000004: package com.openai.sunlitskins;
+000005: 
+000006: import java.lang.reflect.Field;
+000007: import java.lang.reflect.Method;
+000008: import java.util.ArrayList;
+000009: import java.util.Arrays;
+000010: import java.util.Collections;
+000011: import java.util.List;
+000012: import java.util.Map;
+000013: import java.util.concurrent.ConcurrentHashMap;
+000014: 
+000015: final class ReflectionUtil {
+000016:     private static final Map<String, Method> METHODS = new ConcurrentHashMap<String, Method>();
+000017:     private static final Map<String, Field> FIELDS = new ConcurrentHashMap<String, Field>();
+000018: 
+000019:     private ReflectionUtil() {
+000020:     }
+000021: 
+000022:     static Method method(Class<?> clazz, String string, String[] stringArray, int n) throws ReflectiveOperationException {
+000023:         String string2 = clazz.getName() + "#" + string;
+000024:         Method method = METHODS.get(string2);
+000025:         if (method != null) {
+000026:             return method;
+000027:         }
+000028:         for (String string3 : stringArray) {
+000029:             for (Method method2 : ReflectionUtil.allMethods(clazz)) {
+000030:                 if (!method2.getName().equals(string3) || method2.getParameterCount() != n) continue;
+000031:                 method2.setAccessible(true);
+000032:                 METHODS.put(string2, method2);
+000033:                 return method2;
+000034:             }
+000035:         }
+000036:         throw new NoSuchMethodException(string2 + " names=" + Arrays.toString(stringArray));
+000037:     }
+000038: 
+000039:     static Field field(Class<?> clazz, String string, String ... stringArray) throws ReflectiveOperationException {
+000040:         String string2 = clazz.getName() + "#" + string;
+000041:         Field field = FIELDS.get(string2);
+000042:         if (field != null) {
+000043:             return field;
+000044:         }
+000045:         for (Class<?> clazz2 = clazz; clazz2 != null; clazz2 = clazz2.getSuperclass()) {
+000046:             for (String string3 : stringArray) {
+000047:                 try {
+000048:                     Field field2 = clazz2.getDeclaredField(string3);
+000049:                     field2.setAccessible(true);
+000050:                     FIELDS.put(string2, field2);
+000051:                     return field2;
+000052:                 }
+000053:                 catch (NoSuchFieldException noSuchFieldException) {
+000054:                 }
+000055:             }
+000056:         }
+000057:         throw new NoSuchFieldException(string2);
+000058:     }
+000059: 
+000060:     static List<Method> allMethods(Class<?> clazz) {
+000061:         ArrayList<Method> arrayList = new ArrayList<Method>();
+000062:         for (Class<?> clazz2 = clazz; clazz2 != null; clazz2 = clazz2.getSuperclass()) {
+000063:             Collections.addAll(arrayList, clazz2.getDeclaredMethods());
+000064:         }
+000065:         Collections.addAll(arrayList, clazz.getMethods());
+000066:         return arrayList;
+000067:     }
+000068: }
+000069: 
+
+
+===== FILE: recovered-v0.4/decompiled-java/com/openai/sunlitskins/SpeciesFilteredSuggestions.java =====
+000001: /*
+000002:  * Decompiled with CFR 0.152.
+000003:  * 
+000004:  * Could not load the following classes:
+000005:  *  com.cobblemon.mod.common.pokemon.properties.PropertiesCompletionProvider
+000006:  *  com.mojang.brigadier.suggestion.Suggestion
+000007:  *  com.mojang.brigadier.suggestion.Suggestions
+000008:  *  com.mojang.brigadier.suggestion.SuggestionsBuilder
+000009:  */
+000010: package com.openai.sunlitskins;
+000011: 
+000012: import com.cobblemon.mod.common.pokemon.properties.PropertiesCompletionProvider;
+000013: import com.mojang.brigadier.suggestion.Suggestion;
+000014: import com.mojang.brigadier.suggestion.Suggestions;
+000015: import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+000016: import java.io.BufferedReader;
+000017: import java.io.InputStream;
+000018: import java.io.InputStreamReader;
+000019: import java.nio.charset.StandardCharsets;
+000020: import java.util.ArrayList;
+000021: import java.util.Collection;
+000022: import java.util.Collections;
+000023: import java.util.LinkedHashMap;
+000024: import java.util.LinkedHashSet;
+000025: import java.util.List;
+000026: import java.util.Locale;
+000027: import java.util.Map;
+000028: import java.util.Set;
+000029: import java.util.concurrent.CompletableFuture;
+000030: 
+000031: public final class SpeciesFilteredSuggestions {
+000032:     private static final Map<String, Set<String>> ALLOWED = SpeciesFilteredSuggestions.loadAllowed();
+000033:     private static volatile boolean errorLogged;
+000034: 
+000035:     private SpeciesFilteredSuggestions() {
+000036:     }
+000037: 
+000038:     public static List<String> initialKeys(PropertiesCompletionProvider propertiesCompletionProvider) {
+000039:         ArrayList<String> arrayList = new ArrayList<String>();
+000040:         for (String string : propertiesCompletionProvider.keys()) {
+000041:             if (SpeciesFilteredSuggestions.normalizedKey(string).startsWith("mythical_")) continue;
+000042:             arrayList.add(string);
+000043:         }
+000044:         return arrayList;
+000045:     }
+000046: 
+000047:     public static CompletableFuture<Suggestions> suggestKeys(PropertiesCompletionProvider propertiesCompletionProvider, String string, Collection<String> collection, SuggestionsBuilder suggestionsBuilder) {
+000048:         Set<String> set;
+000049:         String string2 = SpeciesFilteredSuggestions.findSpecies(suggestionsBuilder.getInput(), suggestionsBuilder.getStart());
+000050:         Set<String> set2 = set = string2 == null ? null : ALLOWED.get(string2);
+000051:         if (set == null) {
+000052:             return propertiesCompletionProvider.suggestKeys(string, collection, suggestionsBuilder);
+000053:         }
+000054:         SuggestionsBuilder suggestionsBuilder2 = new SuggestionsBuilder(suggestionsBuilder.getInput(), suggestionsBuilder.getStart());
+000055:         return propertiesCompletionProvider.suggestKeys(string, collection, suggestionsBuilder2).thenApply(suggestions -> {
+000056:             for (Suggestion suggestion : suggestions.getList()) {
+000057:                 String string = suggestion.getText();
+000058:                 String string2 = SpeciesFilteredSuggestions.normalizedKey(string);
+000059:                 if (string2.startsWith("mythical_") && !set.contains(string2)) continue;
+000060:                 suggestionsBuilder.suggest(string);
+000061:             }
+000062:             return suggestionsBuilder.build();
+000063:         });
+000064:     }
+000065: 
+000066:     private static String normalizedKey(String string) {
+000067:         int n;
+000068:         String string2 = string == null ? "" : string.trim().toLowerCase(Locale.ROOT);
+000069:         int n2 = string2.lastIndexOf(32);
+000070:         if (n2 >= 0) {
+000071:             string2 = string2.substring(n2 + 1);
+000072:         }
+000073:         if ((n = string2.indexOf(61)) >= 0) {
+000074:             string2 = string2.substring(0, n);
+000075:         }
+000076:         return string2;
+000077:     }
+000078: 
+000079:     private static String findSpecies(String string, int n) {
+000080:         if (string == null || string.isBlank()) {
+000081:             return null;
+000082:         }
+000083:         String[] stringArray = string.trim().split("\\s+");
+000084:         for (int i = stringArray.length - 1; i >= 0; --i) {
+000085:             String string2 = stringArray[i].trim().toLowerCase(Locale.ROOT);
+000086:             if (string2.isEmpty() || string2.indexOf(61) >= 0) continue;
+000087:             int n2 = string2.indexOf(58);
+000088:             if (n2 >= 0) {
+000089:                 string2 = string2.substring(n2 + 1);
+000090:             }
+000091:             if (!ALLOWED.containsKey(string2)) continue;
+000092:             return string2;
+000093:         }
+000094:         return null;
+000095:     }
+000096: 
+000097:     /*
+000098:      * Enabled aggressive block sorting
+000099:      * Enabled unnecessary exception pruning
+000100:      * Enabled aggressive exception aggregation
+000101:      */
+000102:     private static Map<String, Set<String>> loadAllowed() {
+000103:         LinkedHashMap linkedHashMap = new LinkedHashMap();
+000104:         try (InputStream inputStream = SpeciesFilteredSuggestions.class.getClassLoader().getResourceAsStream("META-INF/sunlitcompatible/appearance-variants.tsv");){
+000105:             if (inputStream == null) {
+000106:                 Map<String, Set<String>> map = Collections.emptyMap();
+000107:                 return map;
+000108:             }
+000109:             try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));){
+000110:                 String string;
+000111:                 while ((string = bufferedReader.readLine()) != null) {
+000112:                     String[] stringArray;
+000113:                     if (string.isBlank() || string.startsWith("#") || (stringArray = string.split("\\t", 2)).length != 2) continue;
+000114:                     LinkedHashSet<String> linkedHashSet = new LinkedHashSet<String>();
+000115:                     for (String string2 : stringArray[1].split(",")) {
+000116:                         String[] stringArray2 = string2.split(":", 2);
+000117:                         if (stringArray2.length <= 0 || !stringArray2[0].startsWith("mythical_")) continue;
+000118:                         linkedHashSet.add(stringArray2[0].toLowerCase(Locale.ROOT));
+000119:                     }
+000120:                     linkedHashMap.put(stringArray[0].toLowerCase(Locale.ROOT), Collections.unmodifiableSet(linkedHashSet));
+000121:                 }
+000122:                 return Collections.unmodifiableMap(linkedHashMap);
+000123:             }
+000124:         }
+000125:         catch (Throwable throwable) {
+000126:             SpeciesFilteredSuggestions.report(throwable);
+000127:         }
+000128:         return Collections.unmodifiableMap(linkedHashMap);
+000129:     }
+000130: 
+000131:     private static void report(Throwable throwable) {
+000132:         if (!errorLogged) {
+000133:             errorLogged = true;
+000134:             System.err.println("[SunlitCompatibleSkins] Could not load species-filtered autocomplete: " + String.valueOf(throwable));
+000135:             throwable.printStackTrace(System.err);
+000136:         }
+000137:     }
+000138: }
+000139: 
+
+
+===== FILE: recovered-v0.4/decompiled-java/com/openai/sunlitskins/SunlitSkinsConfig.java =====
+000001: /*
+000002:  * Decompiled with CFR 0.152.
+000003:  */
+000004: package com.openai.sunlitskins;
+000005: 
+000006: import java.nio.charset.StandardCharsets;
+000007: import java.nio.file.Files;
+000008: import java.nio.file.LinkOption;
+000009: import java.nio.file.Path;
+000010: import java.nio.file.StandardOpenOption;
+000011: import java.nio.file.attribute.FileAttribute;
+000012: import java.util.Collections;
+000013: import java.util.LinkedHashSet;
+000014: import java.util.List;
+000015: import java.util.Locale;
+000016: import java.util.Map;
+000017: import java.util.Set;
+000018: import java.util.concurrent.ConcurrentHashMap;
+000019: 
+000020: final class SunlitSkinsConfig {
+000021:     private static final Path PATH = Path.of("config", "sunlit-compatible-skins.toml");
+000022:     private static volatile SunlitSkinsConfig CURRENT = SunlitSkinsConfig.defaults();
+000023:     private static volatile long lastChecked;
+000024:     private static volatile long lastModified;
+000025:     boolean assignToWildPokemon = true;
+000026:     double normalChancePercent = 50.0;
+000027:     double legendaryNormalChancePercent = 50.0;
+000028:     boolean includeTextureVariants = true;
+000029:     boolean includeShaderEffects = true;
+000030:     Set<String> enabledFamilies = Set.of("*");
+000031:     boolean legendaryEnabled = true;
+000032:     int minimumOnlineMinutes = 60;
+000033:     int maximumOnlineMinutes = 240;
+000034:     int checkIntervalMinutes = 5;
+000035:     double initialCheckChancePercent = 2.0;
+000036:     double maximumCheckChancePercent = 25.0;
+000037:     boolean announceSpawns = true;
+000038:     boolean includeNearbyPlayerName = true;
+000039:     boolean includeCoordinates = false;
+000040:     int levelMin = 50;
+000041:     int levelMax = 70;
+000042:     final Map<String, Double> speciesWeights = new ConcurrentHashMap<String, Double>();
+000043: 
+000044:     SunlitSkinsConfig() {
+000045:     }
+000046: 
+000047:     /*
+000048:      * WARNING - Removed try catching itself - possible behaviour change.
+000049:      * Enabled force condition propagation
+000050:      * Lifted jumps to return sites
+000051:      */
+000052:     static SunlitSkinsConfig get() {
+000053:         long l = System.currentTimeMillis();
+000054:         if (l - lastChecked <= 30000L) return CURRENT;
+000055:         Class<SunlitSkinsConfig> clazz = SunlitSkinsConfig.class;
+000056:         synchronized (SunlitSkinsConfig.class) {
+000057:             if (l - lastChecked <= 30000L) return CURRENT;
+000058:             lastChecked = l;
+000059:             SunlitSkinsConfig.reloadIfChanged();
+000060:             // ** MonitorExit[var2_1] (shouldn't be in output)
+000061:             return CURRENT;
+000062:         }
+000063:     }
+000064: 
+000065:     private static SunlitSkinsConfig defaults() {
+000066:         return new SunlitSkinsConfig();
+000067:     }
+000068: 
+000069:     private static void reloadIfChanged() {
+000070:         try {
+000071:             SunlitSkinsConfig sunlitSkinsConfig;
+000072:             long l;
+000073:             if (!Files.exists(PATH, new LinkOption[0])) {
+000074:                 Files.createDirectories(PATH.getParent(), new FileAttribute[0]);
+000075:                 Files.writeString(PATH, (CharSequence)SunlitSkinsConfig.template(), StandardCharsets.UTF_8, StandardOpenOption.CREATE_NEW);
+000076:             }
+000077:             if ((l = Files.getLastModifiedTime(PATH, new LinkOption[0]).toMillis()) == lastModified) {
+000078:                 return;
+000079:             }
+000080:             CURRENT = sunlitSkinsConfig = SunlitSkinsConfig.parse(Files.readAllLines(PATH, StandardCharsets.UTF_8));
+000081:             lastModified = l;
+000082:             System.out.println("[SunlitCompatibleSkins] Loaded " + String.valueOf(PATH) + ". Wild appearances=" + sunlitSkinsConfig.assignToWildPokemon + ", normal chance=" + sunlitSkinsConfig.normalChancePercent + "%, legendary timer=" + sunlitSkinsConfig.legendaryEnabled + ".");
+000083:         }
+000084:         catch (Throwable throwable) {
+000085:             System.err.println("[SunlitCompatibleSkins] Could not load config; retaining previous values: " + String.valueOf(throwable));
+000086:         }
+000087:     }
+000088: 
+000089:     private static SunlitSkinsConfig parse(List<String> list) {
+000090:         SunlitSkinsConfig sunlitSkinsConfig = SunlitSkinsConfig.defaults();
+000091:         String string = "";
+000092:         for (String string2 : list) {
+000093:             String string3 = string2;
+000094:             int n = string3.indexOf(35);
+000095:             if (n >= 0) {
+000096:                 string3 = string3.substring(0, n);
+000097:             }
+000098:             if ((string3 = string3.trim()).isEmpty()) continue;
+000099:             if (string3.startsWith("[") && string3.endsWith("]")) {
+000100:                 string = string3.substring(1, string3.length() - 1).trim().toLowerCase(Locale.ROOT);
+000101:                 continue;
+000102:             }
+000103:             int n2 = string3.indexOf(61);
+000104:             if (n2 < 1) continue;
+000105:             String string4 = SunlitSkinsConfig.unquote(string3.substring(0, n2).trim()).toLowerCase(Locale.ROOT);
+000106:             String string5 = SunlitSkinsConfig.unquote(string3.substring(n2 + 1).trim());
+000107:             try {
+000108:                 switch (string) {
+000109:                     case "appearance_spawning": {
+000110:                         SunlitSkinsConfig.parseAppearance(sunlitSkinsConfig, string4, string5);
+000111:                         break;
+000112:                     }
+000113:                     case "legendary_spawning": {
+000114:                         SunlitSkinsConfig.parseLegendary(sunlitSkinsConfig, string4, string5);
+000115:                         break;
+000116:                     }
+000117:                     case "legendary_species_weights": {
+000118:                         sunlitSkinsConfig.speciesWeights.put(string4.replace("cobblemon:", ""), Math.max(0.0, Double.parseDouble(string5)));
+000119:                         break;
+000120:                     }
+000121:                 }
+000122:             }
+000123:             catch (RuntimeException runtimeException) {
+000124:                 System.err.println("[SunlitCompatibleSkins] Ignoring invalid config value: " + string2);
+000125:             }
+000126:         }
+000127:         if (sunlitSkinsConfig.maximumOnlineMinutes < sunlitSkinsConfig.minimumOnlineMinutes) {
+000128:             sunlitSkinsConfig.maximumOnlineMinutes = sunlitSkinsConfig.minimumOnlineMinutes;
+000129:         }
+000130:         if (sunlitSkinsConfig.levelMax < sunlitSkinsConfig.levelMin) {
+000131:             sunlitSkinsConfig.levelMax = sunlitSkinsConfig.levelMin;
+000132:         }
+000133:         return sunlitSkinsConfig;
+000134:     }
+000135: 
+000136:     private static void parseAppearance(SunlitSkinsConfig sunlitSkinsConfig, String string, String string2) {
+000137:         switch (string) {
+000138:             case "enabled": {
+000139:                 sunlitSkinsConfig.assignToWildPokemon = Boolean.parseBoolean(string2);
+000140:                 break;
+000141:             }
+000142:             case "normal_chance_percent": {
+000143:                 sunlitSkinsConfig.normalChancePercent = SunlitSkinsConfig.clampDouble(string2, 0.0, 100.0);
+000144:                 break;
+000145:             }
+000146:             case "legendary_normal_chance_percent": {
+000147:                 sunlitSkinsConfig.legendaryNormalChancePercent = SunlitSkinsConfig.clampDouble(string2, 0.0, 100.0);
+000148:                 break;
+000149:             }
+000150:             case "include_texture_variants": {
+000151:                 sunlitSkinsConfig.includeTextureVariants = Boolean.parseBoolean(string2);
+000152:                 break;
+000153:             }
+000154:             case "include_shader_effects": {
+000155:                 sunlitSkinsConfig.includeShaderEffects = Boolean.parseBoolean(string2);
+000156:                 break;
+000157:             }
+000158:             case "enabled_variant_families": {
+000159:                 LinkedHashSet<String> linkedHashSet = new LinkedHashSet<String>();
+000160:                 for (String string3 : string2.split(",")) {
+000161:                     if (string3.isBlank()) continue;
+000162:                     linkedHashSet.add(string3.trim().toLowerCase(Locale.ROOT));
+000163:                 }
+000164:                 sunlitSkinsConfig.enabledFamilies = linkedHashSet.isEmpty() ? Set.of("*") : Collections.unmodifiableSet(linkedHashSet);
+000165:                 break;
+000166:             }
+000167:         }
+000168:     }
+000169: 
+000170:     private static void parseLegendary(SunlitSkinsConfig sunlitSkinsConfig, String string, String string2) {
+000171:         switch (string) {
+000172:             case "enabled": {
+000173:                 sunlitSkinsConfig.legendaryEnabled = Boolean.parseBoolean(string2);
+000174:                 break;
+000175:             }
+000176:             case "minimum_online_minutes": {
+000177:                 sunlitSkinsConfig.minimumOnlineMinutes = SunlitSkinsConfig.clampInt(string2, 1, 10080);
+000178:                 break;
+000179:             }
+000180:             case "maximum_online_minutes": {
+000181:                 sunlitSkinsConfig.maximumOnlineMinutes = SunlitSkinsConfig.clampInt(string2, 1, 10080);
+000182:                 break;
+000183:             }
+000184:             case "check_interval_minutes": {
+000185:                 sunlitSkinsConfig.checkIntervalMinutes = SunlitSkinsConfig.clampInt(string2, 1, 240);
+000186:                 break;
+000187:             }
+000188:             case "initial_check_chance_percent": {
+000189:                 sunlitSkinsConfig.initialCheckChancePercent = SunlitSkinsConfig.clampDouble(string2, 0.0, 100.0);
+000190:                 break;
+000191:             }
+000192:             case "maximum_check_chance_percent": {
+000193:                 sunlitSkinsConfig.maximumCheckChancePercent = SunlitSkinsConfig.clampDouble(string2, 0.0, 100.0);
+000194:                 break;
+000195:             }
+000196:             case "announce_spawns": {
+000197:                 sunlitSkinsConfig.announceSpawns = Boolean.parseBoolean(string2);
+000198:                 break;
+000199:             }
+000200:             case "include_nearby_player_name": {
+000201:                 sunlitSkinsConfig.includeNearbyPlayerName = Boolean.parseBoolean(string2);
+000202:                 break;
+000203:             }
+000204:             case "include_coordinates": {
+000205:                 sunlitSkinsConfig.includeCoordinates = Boolean.parseBoolean(string2);
+000206:                 break;
+000207:             }
+000208:             case "level_min": {
+000209:                 sunlitSkinsConfig.levelMin = SunlitSkinsConfig.clampInt(string2, 1, 100);
+000210:                 break;
+000211:             }
+000212:             case "level_max": {
+000213:                 sunlitSkinsConfig.levelMax = SunlitSkinsConfig.clampInt(string2, 1, 100);
+000214:                 break;
+000215:             }
+000216:         }
+000217:     }
+000218: 
+000219:     double weightFor(String string, double d) {
+000220:         return this.speciesWeights.getOrDefault(string, d);
+000221:     }
+000222: 
+000223:     boolean familyEnabled(String string) {
+000224:         if (this.enabledFamilies.contains("*")) {
+000225:             return true;
+000226:         }
+000227:         String string2 = string.toLowerCase(Locale.ROOT);
+000228:         return this.enabledFamilies.contains(string2) || this.enabledFamilies.contains(string2.replace("mythical_", ""));
+000229:     }
+000230: 
+000231:     private static String unquote(String string) {
+000232:         if ((string = string.trim()).length() >= 2 && (string.startsWith("\"") && string.endsWith("\"") || string.startsWith("'") && string.endsWith("'"))) {
+000233:             return string.substring(1, string.length() - 1);
+000234:         }
+000235:         return string;
+000236:     }
+000237: 
+000238:     private static int clampInt(String string, int n, int n2) {
+000239:         return Math.max(n, Math.min(n2, Integer.parseInt(string)));
+000240:     }
+000241: 
+000242:     private static double clampDouble(String string, double d, double d2) {
+000243:         return Math.max(d, Math.min(d2, Double.parseDouble(string)));
+000244:     }
+000245: 
+000246:     static String template() {
+000247:         return "# Sunlit Compatible Skins server configuration.\n# Changes reload automatically within about 30 seconds.\n\n[appearance_spawning]\n# Assign a valid appearance to naturally created wild Pokemon.\nenabled = true\n# The remaining percentage is divided evenly among valid enabled appearances.\nnormal_chance_percent = 50.0\nlegendary_normal_chance_percent = 50.0\ninclude_texture_variants = true\ninclude_shader_effects = true\n# Comma-separated names such as blazing,twilight,galaxy, or * for everything.\nenabled_variant_families = \"*\"\n\n[legendary_spawning]\nenabled = true\n# The timer advances only while at least one player is online.\nminimum_online_minutes = 60\nmaximum_online_minutes = 240\ncheck_interval_minutes = 5\ninitial_check_chance_percent = 2.0\nmaximum_check_chance_percent = 25.0\nannounce_spawns = true\ninclude_nearby_player_name = true\ninclude_coordinates = false\nlevel_min = 50\nlevel_max = 70\n\n[legendary_species_weights]\n# Optional relative weights. Zero disables a species.\n# Native supported scheduler species: articuno, ironleaves, mew, mewtwo,\n# moltres, rayquaza, walkingwake, xerneas, and zapdos.\n# mew = 0.25\n# moltres = 1.0\n";
+000248:     }
+000249: 
+000250:     static {
+000251:         lastModified = Long.MIN_VALUE;
+000252:     }
+000253: }
+000254: 
+
+
+===== FILE: src/bridge/java/com/openai/mythicalbridge/EffectRenderTypeFactory.java =====
+000001: package com.openai.mythicalbridge;
+000002: 
+000003: import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+000004: import com.mojang.blaze3d.vertex.VertexFormat;
+000005: import java.util.concurrent.ConcurrentHashMap;
+000006: import net.minecraft.client.renderer.RenderStateShard;
+000007: import net.minecraft.client.renderer.RenderType;
+000008: import net.minecraft.resources.ResourceLocation;
+000009: 
+000010: /** Produces one cached entity-cutout RenderType per texture/effect pair. */
+000011: public final class EffectRenderTypeFactory {
+000012:     private static final ConcurrentHashMap<String, RenderType> CACHE = new ConcurrentHashMap<>();
+000013: 
+000014:     private EffectRenderTypeFactory() {}
+000015: 
+000016:     public static RenderType cutout(ResourceLocation texture, int effectId) {
+000017:         String key = texture.toString() + "\u0000" + effectId;
+000018:         return CACHE.computeIfAbsent(key, ignored -> createCutout(texture, effectId));
+000019:     }
+000020: 
+000021:     private static RenderType createCutout(ResourceLocation texture, int effectId) {
+000022:         RenderType.CompositeState state = RenderType.CompositeState.m_110628_()
+000023:             .m_173292_(RenderStateShard.f_173113_)
+000024:             .m_173290_(new RenderStateShard.TextureStateShard(texture, false, false))
+000025:             .m_110685_(RenderStateShard.f_110134_)
+000026:             .m_110671_(RenderStateShard.f_110152_)
+000027:             .m_110677_(RenderStateShard.f_110154_)
+000028:             .m_110683_(new EffectTexturingState(effectId))
+000029:             .m_110691_(true);
+000030: 
+000031:         RenderType result = RenderType.m_173215_(
+000032:             "mythical_effect_entity_cutout_" + effectId,
+000033:             DefaultVertexFormat.f_85812_,
+000034:             VertexFormat.Mode.QUADS,
+000035:             256,
+000036:             true,
+000037:             false,
+000038:             state
+000039:         );
+000040:         System.out.println("[MythicalEffectsBridge/V4] Created effect RenderType id=" + effectId
+000041:             + " texture=" + texture + ".");
+000042:         return result;
+000043:     }
+000044: }
+
+
+===== FILE: src/bridge/java/com/openai/mythicalbridge/EffectTexturingState.java =====
+000001: package com.openai.mythicalbridge;
+000002: 
+000003: import net.minecraft.client.renderer.RenderStateShard;
+000004: 
+000005: /** Render-state shard whose setup/clear runs when Minecraft draws the batch, not when it queues vertices. */
+000006: public final class EffectTexturingState extends RenderStateShard.TexturingStateShard {
+000007:     public EffectTexturingState(int effectId) {
+000008:         super("mythical_effect_" + effectId,
+000009:             () -> OculusEffectState.set(effectId),
+000010:             () -> OculusEffectState.set(0));
+000011:     }
+000012: }
+
+
+===== FILE: src/bridge/java/com/openai/mythicalbridge/OculusEffectState.java =====
+000001: package com.openai.mythicalbridge;
+000002: 
+000003: import java.lang.reflect.Method;
+000004: 
+000005: /** Draw-time connection from a custom Minecraft RenderType to Oculus' dynamic uniform. */
+000006: public final class OculusEffectState {
+000007:     private static volatile Method setter;
+000008:     private static volatile boolean lookupDone;
+000009:     private static volatile boolean failureReported;
+000010:     private static volatile boolean firstSetLogged;
+000011: 
+000012:     private OculusEffectState() {}
+000013: 
+000014:     public static void set(int effectId) {
+000015:         int value = effectId >= 1 && effectId <= 7 ? effectId : 0;
+000016:         Method method = setter;
+000017:         if (!lookupDone) {
+000018:             synchronized (OculusEffectState.class) {
+000019:                 if (!lookupDone) {
+000020:                     try {
+000021:                         Class<?> bridge = Class.forName("net.irisshaders.iris.uniforms.CobblemonBridge");
+000022:                         method = bridge.getMethod("setEffectForEntity", int.class);
+000023:                         setter = method;
+000024:                         System.out.println("[MythicalEffectsBridge/V4] Connected draw-time RenderType state to Oculus.");
+000025:                     } catch (Throwable t) {
+000026:                         report("Could not connect to Oculus CobblemonBridge", t);
+000027:                     } finally {
+000028:                         lookupDone = true;
+000029:                     }
+000030:                 }
+000031:             }
+000032:         }
+000033:         if (method != null) {
+000034:             try {
+000035:                 method.invoke(null, value);
+000036:                 if (!firstSetLogged && value > 0) {
+000037:                     firstSetLogged = true;
+000038:                     System.out.println("[MythicalEffectsBridge/V4] First effect activated at actual batch draw time; id=" + value + ".");
+000039:                 }
+000040:             } catch (Throwable t) {
+000041:                 report("Could not update Oculus effect state", t);
+000042:             }
+000043:         }
+000044:     }
+000045: 
+000046:     private static void report(String message, Throwable t) {
+000047:         if (!failureReported) {
+000048:             failureReported = true;
+000049:             System.err.println("[MythicalEffectsBridge/V4] " + message + ": " + t);
+000050:             t.printStackTrace(System.err);
+000051:         }
+000052:     }
+000053: }
+
+
+===== FILE: src/bridge/java/com/openai/mythicalbridge/RenderTypeBridge.java =====
+000001: package com.openai.mythicalbridge;
+000002: 
+000003: import java.lang.reflect.Method;
+000004: import java.util.Locale;
+000005: import java.util.Set;
+000006: import java.util.concurrent.ConcurrentHashMap;
+000007: import net.minecraft.client.renderer.RenderType;
+000008: import net.minecraft.resources.ResourceLocation;
+000009: 
+000010: /**
+000011:  * Mirrors Mythical's real approach: select a custom RenderType from the Pokémon aspect,
+000012:  * then let that RenderType set/clear the uniform at actual draw time.
+000013:  */
+000014: public final class RenderTypeBridge {
+000015:     private static final ThreadLocal<Object> CURRENT_ENTITY = new ThreadLocal<>();
+000016:     private static final ConcurrentHashMap<Class<?>, Method> ASPECT_METHODS = new ConcurrentHashMap<>();
+000017:     private static final ConcurrentHashMap<Class<?>, Method> INVOKE_METHODS = new ConcurrentHashMap<>();
+000018:     private static final Set<String> REPORTED = ConcurrentHashMap.newKeySet();
+000019:     private static volatile boolean failureReported;
+000020: 
+000021:     private RenderTypeBridge() {}
+000022: 
+000023:     public static void setCurrentEntity(Object entity) {
+000024:         if (entity == null) CURRENT_ENTITY.remove();
+000025:         else CURRENT_ENTITY.set(entity);
+000026:     }
+000027: 
+000028:     public static void clearCurrentEntity() {
+000029:         CURRENT_ENTITY.remove();
+000030:     }
+000031: 
+000032:     public static RenderType choose(Object originalFunction, ResourceLocation texture) {
+000033:         Object entity = CURRENT_ENTITY.get();
+000034:         int effectId = effectFor(entity);
+000035:         if (effectId > 0) {
+000036:             String marker = effectId + ":" + (entity == null ? "null" : entity.getClass().getName());
+000037:             if (REPORTED.add(marker)) {
+000038:                 System.out.println("[MythicalEffectsBridge/V4] Selected effect id " + effectId
+000039:                     + " from synchronized Pokémon aspects; using a draw-time custom RenderType.");
+000040:             }
+000041:             return EffectRenderTypeFactory.cutout(texture, effectId);
+000042:         }
+000043:         return invokeOriginal(originalFunction, texture);
+000044:     }
+000045: 
+000046:     private static RenderType invokeOriginal(Object function, ResourceLocation texture) {
+000047:         if (function == null) return null;
+000048:         try {
+000049:             Method invoke = INVOKE_METHODS.computeIfAbsent(function.getClass(), type -> {
+000050:                 try {
+000051:                     Method m = type.getMethod("invoke", Object.class);
+000052:                     m.setAccessible(true);
+000053:                     return m;
+000054:                 } catch (ReflectiveOperationException e) {
+000055:                     throw new MethodLookupFailure(e);
+000056:                 }
+000057:             });
+000058:             return (RenderType) invoke.invoke(function, texture);
+000059:         } catch (Throwable t) {
+000060:             Throwable cause = t instanceof MethodLookupFailure && t.getCause() != null ? t.getCause() : t;
+000061:             report("Could not invoke Cobblemon's original RenderType selector", cause);
+000062:             return null;
+000063:         }
+000064:     }
+000065: 
+000066:     private static int effectFor(Object entity) {
+000067:         if (entity == null) return 0;
+000068:         try {
+000069:             Method getAspects = ASPECT_METHODS.computeIfAbsent(entity.getClass(), type -> {
+000070:                 try {
+000071:                     Method m = type.getMethod("getAspects");
+000072:                     m.setAccessible(true);
+000073:                     return m;
+000074:                 } catch (ReflectiveOperationException e) {
+000075:                     throw new MethodLookupFailure(e);
+000076:                 }
+000077:             });
+000078:             Object raw = getAspects.invoke(entity);
+000079:             if (!(raw instanceof Iterable<?> aspects)) return 0;
+000080: 
+000081:             for (Object value : aspects) {
+000082:                 if (value == null) continue;
+000083:                 String aspect = value.toString().toLowerCase(Locale.ROOT);
+000084:                 switch (aspect) {
+000085:                     case "mythical_radiant", "radiant": return 1;
+000086:                     case "mythical_magma", "magma": return 2;
+000087:                     case "mythical_glitch", "glitch": return 3;
+000088:                     case "mythical_galaxy", "galaxy": return 4;
+000089:                     case "mythical_matrix", "matrix": return 5;
+000090:                     case "mythical_fireworks", "mythical_firework", "fireworks", "firework": return 6;
+000091:                     case "mythical_holographic", "holographic": return 7;
+000092:                     default: { }
+000093:                 }
+000094:             }
+000095:         } catch (Throwable t) {
+000096:             Throwable cause = t instanceof MethodLookupFailure && t.getCause() != null ? t.getCause() : t;
+000097:             report("Could not inspect Pokémon aspects", cause);
+000098:         }
+000099:         return 0;
+000100:     }
+000101: 
+000102:     private static void report(String message, Throwable t) {
+000103:         if (!failureReported) {
+000104:             failureReported = true;
+000105:             System.err.println("[MythicalEffectsBridge/V4] " + message + ": " + t);
+000106:             t.printStackTrace(System.err);
+000107:         }
+000108:     }
+000109: 
+000110:     private static final class MethodLookupFailure extends RuntimeException {
+000111:         MethodLookupFailure(Throwable cause) { super(cause); }
+000112:     }
+000113: }
+
+
+===== FILE: src/bridge/java/com/openai/mythicaloculus/OculusUniformHook.java =====
+000001: package com.openai.mythicaloculus;
+000002: 
+000003: import java.lang.reflect.Field;
+000004: import java.lang.reflect.Method;
+000005: import java.util.concurrent.atomic.AtomicInteger;
+000006: import java.util.function.IntSupplier;
+000007: import net.irisshaders.iris.uniforms.CobblemonBridge;
+000008: 
+000009: /** Registers cobblemon_effectType with every Oculus dynamic-uniform holder. */
+000010: public final class OculusUniformHook {
+000011:     private static volatile boolean failureReported;
+000012:     private static final AtomicInteger REGISTRATIONS = new AtomicInteger();
+000013: 
+000014:     private OculusUniformHook() {}
+000015: 
+000016:     public static void register(Object holder) {
+000017:         if (holder == null) return;
+000018:         try {
+000019:             Class<?> holderType = Class.forName("net.irisshaders.iris.gl.uniform.DynamicUniformHolder");
+000020:             Class<?> notifierType = Class.forName("net.irisshaders.iris.gl.state.ValueUpdateNotifier");
+000021:             Class<?> notifiers = Class.forName("net.irisshaders.iris.gl.state.StateUpdateNotifiers");
+000022:             Field field = notifiers.getField("fallbackEntityNotifier");
+000023:             Object notifier = field.get(null);
+000024:             Method uniform1i = holderType.getMethod("uniform1i", String.class, IntSupplier.class, notifierType);
+000025:             IntSupplier supplier = CobblemonBridge::getEffectForEntity;
+000026:             uniform1i.invoke(holder, "cobblemon_effectType", supplier, notifier);
+000027:             int count = REGISTRATIONS.incrementAndGet();
+000028:             if (count <= 3) {
+000029:                 System.out.println("[MythicalEffectsBridge/V4] Registered cobblemon_effectType on Oculus holder #" + count + ".");
+000030:             }
+000031:         } catch (Throwable t) {
+000032:             if (!failureReported) {
+000033:                 failureReported = true;
+000034:                 System.err.println("[MythicalEffectsBridge/V4] Could not register Oculus uniform: " + t);
+000035:                 t.printStackTrace(System.err);
+000036:             }
+000037:         }
+000038:     }
+000039: }
+
+
+===== FILE: src/bridge/java/net/irisshaders/iris/uniforms/CobblemonBridge.java =====
+000001: package net.irisshaders.iris.uniforms;
+000002: 
+000003: import net.irisshaders.iris.layer.GbufferPrograms;
+000004: 
+000005: /** Shared draw-time effect state read by Oculus' dynamic uniform supplier. */
+000006: public final class CobblemonBridge {
+000007:     private static volatile int effectId;
+000008:     private static volatile boolean firstChangeLogged;
+000009: 
+000010:     private CobblemonBridge() {}
+000011: 
+000012:     public static void setEffectForEntity(int id) {
+000013:         int next = id >= 1 && id <= 7 ? id : 0;
+000014:         if (effectId == next) return;
+000015:         effectId = next;
+000016:         GbufferPrograms.runFallbackEntityListener();
+000017:         if (!firstChangeLogged && next > 0) {
+000018:             firstChangeLogged = true;
+000019:             System.out.println("[MythicalEffectsBridge/V4] Oculus dynamic uniform changed; first active value=" + next + ".");
+000020:         }
+000021:     }
+000022: 
+000023:     public static int getEffectForEntity() {
+000024:         return effectId;
+000025:     }
+000026: }
+
+
+===== FILE: src/main/java/com/openai/sunlitskins/AppearanceManager.java =====
+000001: package com.openai.sunlitskins;
+000002: 
+000003: import java.io.*;
+000004: import java.nio.charset.StandardCharsets;
+000005: import java.util.*;
+000006: import java.util.concurrent.ThreadLocalRandom;
+000007: 
+000008: public final class AppearanceManager {
+000009:     public static final String TAG = "sunlitcompatible_appearance";
+000010:     private static final Map<String,List<Variant>> VARIANTS=loadVariants();
+000011:     private static final Set<String> RECOGNIZED=recognized();
+000012:     private static volatile boolean errorLogged;
+000013:     private AppearanceManager() {}
+000014: 
+000015:     public static void onAssigned(Object entity,Object pokemon) {
+000016:         if(entity==null||pokemon==null)return;
+000017:         try {
+000018:             if(isClient(entity)){restorePersistentAspect(pokemon);return;}
+000019:             String existing=readPersistent(pokemon);
+000020:             if(!existing.isBlank()){addAspects(pokemon,existing);return;}
+000021:             Set<String> current=aspects(pokemon);
+000022:             ArrayList<String> supplied=new ArrayList<>();
+000023:             for(String a:current)if(RECOGNIZED.contains(normalize(a)))supplied.add(normalize(a));
+000024:             if(!supplied.isEmpty()){String value=String.join(",",supplied);writePersistent(pokemon,value);addAspects(pokemon,value);return;}
+000025:             SunlitSkinsConfig cfg=SunlitSkinsConfig.get();
+000026:             if(!cfg.assignToWildPokemon)return;
+000027:             boolean wild=(Boolean)ReflectionUtil.method(pokemon.getClass(),"isWild",new String[]{"isWild"},0).invoke(pokemon);
+000028:             if(!wild)return;
+000029:             String species=speciesName(pokemon);
+000030:             List<Variant> options=VARIANTS.getOrDefault(species,List.of());
+000031:             if(options.isEmpty())return;
+000032:             ArrayList<Variant> enabled=new ArrayList<>();
+000033:             for(Variant v:options){
+000034:                 if(v.shader&&!cfg.includeShaderEffects)continue;
+000035:                 if(!v.shader&&!cfg.includeTextureVariants)continue;
+000036:                 if(!cfg.familyEnabled(v.aspect))continue;
+000037:                 enabled.add(v);
+000038:             }
+000039:             if(enabled.isEmpty()||ThreadLocalRandom.current().nextDouble(100.0)<cfg.normalChancePercent)return;
+000040:             Variant chosen=enabled.get(ThreadLocalRandom.current().nextInt(enabled.size()));
+000041:             writePersistent(pokemon,chosen.aspect); addAspects(pokemon,chosen.aspect);
+000042:         } catch(Throwable t){report("appearance assignment",t);}
+000043:     }
+000044: 
+000045:     public static void restorePersistentAspect(Object pokemon) {
+000046:         if(pokemon==null)return;
+000047:         try {String value=readPersistent(pokemon);if(!value.isBlank())addAspects(pokemon,value);} catch(Throwable t){report("appearance restoration",t);}
+000048:     }
+000049: 
+000050:     private static boolean isClient(Object entity)throws Exception {
+000051:         Object level=ReflectionUtil.method(entity.getClass(),"level",new String[]{"m_9236_","level"},0).invoke(entity);
+000052:         try{return ReflectionUtil.field(level.getClass(),"isClientSide","f_46443_","isClientSide").getBoolean(level);}catch(Throwable ignored){return false;}
+000053:     }
+000054:     private static String speciesName(Object pokemon)throws Exception {
+000055:         Object species=ReflectionUtil.method(pokemon.getClass(),"getSpecies",new String[]{"getSpecies"},0).invoke(pokemon);
+000056:         Object id=ReflectionUtil.method(species.getClass(),"getResourceIdentifier",new String[]{"getResourceIdentifier"},0).invoke(species);
+000057:         String s=String.valueOf(id).toLowerCase(Locale.ROOT);int colon=s.indexOf(':');return colon>=0?s.substring(colon+1):s;
+000058:     }
+000059:     @SuppressWarnings("unchecked") private static Set<String> aspects(Object pokemon)throws Exception {
+000060:         Object raw=ReflectionUtil.method(pokemon.getClass(),"getAspects",new String[]{"getAspects"},0).invoke(pokemon);
+000061:         return raw instanceof Set<?>?(Set<String>)raw:Set.of();
+000062:     }
+000063:     private static void addAspects(Object pokemon,String csv)throws Exception {
+000064:         LinkedHashSet<String> set=new LinkedHashSet<>(aspects(pokemon));
+000065:         for(String a:csv.split(","))if(!a.isBlank())set.add(normalize(a));
+000066:         ReflectionUtil.method(pokemon.getClass(),"setAspects",new String[]{"setAspects"},1).invoke(pokemon,set);
+000067:     }
+000068:     private static Object tag(Object pokemon)throws Exception{return ReflectionUtil.method(pokemon.getClass(),"getPersistentData",new String[]{"getPersistentData"},0).invoke(pokemon);}
+000069:     private static String readPersistent(Object pokemon)throws Exception {
+000070:         Object t=tag(pokemon);if(t==null)return "";
+000071:         for(String n:new String[]{"getString","m_128461_"})try{return String.valueOf(ReflectionUtil.method(t.getClass(),"tagGetString",new String[]{n},1).invoke(t,TAG));}catch(Throwable ignored){}
+000072:         return "";
+000073:     }
+000074:     private static void writePersistent(Object pokemon,String value)throws Exception {
+000075:         Object t=tag(pokemon);if(t==null)return;
+000076:         for(String n:new String[]{"putString","m_128359_"})try{ReflectionUtil.method(t.getClass(),"tagPutString",new String[]{n},2).invoke(t,TAG,value);return;}catch(Throwable ignored){}
+000077:         throw new NoSuchMethodException("CompoundTag.putString");
+000078:     }
+000079:     private static String normalize(String a){String s=a.toLowerCase(Locale.ROOT).trim();if(s.equals("radar_spawned"))return "mythical_holographic";if(s.equals("mythical_fireworks"))return "mythical_firework";return s;}
+000080:     private static Map<String,List<Variant>> loadVariants(){
+000081:         LinkedHashMap<String,List<Variant>>map=new LinkedHashMap<>();
+000082:         try(InputStream in=AppearanceManager.class.getClassLoader().getResourceAsStream("META-INF/sunlitcompatible/appearance-variants.tsv")){
+000083:             if(in==null)return Map.of();
+000084:             try(BufferedReader r=new BufferedReader(new InputStreamReader(in,StandardCharsets.UTF_8))){String line;while((line=r.readLine())!=null){
+000085:                 if(line.isBlank()||line.startsWith("#"))continue;String[]p=line.split("\\t",2);if(p.length<2)continue;
+000086:                 ArrayList<Variant>list=new ArrayList<>();for(String token:p[1].split(",")){String[]v=token.split(":",2);if(v.length==2)list.add(new Variant(normalize(v[0]),v[1].equals("shader")));}
+000087:                 map.put(p[0],Collections.unmodifiableList(list));
+000088:             }}
+000089:         }catch(Throwable t){report("variant table load",t);}
+000090:         return Collections.unmodifiableMap(map);
+000091:     }
+000092:     private static Set<String> recognized(){LinkedHashSet<String>s=new LinkedHashSet<>();for(List<Variant>l:VARIANTS.values())for(Variant v:l)s.add(v.aspect);return Collections.unmodifiableSet(s);}
+000093:     private static void report(String where,Throwable t){if(!errorLogged){errorLogged=true;System.err.println("[SunlitCompatibleSkins] Failed during "+where+": "+t);t.printStackTrace(System.err);}}
+000094:     private record Variant(String aspect,boolean shader){}
+000095: }
+
+
+===== FILE: src/main/java/com/openai/sunlitskins/ReflectionUtil.java =====
+000001: package com.openai.sunlitskins;
+000002: 
+000003: import java.lang.reflect.*;
+000004: import java.util.*;
+000005: import java.util.concurrent.ConcurrentHashMap;
+000006: 
+000007: final class ReflectionUtil {
+000008:     private static final Map<String, Method> METHODS = new ConcurrentHashMap<>();
+000009:     private static final Map<String, Field> FIELDS = new ConcurrentHashMap<>();
+000010:     private ReflectionUtil() {}
+000011: 
+000012:     static Method method(Class<?> type, String cacheKey, String[] names, int params) throws ReflectiveOperationException {
+000013:         String key = type.getName() + "#" + cacheKey;
+000014:         Method cached = METHODS.get(key); if (cached != null) return cached;
+000015:         for (String name : names) {
+000016:             for (Method m : allMethods(type)) {
+000017:                 if (m.getName().equals(name) && m.getParameterCount() == params) {
+000018:                     m.setAccessible(true); METHODS.put(key, m); return m;
+000019:                 }
+000020:             }
+000021:         }
+000022:         throw new NoSuchMethodException(key + " names=" + Arrays.toString(names));
+000023:     }
+000024: 
+000025:     static Field field(Class<?> type, String cacheKey, String... names) throws ReflectiveOperationException {
+000026:         String key = type.getName() + "#" + cacheKey;
+000027:         Field cached = FIELDS.get(key); if (cached != null) return cached;
+000028:         for (Class<?> c=type;c!=null;c=c.getSuperclass()) {
+000029:             for(String n:names) try {
+000030:                 Field f=c.getDeclaredField(n); f.setAccessible(true); FIELDS.put(key,f); return f;
+000031:             } catch(NoSuchFieldException ignored) {}
+000032:         }
+000033:         throw new NoSuchFieldException(key);
+000034:     }
+000035: 
+000036:     static List<Method> allMethods(Class<?> type) {
+000037:         ArrayList<Method> out=new ArrayList<>();
+000038:         for(Class<?> c=type;c!=null;c=c.getSuperclass()) Collections.addAll(out,c.getDeclaredMethods());
+000039:         Collections.addAll(out,type.getMethods());
+000040:         return out;
+000041:     }
+000042: }
+
+
+===== FILE: src/main/java/com/openai/sunlitskins/SpeciesFilteredSuggestions.java =====
+000001: package com.openai.sunlitskins;
+000002: 
+000003: import com.cobblemon.mod.common.pokemon.properties.PropertiesCompletionProvider;
+000004: import com.mojang.brigadier.suggestion.Suggestion;
+000005: import com.mojang.brigadier.suggestion.Suggestions;
+000006: import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+000007: 
+000008: import java.io.BufferedReader;
+000009: import java.io.InputStream;
+000010: import java.io.InputStreamReader;
+000011: import java.nio.charset.StandardCharsets;
+000012: import java.util.Collection;
+000013: import java.util.Collections;
+000014: import java.util.LinkedHashMap;
+000015: import java.util.LinkedHashSet;
+000016: import java.util.Locale;
+000017: import java.util.Map;
+000018: import java.util.ArrayList;
+000019: import java.util.List;
+000020: import java.util.Set;
+000021: import java.util.concurrent.CompletableFuture;
+000022: 
+000023: /** Filters only the custom mythical_* completion keys by the species already typed. */
+000024: public final class SpeciesFilteredSuggestions {
+000025:     private static final Map<String, Set<String>> ALLOWED = loadAllowed();
+000026:     private static volatile boolean errorLogged;
+000027: 
+000028:     private SpeciesFilteredSuggestions() {}
+000029: 
+000030: 
+000031:     /** Hide custom appearance flags until a species has been entered. */
+000032:     public static List<String> initialKeys(PropertiesCompletionProvider provider) {
+000033:         ArrayList<String> result = new ArrayList<>();
+000034:         for (String key : provider.keys()) {
+000035:             if (!normalizedKey(key).startsWith("mythical_")) result.add(key);
+000036:         }
+000037:         return result;
+000038:     }
+000039: 
+000040:     public static CompletableFuture<Suggestions> suggestKeys(
+000041:         PropertiesCompletionProvider provider,
+000042:         String partialKey,
+000043:         Collection<String> excludedKeys,
+000044:         SuggestionsBuilder builder
+000045:     ) {
+000046:         String species = findSpecies(builder.getInput(), builder.getStart());
+000047:         Set<String> allowed = species == null ? null : ALLOWED.get(species);
+000048:         if (allowed == null) {
+000049:             return provider.suggestKeys(partialKey, excludedKeys, builder);
+000050:         }
+000051: 
+000052:         // Use a temporary builder so global mythical suggestions can be discarded
+000053:         // without touching all of Cobblemon's ordinary property completions.
+000054:         SuggestionsBuilder temporary = new SuggestionsBuilder(builder.getInput(), builder.getStart());
+000055:         return provider.suggestKeys(partialKey, excludedKeys, temporary).thenApply(suggestions -> {
+000056:             for (Suggestion suggestion : suggestions.getList()) {
+000057:                 String text = suggestion.getText();
+000058:                 String key = normalizedKey(text);
+000059:                 if (!key.startsWith("mythical_") || allowed.contains(key)) {
+000060:                     builder.suggest(text);
+000061:                 }
+000062:             }
+000063:             return builder.build();
+000064:         });
+000065:     }
+000066: 
+000067:     private static String normalizedKey(String suggestion) {
+000068:         String value = suggestion == null ? "" : suggestion.trim().toLowerCase(Locale.ROOT);
+000069:         int space = value.lastIndexOf(' ');
+000070:         if (space >= 0) value = value.substring(space + 1);
+000071:         int eq = value.indexOf('=');
+000072:         if (eq >= 0) value = value.substring(0, eq);
+000073:         return value;
+000074:     }
+000075: 
+000076:     private static String findSpecies(String input, int completionStart) {
+000077:         if (input == null || input.isBlank()) return null;
+000078:         String[] tokens = input.trim().split("\\s+");
+000079:         for (int i = tokens.length - 1; i >= 0; i--) {
+000080:             String token = tokens[i].trim().toLowerCase(Locale.ROOT);
+000081:             if (token.isEmpty() || token.indexOf('=') >= 0) continue;
+000082:             int colon = token.indexOf(':');
+000083:             if (colon >= 0) token = token.substring(colon + 1);
+000084:             if (ALLOWED.containsKey(token)) return token;
+000085:         }
+000086:         return null;
+000087:     }
+000088: 
+000089:     private static Map<String, Set<String>> loadAllowed() {
+000090:         LinkedHashMap<String, Set<String>> result = new LinkedHashMap<>();
+000091:         try (InputStream in = SpeciesFilteredSuggestions.class.getClassLoader()
+000092:             .getResourceAsStream("META-INF/sunlitcompatible/appearance-variants.tsv")) {
+000093:             if (in == null) return Collections.emptyMap();
+000094:             try (BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
+000095:                 String line;
+000096:                 while ((line = reader.readLine()) != null) {
+000097:                     if (line.isBlank() || line.startsWith("#")) continue;
+000098:                     String[] parts = line.split("\\t", 2);
+000099:                     if (parts.length != 2) continue;
+000100:                     LinkedHashSet<String> variants = new LinkedHashSet<>();
+000101:                     for (String token : parts[1].split(",")) {
+000102:                         String[] fields = token.split(":", 2);
+000103:                         if (fields.length > 0 && fields[0].startsWith("mythical_")) {
+000104:                             variants.add(fields[0].toLowerCase(Locale.ROOT));
+000105:                         }
+000106:                     }
+000107:                     result.put(parts[0].toLowerCase(Locale.ROOT), Collections.unmodifiableSet(variants));
+000108:                 }
+000109:             }
+000110:         } catch (Throwable error) {
+000111:             report(error);
+000112:         }
+000113:         return Collections.unmodifiableMap(result);
+000114:     }
+000115: 
+000116:     private static void report(Throwable error) {
+000117:         if (!errorLogged) {
+000118:             errorLogged = true;
+000119:             System.err.println("[SunlitCompatibleSkins] Could not load species-filtered autocomplete: " + error);
+000120:             error.printStackTrace(System.err);
+000121:         }
+000122:     }
+000123: }
+
+
+===== FILE: src/main/java/com/openai/sunlitskins/SunlitSkinsConfig.java =====
+000001: package com.openai.sunlitskins;
+000002: 
+000003: import java.io.*;
+000004: import java.nio.charset.StandardCharsets;
+000005: import java.nio.file.*;
+000006: import java.util.*;
+000007: 
+000008: final class SunlitSkinsConfig {
+000009:     private static final Path PATH = Path.of("config", "sunlit-compatible-skins.toml");
+000010:     private static volatile SunlitSkinsConfig CURRENT = defaults();
+000011:     private static volatile long lastChecked;
+000012:     private static volatile long lastModified = Long.MIN_VALUE;
+000013: 
+000014:     boolean assignToWildPokemon = false;
+000015:     double normalChancePercent = 75.0;
+000016:     boolean includeTextureVariants = true;
+000017:     boolean includeShaderEffects = true;
+000018:     Set<String> enabledFamilies = Set.of("*");
+000019: 
+000020:     static SunlitSkinsConfig get() {
+000021:         long now = System.currentTimeMillis();
+000022:         if (now-lastChecked > 30_000L) synchronized (SunlitSkinsConfig.class) {
+000023:             if (now-lastChecked > 30_000L) { lastChecked=now; reloadIfChanged(); }
+000024:         }
+000025:         return CURRENT;
+000026:     }
+000027: 
+000028:     private static SunlitSkinsConfig defaults() { return new SunlitSkinsConfig(); }
+000029: 
+000030:     private static void reloadIfChanged() {
+000031:         try {
+000032:             if (!Files.exists(PATH)) {
+000033:                 Files.createDirectories(PATH.getParent());
+000034:                 Files.writeString(PATH, template(), StandardCharsets.UTF_8, StandardOpenOption.CREATE_NEW);
+000035:             }
+000036:             long modified=Files.getLastModifiedTime(PATH).toMillis();
+000037:             if(modified==lastModified)return;
+000038:             CURRENT=parse(Files.readAllLines(PATH,StandardCharsets.UTF_8));
+000039:             lastModified=modified;
+000040:             System.out.println("[SunlitCompatibleSkins] Loaded "+PATH+". Wild assignment="+CURRENT.assignToWildPokemon+".");
+000041:         } catch(Throwable t) {
+000042:             System.err.println("[SunlitCompatibleSkins] Could not load config; retaining previous values: "+t);
+000043:         }
+000044:     }
+000045: 
+000046:     private static SunlitSkinsConfig parse(List<String> lines) {
+000047:         SunlitSkinsConfig c=defaults(); String section="";
+000048:         for(String raw:lines) {
+000049:             String line=raw; int hash=line.indexOf('#'); if(hash>=0)line=line.substring(0,hash); line=line.trim();
+000050:             if(line.isEmpty())continue;
+000051:             if(line.startsWith("[")&&line.endsWith("]")){section=line.substring(1,line.length()-1).trim().toLowerCase(Locale.ROOT);continue;}
+000052:             int eq=line.indexOf('='); if(eq<1)continue;
+000053:             String key=unquote(line.substring(0,eq).trim()).toLowerCase(Locale.ROOT);
+000054:             String value=unquote(line.substring(eq+1).trim());
+000055:             if(!section.equals("appearance_spawning"))continue;
+000056:             try {
+000057:                 switch(key) {
+000058:                     case "enabled" -> c.assignToWildPokemon=Boolean.parseBoolean(value);
+000059:                     case "normal_chance_percent" -> c.normalChancePercent=Math.max(0,Math.min(100,Double.parseDouble(value)));
+000060:                     case "include_texture_variants" -> c.includeTextureVariants=Boolean.parseBoolean(value);
+000061:                     case "include_shader_effects" -> c.includeShaderEffects=Boolean.parseBoolean(value);
+000062:                     case "enabled_variant_families" -> {
+000063:                         LinkedHashSet<String>s=new LinkedHashSet<>();
+000064:                         for(String v:value.split(","))if(!v.isBlank())s.add(v.trim().toLowerCase(Locale.ROOT));
+000065:                         c.enabledFamilies=s.isEmpty()?Set.of("*"):Collections.unmodifiableSet(s);
+000066:                     }
+000067:                 }
+000068:             } catch(RuntimeException ignored) { System.err.println("[SunlitCompatibleSkins] Ignoring invalid config value: "+raw); }
+000069:         }
+000070:         return c;
+000071:     }
+000072: 
+000073:     boolean familyEnabled(String aspect) {
+000074:         if(enabledFamilies.contains("*"))return true;
+000075:         String s=aspect.toLowerCase(Locale.ROOT);
+000076:         return enabledFamilies.contains(s)||enabledFamilies.contains(s.replace("mythical_",""));
+000077:     }
+000078: 
+000079:     private static String unquote(String s) {
+000080:         s=s.trim(); if(s.length()>=2&&((s.startsWith("\"")&&s.endsWith("\""))||(s.startsWith("'")&&s.endsWith("'"))))return s.substring(1,s.length()-1); return s;
+000081:     }
+000082: 
+000083:     private static String template() {
+000084:         return "# Sunlit Compatible Skins. Changes reload automatically within about 30 seconds.\n"
+000085:             + "[appearance_spawning]\n"
+000086:             + "# Disabled by default while the compatibility set is being tested. The grid command still works.\n"
+000087:             + "enabled = false\n"
+000088:             + "normal_chance_percent = 75.0\n"
+000089:             + "include_texture_variants = true\n"
+000090:             + "include_shader_effects = true\n"
+000091:             + "enabled_variant_families = \"*\"\n";
+000092:     }
+000093: }
+
+
+===== FILE: tools/asm/PatchBridgeJars.java =====
+000001: import java.io.*;
+000002: import java.nio.file.*;
+000003: import java.util.*;
+000004: import java.util.jar.*;
+000005: import jdk.internal.org.objectweb.asm.*;
+000006: 
+000007: public final class PatchBridgeJars {
+000008:     private static final String OCULUS_COMMON = "net/irisshaders/iris/uniforms/CommonUniforms.class";
+000009:     private static final String POSEABLE_MODEL = "com/cobblemon/mod/common/client/render/models/blockbench/PoseableEntityModel.class";
+000010: 
+000011:     public static void main(String[] args) throws Exception {
+000012:         if (args.length != 5) {
+000013:             System.err.println("Usage: PatchBridgeJars <oculusIn> <oculusOut> <cobblemonIn> <cobblemonOut> <helperClassesDir>");
+000014:             System.exit(2);
+000015:         }
+000016:         Path oculusIn = Path.of(args[0]);
+000017:         Path oculusOut = Path.of(args[1]);
+000018:         Path cobblemonIn = Path.of(args[2]);
+000019:         Path cobblemonOut = Path.of(args[3]);
+000020:         Path helpers = Path.of(args[4]);
+000021: 
+000022:         Map<String, byte[]> oculusReplacements = new LinkedHashMap<>();
+000023:         oculusReplacements.put(OCULUS_COMMON, patchOculusCommonUniforms(readJarEntry(oculusIn, OCULUS_COMMON)));
+000024:         oculusReplacements.put("net/irisshaders/iris/uniforms/CobblemonBridge.class",
+000025:             Files.readAllBytes(helpers.resolve("net/irisshaders/iris/uniforms/CobblemonBridge.class")));
+000026:         oculusReplacements.put("com/openai/mythicaloculus/OculusUniformHook.class",
+000027:             Files.readAllBytes(helpers.resolve("com/openai/mythicaloculus/OculusUniformHook.class")));
+000028:         oculusReplacements.put("SUNLIT_SKINS_OCULUS_PATCH.txt", oculusReadme().getBytes(java.nio.charset.StandardCharsets.UTF_8));
+000029:         rewriteJar(oculusIn, oculusOut, oculusReplacements);
+000030: 
+000031:         Map<String, byte[]> cobbleReplacements = new LinkedHashMap<>();
+000032:         cobbleReplacements.put(POSEABLE_MODEL, patchPoseableEntityModel(readJarEntry(cobblemonIn, POSEABLE_MODEL)));
+000033:         for (String helper : List.of(
+000034:             "com/openai/mythicalbridge/OculusEffectState.class",
+000035:             "com/openai/mythicalbridge/EffectTexturingState.class",
+000036:             "com/openai/mythicalbridge/EffectRenderTypeFactory.class",
+000037:             "com/openai/mythicalbridge/RenderTypeBridge.class",
+000038:             "com/openai/mythicalbridge/RenderTypeBridge$MethodLookupFailure.class")) {
+000039:             cobbleReplacements.put(helper, Files.readAllBytes(helpers.resolve(helper)));
+000040:         }
+000041:         cobbleReplacements.put("SUNLIT_SKINS_COBBLEMON_RENDER_PATCH.txt", cobblemonReadme().getBytes(java.nio.charset.StandardCharsets.UTF_8));
+000042:         rewriteJar(cobblemonIn, cobblemonOut, cobbleReplacements);
+000043: 
+000044:         System.out.println("Patched Oculus: " + oculusOut);
+000045:         System.out.println("Patched Cobblemon: " + cobblemonOut);
+000046:     }
+000047: 
+000048:     private static byte[] patchOculusCommonUniforms(byte[] original) {
+000049:         ClassReader cr = new ClassReader(original);
+000050:         ClassWriter cw = new ClassWriter(cr, ClassWriter.COMPUTE_MAXS);
+000051:         final int[] patchedMethods = {0};
+000052:         ClassVisitor cv = new ClassVisitor(Opcodes.ASM8, cw) {
+000053:             @Override
+000054:             public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
+000055:                 MethodVisitor mv = super.visitMethod(access, name, desc, signature, exceptions);
+000056:                 if (name.equals("addDynamicUniforms") && desc.equals("(Lnet/irisshaders/iris/gl/uniform/DynamicUniformHolder;Lnet/irisshaders/iris/gl/state/FogMode;)V")) {
+000057:                     patchedMethods[0]++;
+000058:                     return new MethodVisitor(Opcodes.ASM8, mv) {
+000059:                         @Override public void visitInsn(int opcode) {
+000060:                             if (opcode == Opcodes.RETURN) {
+000061:                                 super.visitVarInsn(Opcodes.ALOAD, 0);
+000062:                                 super.visitMethodInsn(Opcodes.INVOKESTATIC,
+000063:                                     "com/openai/mythicaloculus/OculusUniformHook", "register", "(Ljava/lang/Object;)V", false);
+000064:                             }
+000065:                             super.visitInsn(opcode);
+000066:                         }
+000067:                     };
+000068:                 }
+000069:                 return mv;
+000070:             }
+000071:         };
+000072:         cr.accept(cv, 0);
+000073:         if (patchedMethods[0] != 1) throw new IllegalStateException("Expected one Oculus addDynamicUniforms method, patched " + patchedMethods[0]);
+000074:         return cw.toByteArray();
+000075:     }
+000076: 
+000077:     private static byte[] patchPoseableEntityModel(byte[] original) {
+000078:         ClassReader cr = new ClassReader(original);
+000079:         ClassWriter cw = new ClassWriter(cr, ClassWriter.COMPUTE_MAXS);
+000080:         final int[] lambdaMethods = {0};
+000081:         final int[] lambdaCalls = {0};
+000082:         final int[] setupMethods = {0};
+000083:         final int[] renderMethods = {0};
+000084:         final int[] clearReturns = {0};
+000085: 
+000086:         ClassVisitor cv = new ClassVisitor(Opcodes.ASM8, cw) {
+000087:             @Override
+000088:             public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
+000089:                 MethodVisitor mv = super.visitMethod(access, name, desc, signature, exceptions);
+000090:                 if (name.equals("_init_$lambda$0") && desc.equals("(Lkotlin/jvm/functions/Function1;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/client/renderer/RenderType;")) {
+000091:                     lambdaMethods[0]++;
+000092:                     return new MethodVisitor(Opcodes.ASM8, mv) {
+000093:                         @Override
+000094:                         public void visitMethodInsn(int opcode, String owner, String methodName, String methodDesc, boolean isInterface) {
+000095:                             if (opcode == Opcodes.INVOKEINTERFACE
+000096:                                 && owner.equals("kotlin/jvm/functions/Function1")
+000097:                                 && methodName.equals("invoke")
+000098:                                 && methodDesc.equals("(Ljava/lang/Object;)Ljava/lang/Object;")) {
+000099:                                 lambdaCalls[0]++;
+000100:                                 // Stack is [Function1, ResourceLocation]. It matches our bridge parameters.
+000101:                                 super.visitMethodInsn(Opcodes.INVOKESTATIC,
+000102:                                     "com/openai/mythicalbridge/RenderTypeBridge", "choose",
+000103:                                     "(Ljava/lang/Object;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/client/renderer/RenderType;", false);
+000104:                                 return;
+000105:                             }
+000106:                             super.visitMethodInsn(opcode, owner, methodName, methodDesc, isInterface);
+000107:                         }
+000108:                     };
+000109:                 }
+000110:                 if (name.equals("m_6973_") && desc.equals("(Lnet/minecraft/world/entity/Entity;FFFFF)V")) {
+000111:                     setupMethods[0]++;
+000112:                     return new MethodVisitor(Opcodes.ASM8, mv) {
+000113:                         @Override public void visitCode() {
+000114:                             super.visitCode();
+000115:                             super.visitVarInsn(Opcodes.ALOAD, 1);
+000116:                             super.visitMethodInsn(Opcodes.INVOKESTATIC,
+000117:                                 "com/openai/mythicalbridge/RenderTypeBridge", "setCurrentEntity", "(Ljava/lang/Object;)V", false);
+000118:                         }
+000119:                     };
+000120:                 }
+000121:                 if (name.equals("m_7695_") && desc.equals("(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;IIFFFF)V")) {
+000122:                     renderMethods[0]++;
+000123:                     return new MethodVisitor(Opcodes.ASM8, mv) {
+000124:                         @Override public void visitInsn(int opcode) {
+000125:                             if (opcode == Opcodes.RETURN) {
+000126:                                 clearReturns[0]++;
+000127:                                 super.visitMethodInsn(Opcodes.INVOKESTATIC,
+000128:                                     "com/openai/mythicalbridge/RenderTypeBridge", "clearCurrentEntity", "()V", false);
+000129:                             }
+000130:                             super.visitInsn(opcode);
+000131:                         }
+000132:                     };
+000133:                 }
+000134:                 return mv;
+000135:             }
+000136:         };
+000137:         cr.accept(cv, 0);
+000138:         if (lambdaMethods[0] != 1 || lambdaCalls[0] != 1) {
+000139:             throw new IllegalStateException("RenderType selector patch mismatch: methods=" + lambdaMethods[0] + " calls=" + lambdaCalls[0]);
+000140:         }
+000141:         if (setupMethods[0] != 1) throw new IllegalStateException("Expected one setupAnim method, patched " + setupMethods[0]);
+000142:         if (renderMethods[0] != 1 || clearReturns[0] < 1) {
+000143:             throw new IllegalStateException("Render cleanup patch mismatch: methods=" + renderMethods[0] + " returns=" + clearReturns[0]);
+000144:         }
+000145:         return cw.toByteArray();
+000146:     }
+000147: 
+000148:     private static byte[] readJarEntry(Path jar, String entryName) throws IOException {
+000149:         try (JarFile jf = new JarFile(jar.toFile())) {
+000150:             JarEntry e = jf.getJarEntry(entryName);
+000151:             if (e == null) throw new FileNotFoundException(entryName + " not found in " + jar);
+000152:             try (InputStream in = jf.getInputStream(e)) { return in.readAllBytes(); }
+000153:         }
+000154:     }
+000155: 
+000156:     private static void rewriteJar(Path input, Path output, Map<String, byte[]> replacements) throws IOException {
+000157:         Files.deleteIfExists(output);
+000158:         Set<String> written = new HashSet<>();
+000159:         try (JarFile jf = new JarFile(input.toFile()); OutputStream fos = Files.newOutputStream(output); JarOutputStream jos = new JarOutputStream(fos)) {
+000160:             Enumeration<JarEntry> entries = jf.entries();
+000161:             while (entries.hasMoreElements()) {
+000162:                 JarEntry old = entries.nextElement();
+000163:                 String name = old.getName();
+000164:                 String upper = name.toUpperCase(Locale.ROOT);
+000165:                 if (upper.startsWith("META-INF/") && (upper.endsWith(".SF") || upper.endsWith(".RSA") || upper.endsWith(".DSA"))) continue;
+000166:                 byte[] replacement = replacements.get(name);
+000167:                 JarEntry next = new JarEntry(name); next.setTime(0L); jos.putNextEntry(next);
+000168:                 if (!old.isDirectory()) {
+000169:                     if (replacement != null) jos.write(replacement);
+000170:                     else try (InputStream in = jf.getInputStream(old)) { in.transferTo(jos); }
+000171:                 }
+000172:                 jos.closeEntry(); written.add(name);
+000173:             }
+000174:             for (Map.Entry<String, byte[]> e : replacements.entrySet()) {
+000175:                 if (written.contains(e.getKey())) continue;
+000176:                 JarEntry next = new JarEntry(e.getKey()); next.setTime(0L); jos.putNextEntry(next); jos.write(e.getValue()); jos.closeEntry();
+000177:             }
+000178:         }
+000179:     }
+000180: 
+000181:     private static String oculusReadme() {
+000182:         return "Sunlit Compatible Skins: registers cobblemon_effectType with Oculus 1.8.0.\n"
+000183:             + "The value is changed by a custom Cobblemon RenderType at actual batch draw time.\n"
+000184:             + "Client side only; built specifically for Society Sunlit's Oculus version.\n";
+000185:     }
+000186: 
+000187:     private static String cobblemonReadme() {
+000188:         return "Sunlit Compatible Skins: selects a custom effect RenderType from Mythical aspects.\n"
+000189:             + "Unlike V2/V3, it does not flush global buffers; setup/clear occurs when each batch is drawn.\n"
+000190:             + "Client side only; server must retain the original Cobblemon 1.5.2 jar.\n";
+000191:     }
+000192: }
+
+
+===== FILE: tools/asm/PatchSunlitSkins.java =====
+000001: import java.io.*;
+000002: import java.nio.file.*;
+000003: import java.util.*;
+000004: import java.util.jar.*;
+000005: import jdk.internal.org.objectweb.asm.*;
+000006: 
+000007: public final class PatchSunlitSkins {
+000008:   static final String POKEMON="com/cobblemon/mod/common/pokemon/Pokemon.class";
+000009:   static final String ENTITY="com/cobblemon/mod/common/entity/pokemon/PokemonEntity.class";
+000010:   static final String PROPERTIES_ARG="com/cobblemon/mod/common/command/argument/PokemonPropertiesArgumentType.class";
+000011: 
+000012:   public static void main(String[] a)throws Exception{
+000013:     if(a.length!=4)throw new IllegalArgumentException("in out helperDir marker");
+000014:     Path in=Path.of(a[0]),out=Path.of(a[1]),helpers=Path.of(a[2]);
+000015:     Map<String,byte[]> r=new LinkedHashMap<>();
+000016:     r.put(POKEMON,patchPokemon(read(in,POKEMON)));
+000017:     r.put(ENTITY,patchEntity(read(in,ENTITY)));
+000018:     r.put(PROPERTIES_ARG,patchPropertiesAutocomplete(read(in,PROPERTIES_ARG)));
+000019:     Files.walk(helpers).filter(Files::isRegularFile).filter(p->p.toString().endsWith(".class")).forEach(p->{
+000020:       try{r.put(helpers.relativize(p).toString().replace(File.separatorChar,'/'),Files.readAllBytes(p));}
+000021:       catch(IOException e){throw new UncheckedIOException(e);}
+000022:     });
+000023:     r.put("SUNLIT_COMPATIBLE_SKINS_BUILD.txt",("Sunlit Compatible Skins\n"+a[3]+"\nUses only Cobblemon 1.5.2 base model/poser/animation assets.\n").getBytes(java.nio.charset.StandardCharsets.UTF_8));
+000024:     rewrite(in,out,r);
+000025:   }
+000026: 
+000027:   static byte[] patchPokemon(byte[] b){
+000028:     ClassReader cr=new ClassReader(b);ClassWriter cw=new ClassWriter(cr,ClassWriter.COMPUTE_MAXS);int[]n={0};
+000029:     ClassVisitor cv=new ClassVisitor(Opcodes.ASM8,cw){public MethodVisitor visitMethod(int ac,String name,String desc,String sig,String[]ex){
+000030:       MethodVisitor mv=super.visitMethod(ac,name,desc,sig,ex);
+000031:       if(name.equals("updateAspects")&&desc.equals("()V")){n[0]++;return new MethodVisitor(Opcodes.ASM8,mv){public void visitInsn(int op){
+000032:         if(op==Opcodes.RETURN){super.visitVarInsn(Opcodes.ALOAD,0);super.visitMethodInsn(Opcodes.INVOKESTATIC,"com/openai/sunlitskins/AppearanceManager","restorePersistentAspect","(Ljava/lang/Object;)V",false);}super.visitInsn(op);
+000033:       }};}return mv;
+000034:     }};cr.accept(cv,0);if(n[0]!=1)throw new IllegalStateException("updateAspects="+n[0]);return cw.toByteArray();
+000035:   }
+000036: 
+000037:   static byte[] patchEntity(byte[] b){
+000038:     ClassReader cr=new ClassReader(b);ClassWriter cw=new ClassWriter(cr,ClassWriter.COMPUTE_MAXS);int[]ct={0},st={0};
+000039:     ClassVisitor cv=new ClassVisitor(Opcodes.ASM8,cw){public MethodVisitor visitMethod(int ac,String name,String desc,String sig,String[]ex){
+000040:       MethodVisitor mv=super.visitMethod(ac,name,desc,sig,ex);
+000041:       boolean ctor=name.equals("<init>")&&desc.startsWith("(Lnet/minecraft/world/level/Level;Lcom/cobblemon/mod/common/pokemon/Pokemon;Lnet/minecraft/world/entity/EntityType;");
+000042:       boolean setter=name.equals("setPokemon")&&desc.equals("(Lcom/cobblemon/mod/common/pokemon/Pokemon;)V");
+000043:       if(!ctor&&!setter)return mv;
+000044:       return new MethodVisitor(Opcodes.ASM8,mv){public void visitFieldInsn(int op,String owner,String field,String fd){
+000045:         super.visitFieldInsn(op,owner,field,fd);
+000046:         if(op==Opcodes.PUTFIELD&&owner.equals("com/cobblemon/mod/common/entity/pokemon/PokemonEntity")&&field.equals("pokemon")){
+000047:           super.visitVarInsn(Opcodes.ALOAD,0);super.visitVarInsn(Opcodes.ALOAD,ctor?2:1);
+000048:           super.visitMethodInsn(Opcodes.INVOKESTATIC,"com/openai/sunlitskins/AppearanceManager","onAssigned","(Ljava/lang/Object;Ljava/lang/Object;)V",false);
+000049:           if(ctor)ct[0]++;else st[0]++;
+000050:         }
+000051:       }};
+000052:     }};cr.accept(cv,0);if(ct[0]!=1||st[0]!=1)throw new IllegalStateException("entity patches ctor="+ct[0]+" set="+st[0]);return cw.toByteArray();
+000053:   }
+000054: 
+000055:   static byte[] patchPropertiesAutocomplete(byte[] b){
+000056:     ClassReader cr=new ClassReader(b);ClassWriter cw=new ClassWriter(cr,ClassWriter.COMPUTE_MAXS);int[]suggest={0},initial={0};
+000057:     ClassVisitor cv=new ClassVisitor(Opcodes.ASM8,cw){public MethodVisitor visitMethod(int ac,String name,String desc,String sig,String[]ex){
+000058:       MethodVisitor mv=super.visitMethod(ac,name,desc,sig,ex);
+000059:       return new MethodVisitor(Opcodes.ASM8,mv){public void visitMethodInsn(int op,String owner,String methodName,String methodDesc,boolean itf){
+000060:         if(op==Opcodes.INVOKEVIRTUAL
+000061:           && owner.equals("com/cobblemon/mod/common/pokemon/properties/PropertiesCompletionProvider")
+000062:           && methodName.equals("suggestKeys")
+000063:           && methodDesc.equals("(Ljava/lang/String;Ljava/util/Collection;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;")){
+000064:           suggest[0]++;
+000065:           super.visitMethodInsn(Opcodes.INVOKESTATIC,
+000066:             "com/openai/sunlitskins/SpeciesFilteredSuggestions","suggestKeys",
+000067:             "(Lcom/cobblemon/mod/common/pokemon/properties/PropertiesCompletionProvider;Ljava/lang/String;Ljava/util/Collection;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;",false);
+000068:           return;
+000069:         }
+000070:         if(op==Opcodes.INVOKEVIRTUAL
+000071:           && owner.equals("com/cobblemon/mod/common/pokemon/properties/PropertiesCompletionProvider")
+000072:           && methodName.equals("keys")
+000073:           && methodDesc.equals("()Ljava/util/List;")){
+000074:           initial[0]++;
+000075:           super.visitMethodInsn(Opcodes.INVOKESTATIC,
+000076:             "com/openai/sunlitskins/SpeciesFilteredSuggestions","initialKeys",
+000077:             "(Lcom/cobblemon/mod/common/pokemon/properties/PropertiesCompletionProvider;)Ljava/util/List;",false);
+000078:           return;
+000079:         }
+000080:         super.visitMethodInsn(op,owner,methodName,methodDesc,itf);
+000081:       }};
+000082:     }};cr.accept(cv,0);
+000083:     if(suggest[0]!=1||initial[0]!=1)throw new IllegalStateException("autocomplete patches suggest="+suggest[0]+" initial="+initial[0]);
+000084:     return cw.toByteArray();
+000085:   }
+000086: 
+000087:   static byte[] read(Path p,String e)throws IOException{try(JarFile j=new JarFile(p.toFile())){JarEntry x=j.getJarEntry(e);if(x==null)throw new FileNotFoundException(e);try(InputStream in=j.getInputStream(x)){return in.readAllBytes();}}}
+000088:   static void rewrite(Path in,Path out,Map<String,byte[]>r)throws IOException{
+000089:     Files.deleteIfExists(out);Set<String>w=new HashSet<>();
+000090:     try(JarFile j=new JarFile(in.toFile());JarOutputStream z=new JarOutputStream(Files.newOutputStream(out))){
+000091:       Enumeration<JarEntry>es=j.entries();while(es.hasMoreElements()){JarEntry e=es.nextElement();String name=e.getName(),u=name.toUpperCase(Locale.ROOT);
+000092:         if(u.startsWith("META-INF/")&&(u.endsWith(".SF")||u.endsWith(".RSA")||u.endsWith(".DSA")))continue;
+000093:         JarEntry ne=new JarEntry(name);ne.setTime(0);z.putNextEntry(ne);if(!e.isDirectory()){byte[]x=r.get(name);if(x!=null)z.write(x);else try(InputStream q=j.getInputStream(e)){q.transferTo(z);}}z.closeEntry();w.add(name);
+000094:       }
+000095:       for(var x:r.entrySet())if(!w.contains(x.getKey())){JarEntry ne=new JarEntry(x.getKey());ne.setTime(0);z.putNextEntry(ne);z.write(x.getValue());z.closeEntry();}
+000096:     }
+000097:   }
+000098: }
+
+
+===== FILE: tools/compile-stubs/com/mojang/brigadier/suggestion/Suggestion.java =====
+000001: package com.mojang.brigadier.suggestion;
+000002: public class Suggestion {
+000003:     public String getText() { return null; }
+000004: }
+
+
+===== FILE: tools/compile-stubs/com/mojang/brigadier/suggestion/Suggestions.java =====
+000001: package com.mojang.brigadier.suggestion;
+000002: import java.util.List;
+000003: public class Suggestions {
+000004:     public List<Suggestion> getList() { return null; }
+000005: }
+
+
+===== FILE: tools/compile-stubs/com/mojang/brigadier/suggestion/SuggestionsBuilder.java =====
+000001: package com.mojang.brigadier.suggestion;
+000002: import java.util.concurrent.CompletableFuture;
+000003: public class SuggestionsBuilder {
+000004:     public SuggestionsBuilder(String input, int start) {}
+000005:     public String getInput() { return null; }
+000006:     public int getStart() { return 0; }
+000007:     public SuggestionsBuilder suggest(String text) { return this; }
+000008:     public Suggestions build() { return null; }
+000009:     public CompletableFuture<Suggestions> buildFuture() { return null; }
+000010: }
+
+
+===== FILE: tools/stubs/com/mojang/blaze3d/vertex/DefaultVertexFormat.java =====
+000001: package com.mojang.blaze3d.vertex;
+000002: public final class DefaultVertexFormat { public static VertexFormat f_85812_; }
+
+
+===== FILE: tools/stubs/com/mojang/blaze3d/vertex/VertexFormat.java =====
+000001: package com.mojang.blaze3d.vertex;
+000002: public class VertexFormat { public enum Mode { QUADS } }
+
+
+===== FILE: tools/stubs/net/minecraft/client/renderer/RenderStateShard.java =====
+000001: package net.minecraft.client.renderer;
+000002: import java.util.function.Supplier;
+000003: import net.minecraft.resources.ResourceLocation;
+000004: public abstract class RenderStateShard {
+000005:   public static ShaderStateShard f_173113_;
+000006:   public static TransparencyStateShard f_110134_;
+000007:   public static LightmapStateShard f_110152_;
+000008:   public static OverlayStateShard f_110154_;
+000009:   public RenderStateShard(String name, Runnable begin, Runnable end) {}
+000010:   public static class TexturingStateShard extends RenderStateShard { public TexturingStateShard(String n,Runnable b,Runnable e){super(n,b,e);} }
+000011:   public static class ShaderStateShard extends RenderStateShard { public ShaderStateShard(Supplier<?> s){super("",()->{},()->{});} }
+000012:   public static class EmptyTextureStateShard extends RenderStateShard { public EmptyTextureStateShard(){super("",()->{},()->{});} }
+000013:   public static class TextureStateShard extends EmptyTextureStateShard { public TextureStateShard(ResourceLocation r, boolean b1, boolean b2){} }
+000014:   public static class TransparencyStateShard extends RenderStateShard { public TransparencyStateShard(){super("",()->{},()->{});} }
+000015:   public static class LightmapStateShard extends RenderStateShard { public LightmapStateShard(){super("",()->{},()->{});} }
+000016:   public static class OverlayStateShard extends RenderStateShard { public OverlayStateShard(){super("",()->{},()->{});} }
+000017: }
+
+
+===== FILE: tools/stubs/net/minecraft/client/renderer/RenderType.java =====
+000001: package net.minecraft.client.renderer;
+000002: import com.mojang.blaze3d.vertex.VertexFormat;
+000003: public abstract class RenderType extends RenderStateShard {
+000004:   public RenderType(String n, VertexFormat f, VertexFormat.Mode m, int s, boolean c, boolean t, Runnable b, Runnable e){super(n,b,e);}
+000005:   public static CompositeRenderType m_173215_(String n, VertexFormat f, VertexFormat.Mode m, int size, boolean crumble, boolean translucent, CompositeState state){return null;}
+000006:   public static class CompositeRenderType extends RenderType {
+000007:     public CompositeRenderType(){super("",null,null,0,false,false,()->{},()->{});}
+000008:   }
+000009:   public static final class CompositeState {
+000010:     public static CompositeStateBuilder m_110628_(){return null;}
+000011:     public static final class CompositeStateBuilder {
+000012:       public CompositeStateBuilder m_173292_(RenderStateShard.ShaderStateShard x){return this;}
+000013:       public CompositeStateBuilder m_173290_(RenderStateShard.EmptyTextureStateShard x){return this;}
+000014:       public CompositeStateBuilder m_110685_(RenderStateShard.TransparencyStateShard x){return this;}
+000015:       public CompositeStateBuilder m_110671_(RenderStateShard.LightmapStateShard x){return this;}
+000016:       public CompositeStateBuilder m_110677_(RenderStateShard.OverlayStateShard x){return this;}
+000017:       public CompositeStateBuilder m_110683_(RenderStateShard.TexturingStateShard x){return this;}
+000018:       public CompositeState m_110691_(boolean outline){return null;}
+000019:     }
+000020:   }
+000021: }
+
+
+===== FILE: tools/stubs/net/minecraft/resources/ResourceLocation.java =====
+000001: package net.minecraft.resources;
+000002: public class ResourceLocation { @Override public String toString(){ return super.toString(); } }
