@@ -33,7 +33,7 @@ jobs:
           rm -rf work
           mkdir -p work/reference
 
-          gh release download v0.4-reference \
+          gh release download \
             --repo "$GITHUB_REPOSITORY" \
             --pattern "*v0.4*.zip" \
             --dir work/reference
