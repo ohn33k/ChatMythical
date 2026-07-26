@@ -1,0 +1,335 @@
+name: Export v0.4 Analysis
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out reconstructed source
+        uses: actions/checkout@v4
+        with:
+          ref: reconstructed-v0.4
+          fetch-depth: 0
+
+      - name: Generate analysis reports
+        shell: python
+        run: |
+          from pathlib import Path
+          import json
+          import re
+          import shutil
+
+          root = Path.cwd()
+          output = Path("/tmp/v04-analysis")
+
+          if output.exists():
+              shutil.rmtree(output)
+
+          output.mkdir(parents=True)
+
+          text_extensions = {
+              ".java", ".kt", ".kts", ".groovy",
+              ".gradle", ".properties", ".toml",
+              ".json", ".json5", ".mcmeta",
+              ".js", ".mjs", ".ts",
+              ".yml", ".yaml",
+              ".txt", ".md", ".cfg", ".conf"
+          }
+
+          build_names = {
+              "build.gradle",
+              "build.gradle.kts",
+              "settings.gradle",
+              "settings.gradle.kts",
+              "gradle.properties",
+              "mods.toml",
+              "pack.mcmeta"
+          }
+
+          target_pattern = re.compile(
+              r"legendary|scheduler|spawn.?timer|shiny|"
+              r"\biv\b|\bivs\b|individual.?value|"
+              r"pokespawn|autocomplete|suggest|"
+              r"jade|tooltip|waila|"
+              r"magma|mythical_magma|"
+              r"gyarados|0130_|"
+              r"moltres|0146_|"
+              r"mewtwo|0150_|"
+              r"species.?feature|appearance|"
+              r"skin.?grid|poser|animation|resolver",
+              re.IGNORECASE
+          )
+
+          def included_files():
+              for path in root.rglob("*"):
+                  if not path.is_file():
+                      continue
+
+                  if ".git" in path.parts:
+                      continue
+
+                  yield path
+
+          files = sorted(
+              included_files(),
+              key=lambda path: path.as_posix().lower()
+          )
+
+          relative_paths = [
+              path.relative_to(root).as_posix()
+              for path in files
+          ]
+
+          (output / "complete-tree.txt").write_text(
+              "\n".join(relative_paths) + "\n",
+              encoding="utf-8"
+          )
+
+          text_files = [
+              path for path in files
+              if (
+                  path.suffix.lower() in text_extensions
+                  or path.name in build_names
+                  or "mixins" in path.name.lower()
+              )
+          ]
+
+          java_files = [
+              path for path in text_files
+              if path.suffix.lower() in {".java", ".kt"}
+          ]
+
+          def append_file(report, path, numbered=False):
+              relative = path.relative_to(root).as_posix()
+
+              try:
+                  text = path.read_text(
+                      encoding="utf-8",
+                      errors="replace"
+                  )
+              except Exception as exc:
+                  report.append(
+                      f"\n===== FILE: {relative} =====\n"
+                      f"[READ ERROR: {exc}]\n"
+                  )
+                  return
+
+              report.append(
+                  f"\n\n===== FILE: {relative} =====\n"
+              )
+
+              if numbered:
+                  for number, line in enumerate(
+                      text.splitlines(),
+                      start=1
+                  ):
+                      report.append(
+                          f"{number:06d}: {line}\n"
+                      )
+              else:
+                  report.append(text)
+
+                  if not text.endswith("\n"):
+                      report.append("\n")
+
+          java_report = []
+
+          for path in java_files:
+              append_file(java_report, path, numbered=True)
+
+          (output / "all-java-and-kotlin.txt").write_text(
+              "".join(java_report),
+              encoding="utf-8"
+          )
+
+          metadata_files = []
+
+          for path in text_files:
+              relative = path.relative_to(root).as_posix()
+              lower = relative.lower()
+
+              if (
+                  path.name in build_names
+                  or "mixins" in path.name.lower()
+                  or "meta-inf" in lower
+                  or lower.endswith("fabric.mod.json")
+                  or lower.endswith("neoforge.mods.toml")
+              ):
+                  metadata_files.append(path)
+
+          metadata_report = []
+
+          for path in metadata_files:
+              append_file(
+                  metadata_report,
+                  path,
+                  numbered=True
+              )
+
+          (output / "build-and-metadata.txt").write_text(
+              "".join(metadata_report),
+              encoding="utf-8"
+          )
+
+          target_paths = []
+          target_report = []
+          target_character_limit = 30_000_000
+          target_character_count = 0
+
+          for path in text_files:
+              relative = path.relative_to(root).as_posix()
+
+              try:
+                  text = path.read_text(
+                      encoding="utf-8",
+                      errors="replace"
+                  )
+              except Exception:
+                  continue
+
+              path_match = target_pattern.search(relative)
+              content_match = target_pattern.search(text)
+
+              if not path_match and not content_match:
+                  continue
+
+              target_paths.append(relative)
+
+              lines = text.splitlines()
+              report_section = [
+                  f"\n\n===== FILE: {relative} =====\n"
+              ]
+
+              # Include complete Java/config/target-species files
+              # when they are reasonably sized.
+              include_full = (
+                  path.suffix.lower()
+                  in {
+                      ".java", ".kt", ".toml",
+                      ".properties", ".gradle",
+                      ".kts", ".js", ".yml", ".yaml"
+                  }
+                  or path_match
+              ) and len(text) <= 750_000
+
+              if include_full:
+                  for number, line in enumerate(lines, start=1):
+                      report_section.append(
+                          f"{number:06d}: {line}\n"
+                      )
+              else:
+                  matching_lines = [
+                      index
+                      for index, line in enumerate(lines)
+                      if target_pattern.search(line)
+                  ]
+
+                  ranges = []
+
+                  for index in matching_lines:
+                      start = max(0, index - 15)
+                      end = min(len(lines), index + 16)
+
+                      if ranges and start <= ranges[-1][1]:
+                          ranges[-1] = (
+                              ranges[-1][0],
+                              max(ranges[-1][1], end)
+                          )
+                      else:
+                          ranges.append((start, end))
+
+                  for start, end in ranges:
+                      report_section.append(
+                          f"\n--- lines {start + 1}-{end} ---\n"
+                      )
+
+                      for index in range(start, end):
+                          report_section.append(
+                              f"{index + 1:06d}: "
+                              f"{lines[index]}\n"
+                          )
+
+              section_text = "".join(report_section)
+
+              if (
+                  target_character_count
+                  + len(section_text)
+                  > target_character_limit
+              ):
+                  target_report.append(
+                      "\n\n[REPORT SIZE LIMIT REACHED]\n"
+                  )
+                  break
+
+              target_report.append(section_text)
+              target_character_count += len(section_text)
+
+          (output / "target-paths.txt").write_text(
+              "\n".join(sorted(target_paths)) + "\n",
+              encoding="utf-8"
+          )
+
+          (output / "target-source-context.txt").write_text(
+              "".join(target_report),
+              encoding="utf-8"
+          )
+
+          relevant_asset_paths = [
+              relative
+              for relative in relative_paths
+              if target_pattern.search(relative)
+          ]
+
+          (output / "relevant-assets-and-resolvers.txt").write_text(
+              "\n".join(relevant_asset_paths) + "\n",
+              encoding="utf-8"
+          )
+
+          summary = {
+              "total_files": len(files),
+              "text_files": len(text_files),
+              "java_or_kotlin_files": len(java_files),
+              "metadata_files": len(metadata_files),
+              "target_text_files": len(target_paths),
+              "relevant_asset_paths": len(
+                  relevant_asset_paths
+              ),
+              "reports": [
+                  "complete-tree.txt",
+                  "all-java-and-kotlin.txt",
+                  "build-and-metadata.txt",
+                  "target-paths.txt",
+                  "target-source-context.txt",
+                  "relevant-assets-and-resolvers.txt"
+              ]
+          }
+
+          (output / "summary.json").write_text(
+              json.dumps(summary, indent=2),
+              encoding="utf-8"
+          )
+
+          print(json.dumps(summary, indent=2))
+
+      - name: Publish analysis branch
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git checkout --orphan analysis-v0.4-work
+          git rm -rf . || true
+
+          cp -a /tmp/v04-analysis/. .
+
+          git add -A
+          git commit -m "Export reconstructed v0.4 analysis"
+          git push --force origin HEAD:analysis-v0.4
