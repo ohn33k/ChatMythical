@@ -1,0 +1,1839 @@
+name: Build Sunlit v0.5 Final Fix
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Check out reconstructed source
+        uses: actions/checkout@v4
+        with:
+          ref: reconstructed-v0.4
+          fetch-depth: 0
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Download v0.4 reference
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          rm -rf work
+          mkdir -p work/reference
+
+          gh release download v0.4-reference \
+            --repo "$GITHUB_REPOSITORY" \
+            --pattern "*v0.4*.zip" \
+            --dir work/reference
+
+      - name: Extract v0.4 files
+        shell: python
+        run: |
+          from pathlib import Path
+          import shutil
+          import zipfile
+
+          work = Path("work")
+          source_zips = list((work / "reference").glob("*.zip"))
+
+          if not source_zips:
+              raise RuntimeError("The v0.4 reference ZIP was not downloaded.")
+
+          source_zip = max(source_zips, key=lambda path: path.stat().st_size)
+          distribution = work / "distribution"
+          jar_root = work / "jar-root"
+
+          shutil.rmtree(distribution, ignore_errors=True)
+          shutil.rmtree(jar_root, ignore_errors=True)
+
+          distribution.mkdir(parents=True)
+          jar_root.mkdir(parents=True)
+
+          with zipfile.ZipFile(source_zip) as archive:
+              bad_entry = archive.testzip()
+
+              if bad_entry:
+                  raise RuntimeError(
+                      f"Damaged reference ZIP entry: {bad_entry}"
+                  )
+
+              archive.extractall(distribution)
+
+          jars = sorted(
+              distribution.rglob("*.jar"),
+              key=lambda path: path.stat().st_size,
+              reverse=True
+          )
+
+          if not jars:
+              raise RuntimeError(
+                  "No compiled JAR was found in the v0.4 package."
+              )
+
+          main_jar = jars[0]
+
+          with zipfile.ZipFile(main_jar) as archive:
+              bad_entry = archive.testzip()
+
+              if bad_entry:
+                  raise RuntimeError(
+                      f"Damaged v0.4 JAR entry: {bad_entry}"
+                  )
+
+              archive.extractall(jar_root)
+
+          (work / "main-jar.txt").write_text(
+              str(main_jar),
+              encoding="utf-8"
+          )
+
+          print(f"Primary JAR: {main_jar}")
+
+      - name: Prepare corrected Java source
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          import shutil
+
+          work = Path("work")
+          patch_source = work / "patch-source"
+          stub_source = work / "stub-source"
+
+          shutil.rmtree(patch_source, ignore_errors=True)
+          shutil.rmtree(stub_source, ignore_errors=True)
+
+          patch_source.mkdir(parents=True)
+          stub_source.mkdir(parents=True)
+
+          recovered = (
+              Path("recovered-v0.4")
+              / "decompiled-java"
+              / "com"
+              / "openai"
+              / "sunlitskins"
+          )
+
+          config_source = recovered / "SunlitSkinsConfig.java"
+          scheduler_source = recovered / "LegendarySpawnManager.java"
+
+          if not config_source.exists():
+              raise RuntimeError(
+                  "Recovered SunlitSkinsConfig.java is missing."
+              )
+
+          if not scheduler_source.exists():
+              raise RuntimeError(
+                  "Recovered LegendarySpawnManager.java is missing."
+              )
+
+          config_text = config_source.read_text(
+              encoding="utf-8"
+          )
+
+          field_marker = (
+              "    double maximumCheckChancePercent = 25.0;\n"
+          )
+
+          if "schedulerShinyChancePercent" not in config_text:
+              if field_marker not in config_text:
+                  raise RuntimeError(
+                      "Could not locate the legendary chance fields."
+                  )
+
+              config_text = config_text.replace(
+                  field_marker,
+                  field_marker
+                  + "    double schedulerShinyChancePercent = 1.0;\n",
+                  1
+              )
+
+          parse_marker = (
+              '            case "announce_spawns": {\n'
+          )
+
+          shiny_parse = (
+              '            case "shiny_chance_percent":\n'
+              '            case "scheduler_shiny_chance_percent": {\n'
+              '                sunlitSkinsConfig.'
+              'schedulerShinyChancePercent = '
+              'SunlitSkinsConfig.clampDouble('
+              'string2, 0.0, 100.0);\n'
+              '                break;\n'
+              '            }\n'
+          )
+
+          if (
+              "case \"shiny_chance_percent\"" not in config_text
+          ):
+              if parse_marker not in config_text:
+                  raise RuntimeError(
+                      "Could not locate legendary config parsing."
+                  )
+
+              config_text = config_text.replace(
+                  parse_marker,
+                  shiny_parse + parse_marker,
+                  1
+              )
+
+          template_old = (
+              "maximum_check_chance_percent = 25.0\\n"
+              "announce_spawns = true"
+          )
+
+          template_new = (
+              "maximum_check_chance_percent = 25.0\\n"
+              "# Applies only to timer-created legendaries. "
+              "Range: 0.0 to 100.0.\\n"
+              "shiny_chance_percent = 1.0\\n"
+              "announce_spawns = true"
+          )
+
+          if template_old not in config_text:
+              raise RuntimeError(
+                  "Could not locate the generated config template."
+              )
+
+          config_text = config_text.replace(
+              template_old,
+              template_new,
+              1
+          )
+
+          config_destination = (
+              patch_source
+              / "com"
+              / "openai"
+              / "sunlitskins"
+              / "SunlitSkinsConfig.java"
+          )
+
+          config_destination.parent.mkdir(
+              parents=True,
+              exist_ok=True
+          )
+
+          config_destination.write_text(
+              config_text,
+              encoding="utf-8"
+          )
+
+          scheduler_text = scheduler_source.read_text(
+              encoding="utf-8"
+          )
+
+          old_spawn = (
+              '            Object object3 = '
+              'LegendarySpawnManager.parseProperties('
+              'legend.species + " level=" + n4);\n'
+          )
+
+          new_spawn = (
+              '            boolean schedulerShiny = '
+              'ThreadLocalRandom.current().nextDouble(100.0) '
+              '< sunlitSkinsConfig.'
+              'schedulerShinyChancePercent;\n'
+              '            String propertyText = legend.species '
+              '+ " level=" + n4\n'
+              '                + " shiny=" + schedulerShiny\n'
+              '                + " HP_iv=31"\n'
+              '                + " ATTACK_iv=31"\n'
+              '                + " DEFENCE_iv=31"\n'
+              '                + " SPECIAL_ATTACK_iv=31"\n'
+              '                + " SPECIAL_DEFENCE_iv=31"\n'
+              '                + " SPEED_iv=31";\n'
+              '            Object object3 = '
+              'LegendarySpawnManager.parseProperties('
+              'propertyText);\n'
+          )
+
+          if old_spawn not in scheduler_text:
+              raise RuntimeError(
+                  "Could not locate the scheduler property string."
+              )
+
+          scheduler_text = scheduler_text.replace(
+              old_spawn,
+              new_spawn,
+              1
+          )
+
+          # CFR's raw Enum call needs a cast before javac can compile it.
+          scheduler_text = scheduler_text.replace(
+              'Object obj = Enum.valueOf(clazz, '
+              '"MOTION_BLOCKING_NO_LEAVES");',
+              'Object obj = Enum.valueOf((Class) clazz, '
+              '"MOTION_BLOCKING_NO_LEAVES");'
+          )
+
+          scheduler_destination = (
+              patch_source
+              / "com"
+              / "openai"
+              / "sunlitskins"
+              / "LegendarySpawnManager.java"
+          )
+
+          scheduler_destination.parent.mkdir(
+              parents=True,
+              exist_ok=True
+          )
+
+          scheduler_destination.write_text(
+              scheduler_text,
+              encoding="utf-8"
+          )
+
+          bridge_source = (
+              Path("src")
+              / "bridge"
+              / "java"
+              / "com"
+              / "openai"
+              / "mythicalbridge"
+              / "RenderTypeBridge.java"
+          )
+
+          bridge_text = bridge_source.read_text(
+              encoding="utf-8"
+          )
+
+          bridge_text = bridge_text.replace(
+              '                    case '
+              '"mythical_magma", "magma": return 2;\n',
+              ""
+          )
+
+          bridge_destination = (
+              patch_source
+              / "com"
+              / "openai"
+              / "mythicalbridge"
+              / "RenderTypeBridge.java"
+          )
+
+          bridge_destination.parent.mkdir(
+              parents=True,
+              exist_ok=True
+          )
+
+          bridge_destination.write_text(
+              bridge_text,
+              encoding="utf-8"
+          )
+
+          jade_source = r'''
+          package com.openai.sunlitskins.jade;
+
+          import java.lang.reflect.Method;
+          import java.util.ArrayList;
+          import java.util.Collection;
+          import java.util.LinkedHashSet;
+          import java.util.Locale;
+          import java.util.Set;
+          import net.minecraft.network.chat.Component;
+          import net.minecraft.resources.ResourceLocation;
+          import net.minecraft.world.entity.Entity;
+          import snownee.jade.api.EntityAccessor;
+          import snownee.jade.api.IEntityComponentProvider;
+          import snownee.jade.api.ITooltip;
+          import snownee.jade.api.config.IPluginConfig;
+
+          public enum SkinVariantProvider
+          implements IEntityComponentProvider {
+              INSTANCE;
+
+              private static final ResourceLocation UID =
+                  new ResourceLocation(
+                      "sunlitcompatible",
+                      "skin_variant"
+                  );
+
+              private static final ResourceLocation OBJECT_NAME =
+                  new ResourceLocation("jade", "object_name");
+
+              private static final String PERSISTENT_KEY =
+                  "sunlitcompatible_appearance";
+
+              @Override
+              public void appendTooltip(
+                  ITooltip tooltip,
+                  EntityAccessor accessor,
+                  IPluginConfig config
+              ) {
+                  try {
+                      Entity entity = accessor.getEntity();
+
+                      Object pokemon = invokeNoArgs(
+                          entity,
+                          "getPokemon"
+                      );
+
+                      if (pokemon == null) {
+                          return;
+                      }
+
+                      LinkedHashSet<String> labels =
+                          new LinkedHashSet<>();
+
+                      Object aspects = invokeNoArgs(
+                          pokemon,
+                          "getAspects"
+                      );
+
+                      if (aspects instanceof Collection<?> values) {
+                          for (Object value : values) {
+                              addLabel(
+                                  labels,
+                                  String.valueOf(value)
+                              );
+                          }
+                      } else if (
+                          aspects instanceof Iterable<?> values
+                      ) {
+                          for (Object value : values) {
+                              addLabel(
+                                  labels,
+                                  String.valueOf(value)
+                              );
+                          }
+                      }
+
+                      if (labels.isEmpty()) {
+                          Object persistent = invokeNoArgs(
+                              pokemon,
+                              "getPersistentData"
+                          );
+
+                          Object stored = invokeOneArg(
+                              persistent,
+                              "getString",
+                              PERSISTENT_KEY
+                          );
+
+                          if (stored != null) {
+                              for (
+                                  String value :
+                                  String.valueOf(stored).split(",")
+                              ) {
+                                  addLabel(labels, value);
+                              }
+                          }
+                      }
+
+                      if (labels.isEmpty()) {
+                          return;
+                      }
+
+                      String prefix = String.join(
+                          " / ",
+                          labels
+                      );
+
+                      String currentTitle = tooltip.getString(
+                          OBJECT_NAME
+                      );
+
+                      if (
+                          currentTitle == null
+                          || currentTitle.isBlank()
+                      ) {
+                          return;
+                      }
+
+                      if (
+                          currentTitle.equals(prefix)
+                          || currentTitle.startsWith(
+                              prefix + " "
+                          )
+                      ) {
+                          return;
+                      }
+
+                      tooltip.replace(
+                          OBJECT_NAME,
+                          Component.literal(
+                              prefix + " " + currentTitle
+                          )
+                      );
+                  } catch (Throwable ignored) {
+                  }
+              }
+
+              @Override
+              public ResourceLocation getUid() {
+                  return UID;
+              }
+
+              private static void addLabel(
+                  Set<String> labels,
+                  String raw
+              ) {
+                  String display = displayName(normalize(raw));
+
+                  if (
+                      display != null
+                      && !display.isBlank()
+                  ) {
+                      labels.add(display);
+                  }
+              }
+
+              private static String normalize(String raw) {
+                  String value = raw == null
+                      ? ""
+                      : raw.trim().toLowerCase(Locale.ROOT);
+
+                  if (value.equals("radar_spawned")) {
+                      return "mythical_holographic";
+                  }
+
+                  if (value.equals("mythical_fireworks")) {
+                      return "mythical_firework";
+                  }
+
+                  return value;
+              }
+
+              private static String displayName(
+                  String aspect
+              ) {
+                  if (
+                      aspect.equals("mythical_magma")
+                      || aspect.equals("magma")
+                      || !aspect.startsWith("mythical_")
+                  ) {
+                      return null;
+                  }
+
+                  String value = aspect.substring(
+                      "mythical_".length()
+                  );
+
+                  if (
+                      value.isBlank()
+                      || value.equals("normal")
+                      || value.equals("default")
+                  ) {
+                      return null;
+                  }
+
+                  if (value.equals("glitch")) {
+                      return "Glitched";
+                  }
+
+                  if (
+                      value.equals("fireworks")
+                      || value.equals("firework")
+                  ) {
+                      return "Firework";
+                  }
+
+                  if (value.equals("smp")) {
+                      return "SMP";
+                  }
+
+                  if (value.equals("smp_v2")) {
+                      return "SMP V2";
+                  }
+
+                  if (value.equals("smp_v3")) {
+                      return "SMP V3";
+                  }
+
+                  return titleWords(value);
+              }
+
+              private static String titleWords(
+                  String value
+              ) {
+                  String[] words = value.split("_+");
+                  ArrayList<String> result =
+                      new ArrayList<>(words.length);
+
+                  for (String word : words) {
+                      if (word.isBlank()) {
+                          continue;
+                      }
+
+                      if (word.equals("smp")) {
+                          result.add("SMP");
+                      } else if (word.matches("v\\d+")) {
+                          result.add(
+                              word.toUpperCase(Locale.ROOT)
+                          );
+                      } else {
+                          result.add(
+                              Character.toUpperCase(
+                                  word.charAt(0)
+                              )
+                              + word.substring(1)
+                          );
+                      }
+                  }
+
+                  return String.join(" ", result);
+              }
+
+              private static Object invokeNoArgs(
+                  Object target,
+                  String methodName
+              ) throws Exception {
+                  if (target == null) {
+                      return null;
+                  }
+
+                  Method method = target
+                      .getClass()
+                      .getMethod(methodName);
+
+                  return method.invoke(target);
+              }
+
+              private static Object invokeOneArg(
+                  Object target,
+                  String methodName,
+                  Object argument
+              ) throws Exception {
+                  if (target == null) {
+                      return null;
+                  }
+
+                  for (
+                      Method method :
+                      target.getClass().getMethods()
+                  ) {
+                      if (
+                          method.getName().equals(methodName)
+                          && method.getParameterCount() == 1
+                      ) {
+                          return method.invoke(
+                              target,
+                              argument
+                          );
+                      }
+                  }
+
+                  return null;
+              }
+          }
+          '''
+
+          jade_destination = (
+              patch_source
+              / "com"
+              / "openai"
+              / "sunlitskins"
+              / "jade"
+              / "SkinVariantProvider.java"
+          )
+
+          jade_destination.parent.mkdir(
+              parents=True,
+              exist_ok=True
+          )
+
+          jade_destination.write_text(
+              jade_source.strip() + "\n",
+              encoding="utf-8"
+          )
+
+          stubs = {
+              (
+                  "net/minecraft/network/chat/"
+                  "Component.java"
+              ): """
+                  package net.minecraft.network.chat;
+
+                  public class Component {
+                      public static Component literal(
+                          String value
+                      ) {
+                          return null;
+                      }
+                  }
+              """,
+
+              (
+                  "net/minecraft/resources/"
+                  "ResourceLocation.java"
+              ): """
+                  package net.minecraft.resources;
+
+                  public class ResourceLocation {
+                      public ResourceLocation(
+                          String namespace,
+                          String path
+                      ) {
+                      }
+                  }
+              """,
+
+              (
+                  "net/minecraft/world/entity/"
+                  "Entity.java"
+              ): """
+                  package net.minecraft.world.entity;
+
+                  public class Entity {
+                  }
+              """,
+
+              (
+                  "net/minecraft/client/renderer/"
+                  "RenderType.java"
+              ): """
+                  package net.minecraft.client.renderer;
+
+                  public abstract class RenderType {
+                  }
+              """,
+
+              (
+                  "snownee/jade/api/config/"
+                  "IPluginConfig.java"
+              ): """
+                  package snownee.jade.api.config;
+
+                  public interface IPluginConfig {
+                  }
+              """,
+
+              "snownee/jade/api/EntityAccessor.java": """
+                  package snownee.jade.api;
+
+                  import net.minecraft.world.entity.Entity;
+
+                  public interface EntityAccessor {
+                      Entity getEntity();
+                  }
+              """,
+
+              "snownee/jade/api/ITooltip.java": """
+                  package snownee.jade.api;
+
+                  import net.minecraft.network.chat.Component;
+                  import net.minecraft.resources.ResourceLocation;
+
+                  public interface ITooltip {
+                      boolean replace(
+                          ResourceLocation tag,
+                          Component component
+                      );
+
+                      String getString(
+                          ResourceLocation tag
+                      );
+                  }
+              """,
+
+              (
+                  "snownee/jade/api/"
+                  "IEntityComponentProvider.java"
+              ): """
+                  package snownee.jade.api;
+
+                  import net.minecraft.resources.ResourceLocation;
+                  import snownee.jade.api.config.IPluginConfig;
+
+                  public interface IEntityComponentProvider {
+                      void appendTooltip(
+                          ITooltip tooltip,
+                          EntityAccessor accessor,
+                          IPluginConfig config
+                      );
+
+                      ResourceLocation getUid();
+                  }
+              """
+          }
+
+          for relative, text in stubs.items():
+              path = stub_source / relative
+              path.parent.mkdir(
+                  parents=True,
+                  exist_ok=True
+              )
+              path.write_text(
+                  text.strip() + "\n",
+                  encoding="utf-8"
+              )
+
+      - name: Compile corrected classes
+        run: |
+          set -euo pipefail
+
+          MAIN_JAR="$(cat work/main-jar.txt)"
+
+          mkdir -p \
+            work/stub-classes \
+            work/patch-classes
+
+          find work/stub-source -name '*.java' -print0 \
+            | xargs -0 javac \
+                --release 17 \
+                -d work/stub-classes
+
+          find work/patch-source -name '*.java' -print0 \
+            | xargs -0 javac \
+                --release 17 \
+                -cp "$MAIN_JAR:work/stub-classes" \
+                -d work/patch-classes
+
+      - name: Patch package and validate
+        shell: python
+        run: |
+          from pathlib import Path
+          import hashlib
+          import json
+          import re
+          import shutil
+          import struct
+          import zipfile
+
+          work = Path("work")
+          distribution = work / "distribution"
+          jar_root = work / "jar-root"
+          compiled = work / "patch-classes"
+          reports = work / "reports"
+
+          reports.mkdir(parents=True, exist_ok=True)
+
+          main_jar = Path(
+              (work / "main-jar.txt")
+              .read_text(encoding="utf-8")
+              .strip()
+          )
+
+          replaced_classes = []
+
+          for class_file in compiled.rglob("*.class"):
+              relative = class_file.relative_to(compiled)
+              destination = jar_root / relative
+
+              destination.parent.mkdir(
+                  parents=True,
+                  exist_ok=True
+              )
+
+              shutil.copy2(
+                  class_file,
+                  destination
+              )
+
+              replaced_classes.append(
+                  relative.as_posix()
+              )
+
+          meta_inf = jar_root / "META-INF"
+
+          if meta_inf.exists():
+              for path in meta_inf.rglob("*"):
+                  if (
+                      path.is_file()
+                      and path.suffix.upper()
+                      in {".SF", ".RSA", ".DSA", ".EC"}
+                  ):
+                      path.unlink()
+
+          target_resolvers = {
+              (
+                  "0130_gyarados/"
+                  "zz_sunlit_compatible_skins.json"
+              ),
+              (
+                  "0146_moltres/"
+                  "zz_sunlit_compatible_skins.json"
+              ),
+              (
+                  "0150_mewtwo/"
+                  "zz_sunlit_compatible_skins.json"
+              )
+          }
+
+          repaired_resolvers = []
+
+          resolver_files = list(
+              jar_root.rglob(
+                  "zz_sunlit_compatible_skins.json"
+              )
+          )
+
+          for resolver in resolver_files:
+              relative = resolver.as_posix()
+
+              if not any(
+                  relative.endswith(target)
+                  for target in target_resolvers
+              ):
+                  continue
+
+              data = json.loads(
+                  resolver.read_text(encoding="utf-8")
+              )
+
+              changed = False
+
+              for variation in data.get(
+                  "variations",
+                  []
+              ):
+                  if not isinstance(variation, dict):
+                      continue
+
+                  for key in ("model", "poser"):
+                      if key in variation:
+                          variation.pop(key, None)
+                          changed = True
+
+              if changed:
+                  resolver.write_text(
+                      json.dumps(
+                          data,
+                          indent=2,
+                          ensure_ascii=False
+                      ) + "\n",
+                      encoding="utf-8"
+                  )
+
+                  repaired_resolvers.append(
+                      resolver.relative_to(
+                          jar_root
+                      ).as_posix()
+                  )
+
+          removed_aspects = {
+              "mythical_magma",
+              "magma"
+          }
+
+          custom_roots = [
+              (
+                  jar_root
+                  / "assets"
+                  / "mythicalcobbled"
+              ),
+              (
+                  jar_root
+                  / "assets"
+                  / "cobblemon"
+                  / "bedrock"
+                  / "pokemon"
+                  / "resolvers"
+                  / "sunlitcompatible"
+              ),
+              (
+                  jar_root
+                  / "data"
+                  / "cobblemon"
+                  / "species_features"
+                  / "sunlitcompatible"
+              ),
+              (
+                  jar_root
+                  / "data"
+                  / "cobblemon"
+                  / "global_species_features"
+                  / "sunlitcompatible"
+              ),
+              (
+                  jar_root
+                  / "data"
+                  / "cobblemon"
+                  / "species_feature_assignments"
+                  / "sunlitcompatible"
+              ),
+              (
+                  jar_root
+                  / "META-INF"
+                  / "sunlitcompatible"
+              )
+          ]
+
+          removed_paths = []
+
+          for root in custom_roots:
+              if not root.exists():
+                  continue
+
+              for path in sorted(
+                  root.rglob("*"),
+                  reverse=True
+              ):
+                  if (
+                      path.is_file()
+                      and "magma" in path.name.lower()
+                  ):
+                      removed_paths.append(
+                          path.relative_to(
+                              jar_root
+                          ).as_posix()
+                      )
+                      path.unlink()
+
+          def scrub_json(value):
+              if isinstance(value, list):
+                  output = []
+
+                  for item in value:
+                      if (
+                          isinstance(item, str)
+                          and item.strip().lower()
+                          in removed_aspects
+                      ):
+                          continue
+
+                      output.append(scrub_json(item))
+
+                  return output
+
+              if isinstance(value, dict):
+                  output = {}
+
+                  for key, item in value.items():
+                      if (
+                          key == "variations"
+                          and isinstance(item, list)
+                      ):
+                          variations = []
+
+                          for variation in item:
+                              if isinstance(
+                                  variation,
+                                  dict
+                              ):
+                                  aspects = {
+                                      str(aspect)
+                                      .strip()
+                                      .lower()
+                                      for aspect in
+                                      variation.get(
+                                          "aspects",
+                                          []
+                                      )
+                                  }
+
+                                  if (
+                                      aspects
+                                      & removed_aspects
+                                  ):
+                                      continue
+
+                              variations.append(
+                                  scrub_json(variation)
+                              )
+
+                          output[key] = variations
+                      else:
+                          output[key] = scrub_json(
+                              item
+                          )
+
+                  return output
+
+              return value
+
+          for root in custom_roots:
+              if not root.exists():
+                  continue
+
+              for path in root.rglob("*.json"):
+                  try:
+                      before = path.read_text(
+                          encoding="utf-8"
+                      )
+
+                      data = json.loads(before)
+                  except Exception:
+                      continue
+
+                  after = json.dumps(
+                      scrub_json(data),
+                      indent=2,
+                      ensure_ascii=False
+                  ) + "\n"
+
+                  if after != before:
+                      path.write_text(
+                          after,
+                          encoding="utf-8"
+                      )
+
+          variant_table = (
+              jar_root
+              / "META-INF"
+              / "sunlitcompatible"
+              / "appearance-variants.tsv"
+          )
+
+          if not variant_table.exists():
+              raise RuntimeError(
+                  "appearance-variants.tsv is missing."
+              )
+
+          table_lines = []
+
+          for line in variant_table.read_text(
+              encoding="utf-8"
+          ).splitlines():
+              if (
+                  line.startswith("#")
+                  or "\t" not in line
+              ):
+                  table_lines.append(line)
+                  continue
+
+              species, raw_tokens = line.split(
+                  "\t",
+                  1
+              )
+
+              tokens = [
+                  token
+                  for token in raw_tokens.split(",")
+                  if (
+                      token.split(":", 1)[0]
+                      .strip()
+                      .lower()
+                      not in removed_aspects
+                  )
+              ]
+
+              table_lines.append(
+                  species
+                  + "\t"
+                  + ",".join(tokens)
+              )
+
+          variant_table.write_text(
+              "\n".join(table_lines) + "\n",
+              encoding="utf-8"
+          )
+
+          # Remove obsolete notes that describe the
+          # legacy-model workaround.
+          for filename in (
+              "SUNLIT_COMPATIBLE_SKINS_HOTFIX_v0.4.txt",
+              "SUNLIT_JADE_LABELS.txt"
+          ):
+              path = jar_root / filename
+
+              if path.exists():
+                  path.unlink()
+
+          (
+              jar_root
+              / "SUNLIT_COMPATIBLE_SKINS_HOTFIX_v0.5.txt"
+          ).write_text(
+              "Sunlit Compatible Skins v0.5 FINAL FIX\n\n"
+              "- Native Cobblemon model, poser, and animation "
+              "routing is retained for all appearances.\n"
+              "- Jade prepends the appearance to the title.\n"
+              "- Scheduler legendaries receive perfect IVs.\n"
+              "- Scheduler shiny chance is configurable.\n"
+              "- Magma is removed from current systems.\n"
+              "- The confirmed 5x5 origin grid is preserved.\n",
+              encoding="utf-8"
+          )
+
+          shader_changes = []
+
+          shader_extensions = {
+              ".fsh",
+              ".vsh",
+              ".glsl",
+              ".gsh",
+              ".inc",
+              ".properties"
+          }
+
+          dimension_pattern = re.compile(
+              r"textureSize|texSize|texture_size|"
+              r"maxDim|max_dim|dimension|"
+              r"width|height",
+              re.IGNORECASE
+          )
+
+          for scan_root in (
+              jar_root,
+              distribution
+          ):
+              for path in scan_root.rglob("*"):
+                  if (
+                      not path.is_file()
+                      or path.suffix.lower()
+                      not in shader_extensions
+                  ):
+                      continue
+
+                  lower_path = path.as_posix().lower()
+
+                  if not any(
+                      marker in lower_path
+                      for marker in (
+                          "shader",
+                          "mythical",
+                          "oculus",
+                          "sunlit"
+                      )
+                  ):
+                      continue
+
+                  try:
+                      text = path.read_text(
+                          encoding="utf-8"
+                      )
+                  except Exception:
+                      continue
+
+                  lines = text.splitlines(
+                      keepends=True
+                  )
+
+                  changed = False
+
+                  for index, line in enumerate(lines):
+                      if (
+                          dimension_pattern.search(line)
+                          and re.search(
+                              r"(?<!\d)"
+                              r"(256|512)"
+                              r"(?:\.0+)?"
+                              r"(?!\d)",
+                              line
+                          )
+                      ):
+                          replacement = re.sub(
+                              r"(?<!\d)"
+                              r"(256|512)"
+                              r"(?:\.0+)?"
+                              r"(?!\d)",
+                              "2048",
+                              line
+                          )
+
+                          if replacement != line:
+                              lines[index] = replacement
+                              changed = True
+
+                              shader_changes.append(
+                                  f"{path}:"
+                                  f"{index + 1}: "
+                                  f"{line.strip()} -> "
+                                  f"{replacement.strip()}"
+                              )
+
+                  if changed:
+                      path.write_text(
+                          "".join(lines),
+                          encoding="utf-8"
+                      )
+
+          config_paths = list(
+              distribution.rglob(
+                  "sunlit-compatible-skins.toml"
+              )
+          )
+
+          if not config_paths:
+              raise RuntimeError(
+                  "No packaged server config was found."
+              )
+
+          for config_path in config_paths:
+              text = config_path.read_text(
+                  encoding="utf-8"
+              )
+
+              if not re.search(
+                  r"(?im)^\s*"
+                  r"(?:scheduler_)?"
+                  r"shiny_chance_percent\s*=",
+                  text
+              ):
+                  section = re.search(
+                      r"(?im)^"
+                      r"\[legendary_spawning\]"
+                      r"\s*$",
+                      text
+                  )
+
+                  if not section:
+                      raise RuntimeError(
+                          "The legendary config section "
+                          "is missing."
+                      )
+
+                  addition = (
+                      "\n# Applies only to timer-created "
+                      "legendaries. Range: 0.0 to 100.0.\n"
+                      "shiny_chance_percent = 1.0\n"
+                  )
+
+                  text = (
+                      text[:section.end()]
+                      + addition
+                      + text[section.end():]
+                  )
+
+              config_path.write_text(
+                  text,
+                  encoding="utf-8"
+              )
+
+          grid_paths = list(
+              distribution.rglob(
+                  "sunlitSkinGrid.js"
+              )
+          )
+
+          if not grid_paths:
+              raise RuntimeError(
+                  "No packaged skin grid was found."
+              )
+
+          for grid_path in grid_paths:
+              text = grid_path.read_text(
+                  encoding="utf-8"
+              )
+
+              text = re.sub(
+                  r"const COLUMNS\s*=\s*\d+\s*;",
+                  "const COLUMNS = 5;",
+                  text
+              )
+
+              text = re.sub(
+                  r"const ROWS\s*=\s*\d+\s*;",
+                  "const ROWS = 5;",
+                  text
+              )
+
+              origins = {
+                  "GRID_ORIGIN_X": "0",
+                  "GRID_ORIGIN_Y": "-60",
+                  "GRID_ORIGIN_Z": "0"
+              }
+
+              for name, value in origins.items():
+                  if re.search(
+                      rf"const {name}\s*=",
+                      text
+                  ):
+                      text = re.sub(
+                          rf"const {name}"
+                          rf"\s*=\s*-?\d+\s*;",
+                          f"const {name} = {value};",
+                          text
+                      )
+                  else:
+                      marker = "const CELL_Z = 12;"
+
+                      text = text.replace(
+                          marker,
+                          marker
+                          + f"\nconst {name} = {value};"
+                      )
+
+              entries_match = re.search(
+                  r"const ENTRIES\s*=\s*"
+                  r"(\[.*?\]);\s*\n",
+                  text,
+                  re.DOTALL
+              )
+
+              if not entries_match:
+                  raise RuntimeError(
+                      "Could not locate the grid entries."
+                  )
+
+              entries = json.loads(
+                  entries_match.group(1)
+              )
+
+              entries = [
+                  entry
+                  for entry in entries
+                  if (
+                      len(entry) < 4
+                      or str(entry[3]).lower()
+                      != "mythical_magma"
+                  )
+              ]
+
+              compact_entries = json.dumps(
+                  entries,
+                  separators=(",", ":"),
+                  ensure_ascii=False
+              )
+
+              text = (
+                  text[:entries_match.start(1)]
+                  + compact_entries
+                  + text[entries_match.end(1):]
+              )
+
+              text = text.replace(
+                  "then the seven animated shader appearances",
+                  "then the six animated shader appearances"
+              )
+
+              text = text.replace(
+                  "sunlitSkinGridV03",
+                  "sunlitSkinGridV05"
+              )
+
+              text = text.replace(
+                  "sunlitSkinGrid.js v0.3 loaded",
+                  "sunlitSkinGrid.js v0.5 loaded"
+              )
+
+              grid_path.write_text(
+                  text,
+                  encoding="utf-8"
+              )
+
+          patched_name = (
+              "Cobblemon-forge-1.5.2+1.20.1-"
+              "SunlitCompatibleSkins-ALPHA-"
+              "v0.5-FINALFIX-Java17.jar"
+          )
+
+          patched_jar = main_jar.with_name(
+              patched_name
+          )
+
+          if patched_jar.exists():
+              patched_jar.unlink()
+
+          with zipfile.ZipFile(
+              patched_jar,
+              "w",
+              zipfile.ZIP_DEFLATED,
+              allowZip64=True
+          ) as archive:
+              for path in sorted(
+                  jar_root.rglob("*")
+              ):
+                  if not path.is_file():
+                      continue
+
+                  info = zipfile.ZipInfo(
+                      path.relative_to(
+                          jar_root
+                      ).as_posix()
+                  )
+
+                  info.date_time = (
+                      1980,
+                      1,
+                      1,
+                      0,
+                      0,
+                      0
+                  )
+
+                  info.compress_type = (
+                      zipfile.ZIP_DEFLATED
+                  )
+
+                  info.external_attr = 0o644 << 16
+
+                  archive.writestr(
+                      info,
+                      path.read_bytes()
+                  )
+
+          if (
+              main_jar != patched_jar
+              and main_jar.exists()
+          ):
+              main_jar.unlink()
+
+          failures = []
+          warnings = []
+
+          with zipfile.ZipFile(
+              patched_jar
+          ) as archive:
+              bad_entry = archive.testzip()
+
+              if bad_entry:
+                  failures.append(
+                      "Damaged JAR entry: "
+                      + bad_entry
+                  )
+
+              required_classes = [
+                  (
+                      "com/openai/sunlitskins/"
+                      "SunlitSkinsConfig.class"
+                  ),
+                  (
+                      "com/openai/sunlitskins/"
+                      "LegendarySpawnManager.class"
+                  ),
+                  (
+                      "com/openai/sunlitskins/jade/"
+                      "SkinVariantProvider.class"
+                  ),
+                  (
+                      "com/openai/mythicalbridge/"
+                      "RenderTypeBridge.class"
+                  )
+              ]
+
+              names = set(archive.namelist())
+
+              for class_name in required_classes:
+                  if class_name not in names:
+                      failures.append(
+                          "Missing class: "
+                          + class_name
+                      )
+                      continue
+
+                  class_bytes = archive.read(
+                      class_name
+                  )
+
+                  if (
+                      class_bytes[:4]
+                      != b"\xCA\xFE\xBA\xBE"
+                  ):
+                      failures.append(
+                          "Invalid class: "
+                          + class_name
+                      )
+                      continue
+
+                  major = struct.unpack(
+                      ">H",
+                      class_bytes[6:8]
+                  )[0]
+
+                  if major != 61:
+                      failures.append(
+                          f"{class_name} uses "
+                          f"class major {major}; "
+                          "expected Java 17 major 61."
+                      )
+
+              scheduler = archive.read(
+                  "com/openai/sunlitskins/"
+                  "LegendarySpawnManager.class"
+              )
+
+              for marker in (
+                  b"HP_iv",
+                  b"ATTACK_iv",
+                  b"DEFENCE_iv",
+                  b"SPECIAL_ATTACK_iv",
+                  b"SPECIAL_DEFENCE_iv",
+                  b"SPEED_iv",
+                  b"shiny"
+              ):
+                  if marker not in scheduler:
+                      failures.append(
+                          "Scheduler is missing "
+                          + marker.decode()
+                      )
+
+              config_class = archive.read(
+                  "com/openai/sunlitskins/"
+                  "SunlitSkinsConfig.class"
+              )
+
+              if (
+                  b"shiny_chance_percent"
+                  not in config_class
+              ):
+                  failures.append(
+                      "The scheduler shiny config "
+                      "was not compiled."
+                  )
+
+              jade_class = archive.read(
+                  "com/openai/sunlitskins/jade/"
+                  "SkinVariantProvider.class"
+              )
+
+              for marker in (
+                  b"object_name",
+                  b"replace"
+              ):
+                  if marker not in jade_class:
+                      failures.append(
+                          "Jade title replacement is "
+                          "missing " + marker.decode()
+                      )
+
+              render_class = archive.read(
+                  "com/openai/mythicalbridge/"
+                  "RenderTypeBridge.class"
+              ).lower()
+
+              if b"mythical_magma" in render_class:
+                  failures.append(
+                      "Magma remains in RenderTypeBridge."
+                  )
+
+          if len(repaired_resolvers) != 3:
+              failures.append(
+                  "Expected three native resolver repairs; "
+                  f"found {len(repaired_resolvers)}."
+              )
+
+          if "magma" in variant_table.read_text(
+              encoding="utf-8"
+          ).lower():
+              failures.append(
+                  "Magma remains in "
+                  "appearance-variants.tsv."
+              )
+
+          for grid_path in grid_paths:
+              grid = grid_path.read_text(
+                  encoding="utf-8"
+              )
+
+              required_grid_text = [
+                  "const COLUMNS = 5;",
+                  "const ROWS = 5;",
+                  "const GRID_ORIGIN_X = 0;",
+                  "const GRID_ORIGIN_Y = -60;",
+                  "const GRID_ORIGIN_Z = 0;"
+              ]
+
+              for required in required_grid_text:
+                  if required not in grid:
+                      failures.append(
+                          "Grid is missing: "
+                          + required
+                      )
+
+              if "mythical_magma" in grid.lower():
+                  failures.append(
+                      "Magma remains in the grid."
+                  )
+
+          if not shader_changes:
+              warnings.append(
+                  "No explicit 256/512 custom shader "
+                  "dimension guard was found. "
+                  "Wailord and Avalugg must be "
+                  "verified during the in-game test."
+              )
+
+          validation = [
+              "SUNLIT COMPATIBLE SKINS v0.5 VALIDATION",
+              "",
+              f"Patched JAR: {patched_jar.name}",
+              (
+                  "Replaced classes: "
+                  f"{len(replaced_classes)}"
+              ),
+              (
+                  "Native resolver repairs: "
+                  f"{len(repaired_resolvers)}"
+              ),
+              (
+                  "Removed Magma paths: "
+                  f"{len(removed_paths)}"
+              ),
+              (
+                  "Shader dimension edits: "
+                  f"{len(shader_changes)}"
+              ),
+              "",
+              "Resolver repairs:",
+              *[
+                  "- " + value
+                  for value in repaired_resolvers
+              ],
+              "",
+              "Shader edits:",
+              *(
+                  [
+                      "- " + value
+                      for value in shader_changes
+                  ]
+                  if shader_changes
+                  else ["- none found"]
+              ),
+              "",
+              "Warnings:",
+              *(
+                  [
+                      "- " + warning
+                      for warning in warnings
+                  ]
+                  if warnings
+                  else ["- none"]
+              ),
+              "",
+              "Failures:",
+              *(
+                  [
+                      "- " + failure
+                      for failure in failures
+                  ]
+                  if failures
+                  else ["- none"]
+              )
+          ]
+
+          validation_path = (
+              reports
+              / "VALIDATION-v0.5.txt"
+          )
+
+          validation_path.write_text(
+              "\n".join(validation) + "\n",
+              encoding="utf-8"
+          )
+
+          if failures:
+              print(
+                  validation_path.read_text(
+                      encoding="utf-8"
+                  )
+              )
+
+              raise RuntimeError(
+                  f"Validation found "
+                  f"{len(failures)} failure(s)."
+              )
+
+          jar_hash = hashlib.sha256(
+              patched_jar.read_bytes()
+          ).hexdigest()
+
+          (
+              reports
+              / "JAR-SHA256.txt"
+          ).write_text(
+              f"{jar_hash}  {patched_jar.name}\n",
+              encoding="utf-8"
+          )
+
+          output_zip = (
+              work
+              / (
+                  "SunlitCompatibleSkins-"
+                  "Forge-1.20.1-ALPHA-"
+                  "v0.5-FINALFIX-Java17.zip"
+              )
+          )
+
+          if output_zip.exists():
+              output_zip.unlink()
+
+          with zipfile.ZipFile(
+              output_zip,
+              "w",
+              zipfile.ZIP_DEFLATED,
+              allowZip64=True
+          ) as archive:
+              for path in sorted(
+                  distribution.rglob("*")
+              ):
+                  if path.is_file():
+                      archive.write(
+                          path,
+                          path.relative_to(
+                              distribution
+                          ).as_posix()
+                      )
+
+          with zipfile.ZipFile(
+              output_zip
+          ) as archive:
+              bad_entry = archive.testzip()
+
+              if bad_entry:
+                  raise RuntimeError(
+                      "Damaged output ZIP entry: "
+                      + bad_entry
+                  )
+
+          zip_hash = hashlib.sha256(
+              output_zip.read_bytes()
+          ).hexdigest()
+
+          (
+              reports
+              / "ZIP-SHA256.txt"
+          ).write_text(
+              f"{zip_hash}  {output_zip.name}\n",
+              encoding="utf-8"
+          )
+
+          print(
+              validation_path.read_text(
+                  encoding="utf-8"
+              )
+          )
+
+      - name: Upload v0.5 build
+        uses: actions/upload-artifact@v4
+        with:
+          name: SunlitCompatibleSkins-v0.5-FINALFIX
+          path: |
+            work/SunlitCompatibleSkins-Forge-1.20.1-ALPHA-v0.5-FINALFIX-Java17.zip
+            work/reports/VALIDATION-v0.5.txt
+            work/reports/JAR-SHA256.txt
+            work/reports/ZIP-SHA256.txt
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Publish readable results
+        run: |
+          set -euo pipefail
+
+          rm -rf /tmp/v05-results
+          mkdir -p /tmp/v05-results/patch-source
+
+          cp -a work/reports/. /tmp/v05-results/
+          cp -a work/patch-source/. \
+            /tmp/v05-results/patch-source/
+
+          cat > /tmp/v05-results/README.md <<'EOF'
+          # Sunlit Compatible Skins v0.5
+
+          The finished distribution is stored in the Actions
+          artifact named:
+
+          `SunlitCompatibleSkins-v0.5-FINALFIX`
+
+          Read `VALIDATION-v0.5.txt` before installing it.
+          EOF
+
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git checkout --orphan build-v0.5-results-work
+          git rm -rf . || true
+
+          cp -a /tmp/v05-results/. .
+
+          git add -A
+          git commit -m \
+            "Publish Sunlit Compatible Skins v0.5 results"
+
+          git push --force origin \
+            HEAD:build-v0.5-results
