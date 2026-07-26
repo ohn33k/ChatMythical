@@ -1,0 +1,571 @@
+name: Reconstruct v0.4 Source
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  reconstruct:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Download v0.4 release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p work/release
+
+          gh release download \
+            --repo "$GITHUB_REPOSITORY" \
+            --pattern "*v0.4*.zip" \
+            --dir work/release
+
+          echo "Downloaded release files:"
+          ls -lah work/release
+
+      - name: Reconstruct v0.4 source
+        shell: python
+        run: |
+          from pathlib import Path
+          import hashlib
+          import json
+          import re
+          import shutil
+          import subprocess
+          import zipfile
+
+          repo = Path.cwd()
+          work = repo / "work"
+          release_dir = work / "release"
+
+          source_candidates = list(
+              repo.glob("SunlitCompatibleSkins-Source-v0.2*.zip")
+          )
+
+          if not source_candidates:
+              raise RuntimeError(
+                  "The v0.2 source ZIP was not found in the repository root."
+              )
+
+          source_zip = source_candidates[0]
+
+          release_zips = list(release_dir.glob("*.zip"))
+
+          if not release_zips:
+              raise RuntimeError(
+                  "No v0.4 ZIP was downloaded from the GitHub release."
+              )
+
+          # The combined distribution should be the largest release ZIP.
+          distribution_zip = max(
+              release_zips,
+              key=lambda path: path.stat().st_size
+          )
+
+          source_extract = work / "source-v0.2"
+          distribution_extract = work / "distribution-v0.4"
+
+          source_extract.mkdir(parents=True, exist_ok=True)
+          distribution_extract.mkdir(parents=True, exist_ok=True)
+
+          with zipfile.ZipFile(source_zip) as archive:
+              bad_entry = archive.testzip()
+
+              if bad_entry:
+                  raise RuntimeError(
+                      f"Damaged v0.2 source entry: {bad_entry}"
+                  )
+
+              archive.extractall(source_extract)
+
+          with zipfile.ZipFile(distribution_zip) as archive:
+              bad_entry = archive.testzip()
+
+              if bad_entry:
+                  raise RuntimeError(
+                      f"Damaged v0.4 distribution entry: {bad_entry}"
+                  )
+
+              archive.extractall(distribution_extract)
+
+          def unwrap_single_directory(directory: Path) -> Path:
+              entries = list(directory.iterdir())
+
+              if len(entries) == 1 and entries[0].is_dir():
+                  return entries[0]
+
+              return directory
+
+          original_source_root = unwrap_single_directory(source_extract)
+
+          reconstructed = (
+              work / "SunlitCompatibleSkins-Source-v0.4-Reconstructed"
+          )
+
+          if reconstructed.exists():
+              shutil.rmtree(reconstructed)
+
+          shutil.copytree(original_source_root, reconstructed)
+
+          # Locate the primary Gradle project.
+          project_markers = []
+
+          for marker_name in (
+              "settings.gradle",
+              "settings.gradle.kts",
+              "build.gradle",
+              "build.gradle.kts",
+          ):
+              project_markers.extend(
+                  reconstructed.rglob(marker_name)
+              )
+
+          if project_markers:
+              project_root = min(
+                  (marker.parent for marker in project_markers),
+                  key=lambda path: len(path.parts)
+              )
+          else:
+              project_root = reconstructed
+
+          recovery_root = reconstructed / "recovered-v0.4"
+          recovered_resources = recovery_root / "resources"
+          recovered_java = recovery_root / "decompiled-java"
+          recovered_distribution = recovery_root / "distribution-files"
+
+          recovered_resources.mkdir(parents=True, exist_ok=True)
+          recovered_java.mkdir(parents=True, exist_ok=True)
+          recovered_distribution.mkdir(parents=True, exist_ok=True)
+
+          # Preserve scripts, configuration, shader packs and other
+          # non-JAR files from the v0.4 distribution.
+          copied_distribution_files = []
+
+          for path in distribution_extract.rglob("*"):
+              if not path.is_file():
+                  continue
+
+              if path.suffix.lower() == ".jar":
+                  continue
+
+              relative = path.relative_to(distribution_extract)
+              destination = recovered_distribution / relative
+              destination.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copy2(path, destination)
+
+              copied_distribution_files.append(relative.as_posix())
+
+          jars = sorted(
+              distribution_extract.rglob("*.jar"),
+              key=lambda path: path.stat().st_size,
+              reverse=True
+          )
+
+          if not jars:
+              raise RuntimeError(
+                  "No compiled JAR was found inside the v0.4 distribution."
+              )
+
+          main_jar = jars[0]
+          jar_extract = work / "v0.4-jar"
+
+          if jar_extract.exists():
+              shutil.rmtree(jar_extract)
+
+          jar_extract.mkdir(parents=True)
+
+          with zipfile.ZipFile(main_jar) as archive:
+              archive.extractall(jar_extract)
+
+          # Find all resource locations represented in the v0.2 source.
+          resource_roots = []
+
+          for possible in reconstructed.rglob("resources"):
+              if (
+                  possible.is_dir()
+                  and possible.parent.name == "main"
+                  and possible.parent.parent.name == "src"
+              ):
+                  resource_roots.append(possible)
+
+          primary_resource_root = project_root / "src/main/resources"
+          primary_resource_root.mkdir(parents=True, exist_ok=True)
+
+          known_resource_paths = set()
+          known_namespaces = set()
+
+          for resource_root in resource_roots:
+              for path in resource_root.rglob("*"):
+                  if not path.is_file():
+                      continue
+
+                  relative = path.relative_to(resource_root).as_posix()
+                  known_resource_paths.add(relative)
+
+                  parts = relative.split("/")
+
+                  if (
+                      len(parts) >= 2
+                      and parts[0] in {"assets", "data"}
+                  ):
+                      known_namespaces.add(parts[1].lower())
+
+          keywords = (
+              "sunlit",
+              "mythical",
+              "appearance",
+              "species_feature",
+              "legendary",
+              "jade",
+              "skin",
+              "pokespawn",
+              "kubejs",
+          )
+
+          recovered_resource_list = []
+          overlaid_resource_list = []
+
+          for path in jar_extract.rglob("*"):
+              if not path.is_file():
+                  continue
+
+              if path.suffix.lower() == ".class":
+                  continue
+
+              relative = path.relative_to(jar_extract).as_posix()
+              lower_relative = relative.lower()
+              parts = relative.split("/")
+
+              namespace_match = False
+
+              if (
+                  len(parts) >= 2
+                  and parts[0] in {"assets", "data"}
+              ):
+                  namespace_match = (
+                      parts[1].lower() in known_namespaces
+                  )
+
+              important_metadata = (
+                  lower_relative == "meta-inf/mods.toml"
+                  or lower_relative == "pack.mcmeta"
+                  or lower_relative.endswith(".mixins.json")
+              )
+
+              should_recover = (
+                  relative in known_resource_paths
+                  or namespace_match
+                  or important_metadata
+                  or any(
+                      keyword in lower_relative
+                      for keyword in keywords
+                  )
+              )
+
+              if not should_recover:
+                  continue
+
+              recovered_destination = recovered_resources / relative
+              recovered_destination.parent.mkdir(
+                  parents=True,
+                  exist_ok=True
+              )
+              shutil.copy2(path, recovered_destination)
+
+              recovered_resource_list.append(relative)
+
+              # Overlay known or project-specific resources into the
+              # ordinary Gradle resource folder as the v0.4 baseline.
+              should_overlay = (
+                  relative in known_resource_paths
+                  or namespace_match
+                  or any(
+                      keyword in lower_relative
+                      for keyword in keywords
+                  )
+              )
+
+              if should_overlay:
+                  overlay_destination = (
+                      primary_resource_root / relative
+                  )
+                  overlay_destination.parent.mkdir(
+                      parents=True,
+                      exist_ok=True
+                  )
+                  shutil.copy2(path, overlay_destination)
+
+                  overlaid_resource_list.append(relative)
+
+          # Determine which compiled classes correspond to Java source
+          # represented by the v0.2 source archive.
+          expected_class_paths = set()
+
+          for java_file in reconstructed.rglob("*.java"):
+              if recovery_root in java_file.parents:
+                  continue
+
+              text = java_file.read_text(
+                  encoding="utf-8",
+                  errors="ignore"
+              )
+
+              package_match = re.search(
+                  r"(?m)^\s*package\s+([\w.]+)\s*;",
+                  text
+              )
+
+              if not package_match:
+                  continue
+
+              package_name = package_match.group(1)
+              internal_name = (
+                  package_name.replace(".", "/")
+                  + "/"
+                  + java_file.stem
+              )
+
+              expected_class_paths.add(
+                  internal_name + ".class"
+              )
+
+          selected_classes = []
+
+          for class_file in jar_extract.rglob("*.class"):
+              relative = class_file.relative_to(
+                  jar_extract
+              ).as_posix()
+
+              if "$" in relative:
+                  outer_class = (
+                      relative.split("$", 1)[0] + ".class"
+                  )
+              else:
+                  outer_class = relative
+
+              lower_relative = relative.lower()
+
+              should_select = (
+                  relative in expected_class_paths
+                  or outer_class in expected_class_paths
+                  or any(
+                      keyword in lower_relative
+                      for keyword in keywords
+                  )
+              )
+
+              if should_select:
+                  selected_classes.append(class_file)
+
+          selected_classes_jar = work / "v0.4-selected-classes.jar"
+
+          with zipfile.ZipFile(
+              selected_classes_jar,
+              "w",
+              zipfile.ZIP_DEFLATED
+          ) as archive:
+              for class_file in selected_classes:
+                  relative = class_file.relative_to(
+                      jar_extract
+                  ).as_posix()
+
+                  archive.write(class_file, relative)
+
+          decompiler_status = "No matching classes were found."
+
+          if selected_classes:
+              cfr_jar = work / "cfr-0.152.jar"
+
+              subprocess.run(
+                  [
+                      "curl",
+                      "--fail",
+                      "--location",
+                      "--retry",
+                      "3",
+                      "https://www.benf.org/other/cfr/"
+                      "cfr-0.152.jar",
+                      "--output",
+                      str(cfr_jar),
+                  ],
+                  check=True
+              )
+
+              result = subprocess.run(
+                  [
+                      "java",
+                      "-jar",
+                      str(cfr_jar),
+                      str(selected_classes_jar),
+                      "--outputdir",
+                      str(recovered_java),
+                      "--silent",
+                      "true",
+                  ],
+                  stdout=subprocess.PIPE,
+                  stderr=subprocess.STDOUT,
+                  text=True
+              )
+
+              decompiler_status = (
+                  f"CFR exit code: {result.returncode}\n"
+                  + result.stdout[-10000:]
+              )
+
+          report = {
+              "base_source": source_zip.name,
+              "reference_distribution": distribution_zip.name,
+              "selected_main_jar": str(
+                  main_jar.relative_to(distribution_extract)
+              ),
+              "selected_main_jar_size": main_jar.stat().st_size,
+              "v0_2_java_file_count": len(
+                  list(reconstructed.rglob("*.java"))
+              ),
+              "selected_v0_4_class_count": len(selected_classes),
+              "recovered_resource_count": len(
+                  recovered_resource_list
+              ),
+              "overlaid_resource_count": len(
+                  overlaid_resource_list
+              ),
+              "distribution_file_count": len(
+                  copied_distribution_files
+              ),
+              "known_namespaces": sorted(known_namespaces),
+              "decompiler_status": decompiler_status,
+              "important_note": (
+                  "This is a reconstructed v0.4 source baseline made "
+                  "from the complete v0.2 source and compiled v0.4 "
+                  "distribution. It is not a byte-for-byte copy of the "
+                  "unavailable original v0.4 development directory."
+              ),
+          }
+
+          (recovery_root / "RECONSTRUCTION-REPORT.json").write_text(
+              json.dumps(report, indent=2),
+              encoding="utf-8"
+          )
+
+          (recovery_root / "RECOVERED-RESOURCE-LIST.txt").write_text(
+              "\n".join(sorted(recovered_resource_list)) + "\n",
+              encoding="utf-8"
+          )
+
+          readme = reconstructed / "README-RECONSTRUCTED-v0.4.md"
+
+          readme.write_text(
+              """# Sunlit Compatible Skins — Reconstructed v0.4 Source
+
+          This branch was reconstructed from:
+
+          - the complete v0.2 source archive
+          - the compiled v0.4 Combined Fix distribution
+
+          The ordinary source tree starts with the v0.2 source.
+
+          Resources recoverable from v0.4 were overlaid into the
+          Gradle resource tree. Decompiled v0.4 project classes and
+          preserved distribution files are under `recovered-v0.4/`.
+
+          This is not the unavailable original v0.4 working directory.
+          Decompiled files should be reviewed before being treated as
+          final editable source.
+          """,
+              encoding="utf-8"
+          )
+
+          output_archive = (
+              work
+              / "SunlitCompatibleSkins-Source-v0.4-Reconstructed.zip"
+          )
+
+          if output_archive.exists():
+              output_archive.unlink()
+
+          with zipfile.ZipFile(
+              output_archive,
+              "w",
+              zipfile.ZIP_DEFLATED,
+              allowZip64=True
+          ) as archive:
+              for path in sorted(reconstructed.rglob("*")):
+                  if not path.is_file():
+                      continue
+
+                  relative = path.relative_to(
+                      reconstructed.parent
+                  ).as_posix()
+
+                  archive.write(path, relative)
+
+          with zipfile.ZipFile(output_archive) as archive:
+              bad_entry = archive.testzip()
+
+              if bad_entry:
+                  raise RuntimeError(
+                      f"Damaged output archive entry: {bad_entry}"
+                  )
+
+          digest = hashlib.sha256(
+              output_archive.read_bytes()
+          ).hexdigest()
+
+          checksum_file = (
+              work
+              / "SunlitCompatibleSkins-Source-v0.4-"
+                "Reconstructed-SHA256.txt"
+          )
+
+          checksum_file.write_text(
+              f"{digest}  {output_archive.name}\n",
+              encoding="utf-8"
+          )
+
+          print(json.dumps(report, indent=2))
+          print(f"Created: {output_archive}")
+          print(f"SHA-256: {digest}")
+
+      - name: Upload reconstructed source ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: SunlitCompatibleSkins-Source-v0.4-Reconstructed
+          path: |
+            work/SunlitCompatibleSkins-Source-v0.4-Reconstructed.zip
+            work/SunlitCompatibleSkins-Source-v0.4-Reconstructed-SHA256.txt
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Publish reconstructed source branch
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git checkout --orphan reconstructed-v0.4-work
+          git rm -rf . || true
+
+          cp -a \
+            work/SunlitCompatibleSkins-Source-v0.4-Reconstructed/. \
+            .
+
+          rm -rf work
+
+          git add -A
+          git commit -m "Publish reconstructed v0.4 source"
+          git push --force origin \
+            HEAD:reconstructed-v0.4
